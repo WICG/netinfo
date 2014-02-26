@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<head>
+<meta charset='utf-8'>
+<title>Network Information API</title>
+<script class='remove' src='http://www.w3.org/Tools/respec/respec-w3c-common' async></script>
+<script class='remove'>
+/**/
+  var respecConfig = {
+  specStatus: 'ED',
+  shortName: 'netinfo',
+  format: "markdown",
+  subtitle: 'Living Document',
+  edDraftURI: 'http://w3c.github.io/netinfo/',
+  previousMaturity: 'ED',
+  previousURI: 'http://www.w3.org/TR/2012/WD-netinfo-api-20121129/',
+  editors: [{
+      name: 'Marcos Cáceres',
+      company: 'Mozilla Corporation',
+      companyURL: 'http://mozilla.com'
+  },{
+      name: 'Fernando Jiménez Moreno',
+      company: 'Telefonica',
+      companyURL: 'http://www.telefonica.com/en/home/jsp/home.jsp'
+  }],
+  wg: 'Device APIs Working Group',
+  wgURI: 'http://www.w3.org/2009/dap/',
+  wgPublicList: 'public-device-apis',
+  wgPatentURI: 'http://www.w3.org/2004/01/pp-impl/43696/status',
+  noLegacyStyle: true,
+  otherLinks: [
+      {
+      key: 'Repository',
+      data: [{
+          value: 'We are on Github.',
+          href: 'https://github.com/w3c/netinfo'
+      }, {
+          value: 'File a bug.',
+          href: 'https://github.com/w3c/netinfo/issues'
+      }, {
+          value: 'Commit history.',
+          href: 'https://github.com/w3c/netinfo/commits/gh-pages'
+      }]
+  }]
+  };
+  </script>
+</head>
+<body>
+
+<section id='abstract'>
+The Network Information API enables web applications to access the underlying connection information of the device.
+</section>
+
+<section id='sotd'>
+### What's new?
+* Reintroduce the `type` attribute from the [20110607](http://www.w3.org/TR/2011/WD-netinfo-api-20110607) spec, but with a different set of <a>connection types</a>.
+* Remove the `bandwidth` and `metered` attributes from the [20121129](http://www.w3.org/TR/2012/WD-netinfo-api-20121129/) spec.
+* Keep the `onchange` event introduced in the [20121129](http://www.w3.org/TR/2012/WD-netinfo-api-20121129/) spec.
+
+For the rationale for the changes, see the [Discussion](https://github.com/w3c-webmob/netinfo#discussion) section of the <cite>[Review of apps that use network Information](https://github.com/w3c-webmob/netinfo)</cite>.
+</section>
+
+<section id="use-cases">
+## Use cases and requirements
+This document attempts to address the [requirements](https://github.com/w3c-webmob/netinfo/blob/master/README.md) from the <cite>Review of Apps that Use Network Information</a> document published by the <a href="http://www.w3.org/Mobile/IG/">Web and Mobile Interest Group</a>. Those are: 
+ 
+ * Provide access to the connection type the system is using to communicate with the network (e.g., cellular, Wi-Fi, Ethernet, or airplane mode). This information needs to be available either immediately on page load or as close as possible to it.
+ * Provide a means for scripts to be notified if the connection type changes. This is to allow developers to make dynamic changes to the DOM and/or inform the user that the network connection type has changed (and that it could impact them in some way).
+</section>
+
+<section class="informative">
+## Examples of usage
+The following are simple examples of how to use the API. More [sophisticated examples](https://github.com/w3c/netinfo/blob/gh-pages/examples/) are available on GitHub. 
+
+For examples of the kinds of applications one can build with this API, see the <cite>[review of apps that use network information](https://github.com/w3c-webmob/netinfo)</cite>. 
+
+<pre class="example highlight js">
+//get the connection type
+var type = navigator.connection.type;
+
+function changeHandler(e){ 
+  //Handle change of connection type here
+}
+
+//Register for event changes
+navigator.connection.ontypechange = changeHandler;
+
+//Alternatively
+navigator.connection.addEventListener('onchange', changeHandler)
+</pre>
+</section>
+
+<section>
+## Connection types 
+This section defines the <dfn>connection types</dfn>:
+
+<dl>
+  <dt><dfn id="idl-def-ConnectionType.unknown">unknown</dfn></dt> 
+  <dd>The connection type is not known at this time or is not one of the connection types. </dd>
+  <dt><dfn id="idl-def-ConnectionType.ethernet">ethernet</dfn></dt> 
+  <dd>The user agent is using an ethernet connection.</dd> 
+  <dt><dfn id="idl-def-ConnectionType.wifi">wifi</dfn></dt> 
+  <dd>The user agent is using a Wi-Fi connection.</dd> 
+  <dt><dfn id="idl-def-ConnectionType.cellular">cellular</dfn></dt> 
+  <dd>The user agent is using a cellular connection (e.g., EDGE, 3G, 4G, etc.).</dd> 
+  <dt><dfn id="idl-def-ConnectionType.bluetooth">bluetooth</dfn></dt> 
+  <dd>The user agent is using a bluetooth connection.</dd> 
+  <dt><dfn id="idl-def-ConnectionType.none">none</dfn></dt> 
+  <dd>The user agent is not using any connection (it's explicitly disabled, such as in "airplane" mode).</dd> 
+</dl>
+</section>
+
+<section>
+## Extensions to the `Navigator` interface
+
+<dl class="idl" title="partial interface Navigator">
+   <dt>readonly attribute NetworkInformation connection</dt>
+</dl>
+
+### The `connection` attribute
+The `connection` attribute, when getting, returns an object that implements the <a>`NetworkInformation`</a> interface.
+</section>
+
+<section>
+## The `NetworkInformation` interface
+The <dfn>`NetworkInformation`</dfn> interface provides a means to access information about the network connection the user agent is currently using.
+
+<dl class="idl" title="[Exposed=Window,Worker] interface NetworkInformation : EventTarget">
+    <dt>readonly attribute ConnectionType type</dt>
+    <dt>attribute EventHandler ontypechange</dt>
+</dl>
+
+### `type` attribute
+The <dfn id="netinfo.type">`type`</dfn> attribute, when getting, returns the <a title="connection types">connection type</a> that the user agent is using.
+
+Whenever the user agent needs to make the `navigator.connection.type` attribute of a `Window` or `WorkerGlobalScope` object return a new <a title="connection types">connection type</a>, the user agent MUST [queue a task](http://www.whatwg.org/specs/web-apps/current-work/#queue-a-task) to [fire a simple event](http://www.whatwg.org/specs/web-apps/current-work/#fire-a-simple-event) named `connectiontypechange` at the `NetworkInformation` object and wait until that task begins to be executed before actually returning a new value.
+</section>
+
+<section>
+## The `ConnectionType` enum
+
+<dl class="idl" title="enum ConnectionType">
+  <dt>unknown</dt>
+  <dt>ethernet</dt>
+  <dt>wifi</dt>
+  <dt>cellular</dt>
+  <dt>bluetooth</dt>
+  <dt>none</dt>
+</dl>
+</section>
+
+<section id="conformance">
+  There is only one class of product that can claim conformance to this
+  specification: a <dfn>user agent</dfn>.
+</section>
+
+<section class="appendix">
+  ## Acknowledgments
+  This document reuses text from the [[!HTML]] specification, edited by
+  Ian Hickson, as permitted by the license of that specification.
+</section>

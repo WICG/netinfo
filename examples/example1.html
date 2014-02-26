@@ -1,0 +1,103 @@
+<style>
+.cellwarn{ display: none }
+.cellular video {display: none}
+.cellular .cellwarn{display: block}
+.cellDownloadsAllowed .cellwarn{ display: none }
+.cellDownloadsAllowed video{ display: block; }
+</style>
+
+<div>
+	<p class="cellwarn">This is a free ACME service. However, your operator may
+	charge you for the amount of data you use. If you are unsure how much data
+	costs on your tariff, please contact your network operator.
+	<button class="vidConfirm">Continue</button>
+	</p>
+	<video src="lolcat" controls preload=none width="320" height="240"></video>
+<div>
+
+<div>
+	<p class="cellwarn">This is a free ACME service. However, your operator may
+	charge you for the amount of data you use. If you are unsure how much data
+	costs on your tariff, please contact your network operator.
+	<button class="vidConfirm">Continue</button>
+	</p>
+	<video src="lolcat" controls preload=none width="320" height="240"></video>
+<div>
+<div>
+	<p class="cellwarn">This is a free ACME service. However, your operator may
+	charge you for the amount of data you use. If you are unsure how much data
+	costs on your tariff, please contact your network operator.
+	<button class="vidConfirm">Continue</button>
+	</p>
+	<video src="lolcat" controls preload=none width="320" height="240"></video>
+<div>
+
+<script>
+'use strict';
+//Cheap polyfill 
+navigator.connection = {
+    realType: 'unknown',
+    get type() {
+        return this.realType;
+    },
+    set type(value) {
+        this.realType = value;
+        this.test();
+    },
+    addEventListener: function () {},
+    test: function () {
+        console.log('test')
+    }
+};
+
+window.addEventListener('DOMContentLoaded', function () {
+    var rootElem = document.documentElement,
+        buttons = document.querySelectorAll('.vidConfirm'),
+        type = (navigator.connection) ? navigator.connection.type : 'unknown';
+
+    //if the API is supported
+    if (navigator.connection) {
+    	//watch for connection type changes
+        navigator.connection.addEventListener('typechange', matchToConnectionType);
+        //update the ui to match
+        matchToConnectionType();
+         navigator.connection.test = matchToConnectionType;
+    }else{
+    	rootElem.classList.add(type);
+    }
+
+    //Update the UI for the connection type
+    function matchToConnectionType() {
+        //Replace the old connection type for the new one
+        if(rootElem.classList.contains(type)){
+        	rootElem.classList.remove(type);
+        }
+        type = navigator.connection.type;
+        rootElem.classList.add(type);
+
+      	switch(type){
+      		case "cellular": {       
+		        if (localStorage.cellDownloadsAllowed !== 'true') {
+		            rootElem.classList.remove('cellDownloadsAllowed');
+		            //A
+		            for (var i = buttons.length - 1; i >= 0; i--) {
+		                buttons[i].addEventListener('click', enableVideosOnCell);
+		            }
+		        }else if (localStorage.cellDownloadsAllowed) {
+		            rootElem.classList.add('cellDownloadsAllowed');
+		        }
+		        break;
+		    }
+		}
+    }
+
+    function enableVideosOnCell() {
+        localStorage.cellDownloadsAllowed = 'true';
+        //remove events on buttons
+        for (var i = buttons.length - 1; i >= 0; i--) {
+            buttons[i].removeEventListener('click', enableVideosOnCell);
+        }
+        matchToConnectionType();
+    }
+});
+</script>
