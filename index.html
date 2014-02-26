@@ -105,7 +105,7 @@ This section defines the <dfn>connection types</dfn>:
   <dt><dfn id="idl-def-ConnectionType.bluetooth">bluetooth</dfn></dt> 
   <dd>The user agent is using a bluetooth connection.</dd> 
   <dt><dfn id="idl-def-ConnectionType.none">none</dfn></dt> 
-  <dd>The user agent is not using any connection (it's explicitly disabled, such as in "airplane" mode).</dd> 
+  <dd>The user agent will not contact the network when the user follows links or when a script requests a remote page (or knows that such an attempt would fail) - i.e., equivalent to `navigator.onLine === false` in HTML.</dd> 
 </dl>
 </section>
 
