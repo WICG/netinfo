@@ -36,7 +36,7 @@
 'use strict';
 //Cheap polyfill 
 navigator.connection = {
-    realType: 'unknown',
+    realType: 'other',
     get type() {
         return this.realType;
     },
@@ -53,7 +53,7 @@ navigator.connection = {
 window.addEventListener('DOMContentLoaded', function () {
     var rootElem = document.documentElement,
         buttons = document.querySelectorAll('.vidConfirm'),
-        type = (navigator.connection) ? navigator.connection.type : 'unknown';
+        type = (navigator.connection) ? navigator.connection.type : 'other';
 
     //if the API is supported
     if (navigator.connection) {

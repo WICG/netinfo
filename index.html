@@ -63,7 +63,7 @@ For the rationale for the changes, see the [Discussion](https://github.com/w3c-w
 ## Use cases and requirements
 This document attempts to address the [requirements](https://github.com/w3c-webmob/netinfo/blob/master/README.md) from the <cite>[Review of Apps that Use Network Information](https://github.com/w3c-webmob/netinfo)</cite> document published by the <a href="http://www.w3.org/Mobile/IG/">Web and Mobile Interest Group</a>. Those are:
  
- * Provide access to the connection type the system is using to communicate with the network (e.g., cellular, Wi-Fi, Ethernet, Bluetooth or none). This information needs to be available either immediately on page load or as close as possible to it.
+ * Provide access to the connection type the system is using to communicate with the network (e.g., cellular, other or none). This information needs to be available either immediately on page load or as close as possible to it.
  * Provide a means for scripts to be notified if the connection type changes. This is to allow developers to make dynamic changes to the DOM and/or inform the user that the network connection type has changed (and that it could impact them in some way).
 </section>
 
@@ -94,16 +94,10 @@ navigator.connection.addEventListener('typechange', changeHandler);
 This section defines the <dfn>connection types</dfn>:
 
 <dl>
-  <dt><dfn id="idl-def-ConnectionType.unknown">unknown</dfn></dt> 
-  <dd>The connection type is not known at this time or is not one of the connection types. </dd>
-  <dt><dfn id="idl-def-ConnectionType.ethernet">ethernet</dfn></dt> 
-  <dd>The user agent is using an ethernet connection.</dd> 
-  <dt><dfn id="idl-def-ConnectionType.wifi">wifi</dfn></dt> 
-  <dd>The user agent is using a Wi-Fi connection.</dd> 
   <dt><dfn id="idl-def-ConnectionType.cellular">cellular</dfn></dt> 
   <dd>The user agent is using a cellular connection (e.g., EDGE, 3G, 4G, etc.).</dd> 
-  <dt><dfn id="idl-def-ConnectionType.bluetooth">bluetooth</dfn></dt> 
-  <dd>The user agent is using a bluetooth connection.</dd> 
+  <dt><dfn id="idl-def-ConnectionType.other">other</dfn></dt>
+  <dd>The user agent is using a connection type different to any of the other enumerated connection types. This can be an ethernet, Wi-Fi, bluetooth or other unknown connection type.</dd>
   <dt><dfn id="idl-def-ConnectionType.none">none</dfn></dt> 
   <dd>The user agent will not contact the network when the user follows links or when a script requests a remote page (or knows that such an attempt would fail) - i.e., equivalent to `navigator.onLine === false` in HTML.</dd> 
 </dl>
@@ -139,11 +133,8 @@ Whenever the user agent needs to make the `navigator.connection.type` attribute 
 ## The `ConnectionType` enum
 
 <dl class="idl" title="enum ConnectionType">
-  <dt>unknown</dt>
-  <dt>ethernet</dt>
-  <dt>wifi</dt>
   <dt>cellular</dt>
-  <dt>bluetooth</dt>
+  <dt>other</dt>
   <dt>none</dt>
 </dl>
 </section>
