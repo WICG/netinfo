@@ -6,6 +6,6 @@ Everyone is welcome to contribute to this specification, but please see our [con
 
 ## Useful links
 * [Network Information API specification](http://w3c.github.io/netinfo/)
-* [Use cases and requirements](https://github.com/w3c-webmob/netinfo/)
+* [Use cases and requirements](http://w3c-webmob.github.io/netinfo-usecases/)
 * [DAPWG homepage](http://www.w3.org/2009/dap/)
 * [DAPWG mailing-list](http://lists.w3.org/Archives/Public/public-device-apis/)
