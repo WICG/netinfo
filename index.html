@@ -106,6 +106,8 @@ This section defines the <dfn>connection types</dfn>:
   <dd>The user agent is using a wifi connection.</dd>
   <dt><dfn id="idl-def-ConnectionType.other">other</dfn></dt>
   <dd>The user agent is using a connection type that is not one of enumerated connection types.</dd>
+  <dt><dfn id="idl-def-ConnectionType.unknown">unknown</dfn></dt>
+  <dd>The user agent has established a network connection, but is unable to determine what the connection type is.</dd>
 </dl>
 </section>
 
@@ -145,6 +147,7 @@ Whenever the user agent needs to make the `navigator.connection.type` attribute 
   <dt>wifi</dt>
   <dt>other</dt>
   <dt>none</dt>
+  <dt>unknown</dt>
 </dl>
 </section>
 
