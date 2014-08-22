@@ -61,6 +61,7 @@ The Network Information API enables web applications to access the underlying co
 
 <section id='sotd'>
 ### What's new?
+* Introduced the `bandwidthCeiling`. [Discussion on GH](https://github.com/w3c/netinfo/issues/13). 
 * Reintroduce the `type` attribute from the [20110607](http://www.w3.org/TR/2011/WD-netinfo-api-20110607) spec, but with a different set of <a>connection types</a>.
 * Remove the `bandwidth` and `metered` attributes from the [20121129](http://www.w3.org/TR/2012/WD-netinfo-api-20121129/) spec.
 * Keep the `onchange` event introduced in the [20121129](http://www.w3.org/TR/2012/WD-netinfo-api-20121129/) spec, but renamed to `ontypechange`.
@@ -137,13 +138,24 @@ The <dfn>`NetworkInformation`</dfn> interface provides a means to access informa
 
 <dl class="idl" title="[Exposed=Window,Worker] interface NetworkInformation : EventTarget">
     <dt>readonly attribute ConnectionType type</dt>
+    <dt>readonly attribute Mbps bandwidthCeiling</dt>
     <dt>attribute EventHandler ontypechange</dt>
+</dl>
+
+<dl class="idl" title="typedef unsigned long long Mbps">
+  
 </dl>
 
 ### `type` attribute
 The <dfn id="netinfo.type">`type`</dfn> attribute, when getting, returns the <a title="connection types">connection type</a> that the user agent is using.
 
 Whenever the user agent needs to make the `navigator.connection.type` attribute of a `Window` or `WorkerGlobalScope` object return a new <a title="connection types">connection type</a>, the user agent MUST [queue a task](http://www.whatwg.org/specs/web-apps/current-work/#queue-a-task) to [fire a simple event](http://www.whatwg.org/specs/web-apps/current-work/#fire-a-simple-event) named `typechange` at the `NetworkInformation` object and wait until that task begins to be executed before actually returning a new value.
+
+### `bandwidthCeiling` attribute
+The <dfn>bandwidthCeiling</dfn> represents the max theoretical bandwidth, in megabits per second, for <a>underlying connection type</a>. 
+
+The <dfn>underlying connection type</dfn> is the type of connection being used by the device. 
+
 </section>
 
 <section>
