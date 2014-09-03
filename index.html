@@ -2,7 +2,7 @@
 <head>
 <meta charset='utf-8'>
 <title>Network Information API</title>
-<script class='remove' src='http://www.w3.org/Tools/respec/respec-w3c-common' async></script>
+<script class='remove' src='//www.w3.org/Tools/respec/respec-w3c-common' async></script>
 <script class='remove'>
 /**/
   var respecConfig = {
@@ -100,6 +100,18 @@ navigator.connection.addEventListener('typechange', changeHandler);
 </section>
 
 <section>
+## Depedencies
+
+The <a herf="http://www.whatwg.org/specs/web-apps/current-work/#task-source">task source</a> used by this specification is the the <dfn>networking task source</dfn> [[!HTML]].
+
+The following concepts are defined in [[!DOM]]:
+
+ * <dfn>Queue a task</dfn>.
+ * <dfn>Fire a simple event</dfn>. 
+
+</section>
+
+<section>
 ## Connection types 
 This section defines the <dfn>connection types</dfn>:
 
@@ -138,23 +150,48 @@ The <dfn>`NetworkInformation`</dfn> interface provides a means to access informa
 
 <dl class="idl" title="[Exposed=Window,Worker] interface NetworkInformation : EventTarget">
     <dt>readonly attribute ConnectionType type</dt>
-    <dt>readonly attribute Mbps bandwidthCeiling</dt>
+    <dt>readonly attribute Megabyte bandwidthCeiling</dt>
     <dt>attribute EventHandler ontypechange</dt>
+    <dt>attribute EventHandler onbandwidthceilingchange</dt>
 </dl>
 
-<dl class="idl" title="typedef unsigned long long Mbps">
+<dl class="idl" title="typedef unrestricted double Megabyte">
   
 </dl>
 
 ### `type` attribute
 The <dfn id="netinfo.type">`type`</dfn> attribute, when getting, returns the <a title="connection types">connection type</a> that the user agent is using.
 
-Whenever the user agent needs to make the `navigator.connection.type` attribute of a `Window` or `WorkerGlobalScope` object return a new <a title="connection types">connection type</a>, the user agent MUST [queue a task](http://www.whatwg.org/specs/web-apps/current-work/#queue-a-task) to [fire a simple event](http://www.whatwg.org/specs/web-apps/current-work/#fire-a-simple-event) named `typechange` at the `NetworkInformation` object and wait until that task begins to be executed before actually returning a new value.
+Whenever the user agent needs to make the `navigator.connection.type` attribute of a `Window` or `WorkerGlobalScope` object return a new <a title="connection types">connection type</a>, the user agent MUST <a>queue a task</a> to <a>fire a simple event</a> named `typechange` at the `NetworkInformation` object and wait until that task begins to be executed before actually returning a new value.
 
 ### `bandwidthCeiling` attribute
-The <dfn>bandwidthCeiling</dfn> represents the max theoretical bandwidth, in megabits per second, for <a>underlying connection type</a>. 
+The <dfn>bandwidthCeiling</dfn> represents the <a>maximum theoretical bandwidth</a>, in megabytes (1,048,576 bytes or a <abbr title="mebibyte">MiB</abbr>) per second, for <a>underlying connection type</a>. 
 
-The <dfn>underlying connection type</dfn> is the type of connection being used by the device. 
+Whenever the user agent needs to make the `navigator.connection.bandwidthCeiling` attribute of a `Window` or `WorkerGlobalScope` object return a new <a>theoretical maximum bandwidth</a>, the user agent MUST <a>queue a task</a> to <a>fire a simple event</a> named `bandwidthceilingchange` at the `NetworkInformation` object and wait until that task begins to be executed before actually returning a new value.
+
+When getting, the user agent MUST run the <dfn>steps for getting the bandwidth ceiling</dfn>:
+
+  1. Let <var>type<var> be the value of the `connection.type` attribute.
+  1. Let <var>value</var> be `+Infinity`. 
+  1. If <var>type</var> is "none", set <var>value</var> to `0`.
+  1. Otherwise, if <var>type</var> not "unknown":
+    1. Set <var>value</var> to the <a>maximum theoretical bandwidth</a> of the <a>underlying connection type</a> from the <a>table of maximum theoretical bandwidths</a>.
+  1. Return <var>value</var>.
+
+</section>
+
+<section>
+##Underlying connection types
+The <dfn>underlying connection type</dfn> represents the generation and/or version of the network connection being used by the device. For example, "3G" for cellular, or "802.11g" for Wi-Fi. This differs from the <a>connection type</a> exposed by the API, in that it's more fine grained.  
+
+Each <a>underlying connection type</a> has an associated <dfn>theoretical maximum bandwidth</dfn>, which is the standardized, or generally excepted, maximum amount of data, in megabytes (1,048,576 bytes or a <abbr title="mebibyte">MiB</abbr>) per second, that can be sent over the underlying connection type. The relationship between an underlying connection type and its <a>theoretical maximum bandwidth</a> is captured in the <a>table of maximum theoretical bandwidths</a>. 
+
+<div class="note">
+The <a>underlying connection type</a> is not directly exposed to script. Instead, the <a>theoretical maximum bandwidth</a> is exposed via the <a href="#widl-NetworkInformation-bandwidthCeiling">`bandwidthCeiling`</a> attribute.
+</div>
+<table>
+  <caption><dfn>Table of maximum theoretical bandwidths</dfn></caption>
+</table>
 
 </section>
 

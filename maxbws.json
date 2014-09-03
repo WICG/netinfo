@@ -1,0 +1,14 @@
+{
+  "cellular": [
+  	{"version": "", "maxmegabytes": }
+  ],
+  "bluetooth": [
+  	{"version": "", "maxmegabytes": }
+  ],
+  "ethernet": [
+  	{"version": "", "maxmegabytes": }
+  ],
+  "wifi": [
+  	{"version": "", "maxmegabytes": }
+  ]
+}
