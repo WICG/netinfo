@@ -204,12 +204,12 @@ If the <a>underlying connection type</a> changes (in either connection type or <
 1. Let <var>max-value</var> be `+Infinity`.
 1. If <var>new-type</var> is "none", set <var>max-value</var> to `0`.
 1. Otherwise, if <var>new-type</var> is not "unknown":
-1. Set <var>max-value</var> to the <a>maximum theoretical downlink speed</a> of the <a>underlying connection type</a> from the <a>table of maximum theoretical downlink speeds</a>.
+    1. Set <var>max-value</var> to the <a>maximum theoretical downlink speed</a> of the <a>underlying connection type</a> from the <a>table of maximum theoretical downlink speeds</a>.
 1. If <var>max-value</var> is not equal to the value <var>connection.downlinkMax</var> or if <var>new-type</var> is not equal to the value <var>connection.type</var>:
     1. Using the <a>networking task source</a>, queue a <a>task</a> to perform the following:
-    1. Set <var>connection.downlinkMax</var> to <var>max-value</var>. 
-    1. Set <var>connection.type</var> to <var>new-type</var>. 
-    1. <a>Fire a simple event</a> named `change` at the `NetworkInformation` object.
+        1. Set <var>connection.downlinkMax</var> to <var>max-value</var>. 
+        1. Set <var>connection.type</var> to <var>new-type</var>. 
+        1. <a>Fire a simple event</a> named `change` at the `NetworkInformation` object.
 
 </section>
 
