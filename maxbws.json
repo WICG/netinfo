@@ -2,7 +2,10 @@
  "cellular": [{
   "name": "IDEN",
   "version": "2G",
-  "ceiling": 64,
+  "ceiling": {
+   "downlink": 0.064,
+   "uplink": 0.064
+  },
   "latencyRange": "500-1500",
   "ref": {
    "url": "http://www.rfcafe.com/references/electrical/wireless-comm-specs-new.htm"
@@ -10,7 +13,10 @@
  }, {
   "name": "CDMA",
   "version": "2G",
-  "ceiling": 115,
+  "ceiling": {
+   "downlink": 0.115,
+   "uplink": 0.115
+  },
   "latencyRange": "500-1500",
   "ref": {
    "url": "http://www.rfcafe.com/references/electrical/wireless-comm-specs-new.htm"
@@ -18,7 +24,10 @@
  }, {
   "name": "1xRTT",
   "version": "2.5G",
-  "ceiling": 153,
+  "ceiling": {
+   "downlink": 0.153,
+   "uplink": 0.153
+  },
   "latencyRange": "500-1000",
   "ref": {
    "url": "http://en.wikipedia.org/wiki/CDMA2000#1X"
@@ -26,7 +35,10 @@
  }, {
   "name": "GPRS",
   "version": "2.5G",
-  "ceiling": 237,
+  "ceiling": {
+   "downlink": 0.237,
+   "uplink": 0.237
+  },
   "latencyRange": "500-1000",
   "ref": {
    "url": "http://en.wikipedia.org/wiki/General_Packet_Radio_Service"
@@ -34,7 +46,10 @@
  }, {
   "name": "EDGE",
   "version": "2.75G",
-  "ceiling": 384,
+  "ceiling": {
+   "downlink": 0.384,
+   "uplink": 0.384
+  },
   "latencyRange": "500-600",
   "ref": {
    "url": "http://www.umtsworld.com/technology/edge.htm"
@@ -42,7 +57,10 @@
  }, {
   "name": "UMTS",
   "version": "3G",
-  "ceiling": 2000,
+  "ceiling": {
+   "downlink": 2.0,
+   "uplink": 2.0
+  },
   "latencyRange": "150-450",
   "ref": {
    "url": "http://www.radio-electronics.com/info/cellulartelecomms/3g-hspa/umts-high-speed-packet-access-tutorial.php"
@@ -50,7 +68,10 @@
  }, {
   "name": "EVDO Rev 0",
   "version": "3.5G",
-  "ceiling": 2460,
+  "ceiling": {
+   "downlink": 2.46,
+   "uplink": 2.46
+  },
   "latencyRange": "150-350",
   "ref": {
    "url": "http://en.wikipedia.org/wiki/Comparison_of_wireless_data_standards#Peak_bit_rate_and_throughput"
@@ -58,7 +79,10 @@
  }, {
   "name": "EVDO Rev A",
   "version": "3.5G",
-  "ceiling": 3100,
+  "ceiling": {
+   "downlink": 3.1,
+   "uplink": 3.1
+  },
   "latencyRange": "100-250",
   "ref": {
    "url": "http://en.wikipedia.org/wiki/Evolution-Data_Optimized#TIA-856_Rev._A"
@@ -66,7 +90,10 @@
  }, {
   "name": "HSPA",
   "version": "3.5G",
-  "ceiling": 3600,
+  "ceiling": {
+   "downlink": 3.6,
+   "uplink": 3.6
+  },
   "latencyRange": "100-250",
   "ref": {
    "url": "http://www.4gamericas.org/index.cfm?fuseaction=page&sectionid=247"
@@ -74,7 +101,10 @@
  }, {
   "name": "EVDO Rev B",
   "version": "3.75G",
-  "ceiling": 14700,
+  "ceiling": {
+   "downlink": 14.7,
+   "uplink": 14.7
+  },
   "latencyRange": "70-150",
   "ref": {
    "url": "http://en.wikipedia.org/wiki/Evolution-Data_Optimized#TIA-856_Rev._B"
@@ -82,7 +112,10 @@
  }, {
   "name": "HSDPA",
   "version": "3.75G",
-  "ceiling": 14400,
+  "ceiling": {
+   "downlink": 14.4,
+   "uplink": 14.4
+  },
   "latencyRange": "70-150",
   "ref": {
    "url": "http://www.4gamericas.org/index.cfm?fuseaction=page&sectionid=247"
@@ -90,7 +123,10 @@
  }, {
   "name": "HSUPA",
   "version": "3.75G",
-  "ceiling": 14400,
+  "ceiling": {
+   "downlink": 14.4,
+   "uplink": 14.4
+  },
   "latencyRange": "70-150",
   "ref": {
    "url": "http://www.4gamericas.org/index.cfm?fuseaction=page&sectionid=247"
@@ -98,7 +134,10 @@
  }, {
   "name": "EHRPD",
   "version": "3.9G",
-  "ceiling": 21000,
+  "ceiling": {
+   "downlink": 21.0,
+   "uplink": 21.0
+  },
   "latencyRange": "50-150",
   "ref": {
    "url": "http://www.cdg.org/news/events/cdmaseminar/09_TechForum_Sept/presentations/5-Spirent-ehrpd_9_handouts.pdf",
@@ -107,7 +146,10 @@
  }, {
   "name": "HSPAP",
   "version": "3.9G",
-  "ceiling": 42000,
+  "ceiling": {
+   "downlink": 42.0,
+   "uplink": 42.0
+  },
   "latencyRange": "50-100",
   "ref": {
    "url": "http://www.4gamericas.org/index.cfm?fuseaction=page&sectionid=248"
@@ -115,7 +157,10 @@
  }, {
   "name": "LTE",
   "version": "4G",
-  "ceiling": 100000,
+  "ceiling": {
+   "downlink": 100.0,
+   "uplink": 100.0
+  },
   "latencyRange": "20-70",
   "ref": {
    "url": "http://www.4gamericas.org/index.cfm?fuseaction=page&sectionid=249"
@@ -123,7 +168,10 @@
  }, {
   "name": "LTE Advanced",
   "version": "4G",
-  "ceiling": 100000,
+  "ceiling": {
+   "downlink": 100.0,
+   "uplink": 100.0
+  },
   "latencyRange": "20-50",
   "ref": {
    "url": "http://www.4gamericas.org/index.cfm?fuseaction=page&sectionid=249"
