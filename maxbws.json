@@ -1,154 +1,133 @@
 {
  "cellular": [{
-  // Ref: http://www.rfcafe.com/references/electrical/wireless-comm-specs-new.htm
   "name": "IDEN",
   "version": "2G",
-  "type": {
-   "android": "NETWORK_TYPE_IDEN",
-   "ios": ""
-  },
   "ceiling": 64,
-  "latencyRange": "500-1500"
+  "latencyRange": "500-1500",
+  "ref": {
+   "url": "http://www.rfcafe.com/references/electrical/wireless-comm-specs-new.htm"
+  }
  }, {
-  // Ref: http://www.rfcafe.com/references/electrical/wireless-comm-specs-new.htm
   "name": "CDMA",
   "version": "2G",
-  "type": {
-   "android": "NETWORK_TYPE_CDMA",
-   "ios": ""
-  },
   "ceiling": 115,
-  "latencyRange": "500-1500"
+  "latencyRange": "500-1500",
+  "ref": {
+   "url": "http://www.rfcafe.com/references/electrical/wireless-comm-specs-new.htm"
+  }
  }, {
-  // Ref: http://en.wikipedia.org/wiki/CDMA2000#1X
   "name": "1xRTT",
   "version": "2.5G",
-  "type": {
-   "android": "NETWORK_TYPE_1xRTT",
-   "ios": "CTRadioAccessTechnologyCDMA1x"
-  },
   "ceiling": 153,
-  "latencyRange": "500-1000"
+  "latencyRange": "500-1000",
+  "ref": {
+   "url": "http://en.wikipedia.org/wiki/CDMA2000#1X"
+  }
  }, {
-  // Ref: http://en.wikipedia.org/wiki/General_Packet_Radio_Service
   "name": "GPRS",
   "version": "2.5G",
-  "type": {
-   "android": "NETWORK_TYPE_GPRS",
-   "ios": "CTRadioAccessTechnologyGPRS"
-  },
   "ceiling": 237,
-  "latencyRange": "500-1000"
+  "latencyRange": "500-1000",
+  "ref": {
+   "url": "http://en.wikipedia.org/wiki/General_Packet_Radio_Service"
+  }
  }, {
-  // Ref: http://www.umtsworld.com/technology/edge.htm
   "name": "EDGE",
   "version": "2.75G",
-  "type": {
-   "android": "NETWORK_TYPE_EDGE",
-   "ios": "CTRadioAccessTechnologyEdge"
-  },
   "ceiling": 384,
-  "latencyRange": "500-600"
+  "latencyRange": "500-600",
+  "ref": {
+   "url": "http://www.umtsworld.com/technology/edge.htm"
+  }
  }, {
-  // Ref: http://www.radio-electronics.com/info/cellulartelecomms/3g-hspa/umts-high-speed-packet-access-tutorial.php
   "name": "UMTS",
   "version": "3G",
-  "type": {
-   "android": "NETWORK_TYPE_UMTS",
-   "ios": "CTRadioAccessTechnologyWCDMA"
-  },
   "ceiling": 2000,
-  "latencyRange": "150-450"
+  "latencyRange": "150-450",
+  "ref": {
+   "url": "http://www.radio-electronics.com/info/cellulartelecomms/3g-hspa/umts-high-speed-packet-access-tutorial.php"
+  }
  }, {
-  // Ref: http://en.wikipedia.org/wiki/Comparison_of_wireless_data_standards#Peak_bit_rate_and_throughput
   "name": "EVDO Rev 0",
   "version": "3.5G",
-  "type": {
-   "android": "NETWORK_TYPE_EVDO_0",
-   "ios": "CTRadioAccessTechnologyCDMAEVDORev0"
-  },
   "ceiling": 2460,
-  "latencyRange": "150-350"
+  "latencyRange": "150-350",
+  "ref": {
+   "url": "http://en.wikipedia.org/wiki/Comparison_of_wireless_data_standards#Peak_bit_rate_and_throughput"
+  }
  }, {
-  // Ref: http://en.wikipedia.org/wiki/Evolution-Data_Optimized#TIA-856_Rev._A
   "name": "EVDO Rev A",
   "version": "3.5G",
-  "type": {
-   "android": "NETWORK_TYPE_EVDO_A",
-   "ios": "CTRadioAccessTechnologyCDMAEVDORevA"
-  },
   "ceiling": 3100,
-  "latencyRange": "100-250"
+  "latencyRange": "100-250",
+  "ref": {
+   "url": "http://en.wikipedia.org/wiki/Evolution-Data_Optimized#TIA-856_Rev._A"
+  }
  }, {
-  // Ref: http://www.4gamericas.org/index.cfm?fuseaction=page&sectionid=247
   "name": "HSPA",
   "version": "3.5G",
-  "type": {
-   "android": "NETWORK_TYPE_HSPA",
-   "ios": ""
-  },
   "ceiling": 3600,
-  "latencyRange": "100-250"
+  "latencyRange": "100-250",
+  "ref": {
+   "url": "http://www.4gamericas.org/index.cfm?fuseaction=page&sectionid=247"
+  }
  }, {
-  // Ref: http://en.wikipedia.org/wiki/Evolution-Data_Optimized#TIA-856_Rev._B
   "name": "EVDO Rev B",
   "version": "3.75G",
-  "type": {
-   "android": "NETWORK_TYPE_EVDO_B",
-   "ios": "CTRadioAccessTechnologyCDMAEVDORevB"
-  },
   "ceiling": 14700,
-  "latencyRange": "70-150"
+  "latencyRange": "70-150",
+  "ref": {
+   "url": "http://en.wikipedia.org/wiki/Evolution-Data_Optimized#TIA-856_Rev._B"
+  }
  }, {
-  // Ref: http://www.4gamericas.org/index.cfm?fuseaction=page&sectionid=247
   "name": "HSDPA",
   "version": "3.75G",
-  "type": {
-   "android": "NETWORK_TYPE_HSDPA",
-   "ios": "CTRadioAccessTechnologyHSDPA"
-  },
   "ceiling": 14400,
-  "latencyRange": "70-150"
+  "latencyRange": "70-150",
+  "ref": {
+   "url": "http://www.4gamericas.org/index.cfm?fuseaction=page&sectionid=247"
+  }
  }, {
-  // Ref: http://www.4gamericas.org/index.cfm?fuseaction=page&sectionid=247
   "name": "HSUPA",
   "version": "3.75G",
-  "type": {
-   "android": "NETWORK_TYPE_HSUPA",
-   "ios": "CTRadioAccessTechnologyHSUPA"
-  },
   "ceiling": 14400,
-  "latencyRange": "70-150"
+  "latencyRange": "70-150",
+  "ref": {
+   "url": "http://www.4gamericas.org/index.cfm?fuseaction=page&sectionid=247"
+  }
  }, {
-  // Ref: http://www.cdg.org/news/events/cdmaseminar/09_TechForum_Sept/presentations/5-Spirent-ehrpd_9_handouts.pdf
   "name": "EHRPD",
   "version": "3.9G",
-  "type": {
-   "android": "NETWORK_TYPE_EHRPD",
-   "ios": "CTRadioAccessTechnologyeHRPD"
-  },
   "ceiling": 21000,
-  "latencyRange": "50-150"
+  "latencyRange": "50-150",
+  "ref": {
+   "url": "http://www.cdg.org/news/events/cdmaseminar/09_TechForum_Sept/presentations/5-Spirent-ehrpd_9_handouts.pdf",
+   "note": "eHRPD is a method of interworking multiple access networks (eHRPD, E-UTRAN), as such it's a mix of 3.75G-4G technologies, and there isn't a single ceiling value. As a result, 21000kbps is an in-between value."
+  }
  }, {
-  // Ref: http://www.4gamericas.org/index.cfm?fuseaction=page&sectionid=248
   "name": "HSPAP",
   "version": "3.9G",
-  "type": {
-   "android": "NETWORK_TYPE_HSPAP",
-   "ios": ""
-  },
   "ceiling": 42000,
-  "latencyRange": "50-100"
+  "latencyRange": "50-100",
+  "ref": {
+   "url": "http://www.4gamericas.org/index.cfm?fuseaction=page&sectionid=248"
+  }
  }, {
-  // Ref: http://www.4gamericas.org/index.cfm?fuseaction=page&sectionid=249
   "name": "LTE",
   "version": "4G",
-  "type": {
-   "android": "NETWORK_TYPE_LTE",
-   "ios": "CTRadioAccessTechnologyLTE"
-  },
   "ceiling": 100000,
-  "latencyRange": "20-70"
+  "latencyRange": "20-70",
+  "ref": {
+   "url": "http://www.4gamericas.org/index.cfm?fuseaction=page&sectionid=249"
+  }
+ }, {
+  "name": "LTE Advanced",
+  "version": "4G",
+  "ceiling": 100000,
+  "latencyRange": "20-50",
+  "ref": {
+   "url": "http://www.4gamericas.org/index.cfm?fuseaction=page&sectionid=249"
+  }
  }],
 
  "bluetooth": [{
