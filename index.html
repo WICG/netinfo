@@ -111,7 +111,7 @@ navigator.connection.addEventListener('change', changeHandler);
 <section>
 ## Dependencies and definitions
 
-The <a herf="http://www.whatwg.org/specs/web-apps/current-work/#task-source">task source</a> used by this specification is the the <dfn>networking task source</dfn> [[!HTML]].
+The <a href="http://www.whatwg.org/specs/web-apps/current-work/#task-source">task source</a> used by this specification is the the <dfn>networking task source</dfn> [[!HTML]].
 
 The following concepts are defined in [[!DOM]]:
 
@@ -172,43 +172,44 @@ The <dfn>`NetworkInformation`</dfn> interface provides a means to access informa
 </dl>
 
 <dl class="idl" title="typedef unrestricted double Megabit">
-  
+
 </dl>
 
 ### `type` attribute
 The <dfn id="netinfo.type">`type`</dfn> attribute, when getting, returns the <a title="connection types">connection type</a> that the user agent is using.
 
 ### `downlinkMax` attribute
-The <dfn>`downlinkMax`</dfn> attribute represents the <a>maximum theoretical downlink speed</a>, in <a>megabits per second</a>, for <a>underlying connection type</a>. 
+The <dfn>`downlinkMax`</dfn> attribute represents the <a>maximum theoretical downlink speed</a>, in <a>megabits per second</a> (Mbps), for <a>underlying connection type</a>.
 
 </section>
 
 <section>
 
 ##Underlying connection types
-The <dfn>underlying connection type</dfn> represents the generation and/or version of the network connection being used by the device. For example, "3G" for cellular, or "802.11g" for Wi-Fi. This differs from the <a>connection type</a> exposed by the API, in that it's more fine grained.  
+The <dfn>underlying connection type</dfn> represents the generation and/or version of the network connection being used by the device. For example, "HSPA" (3.5G) for cellular, or "802.11g" for Wi-Fi. This differs from the <a>connection type</a> exposed by the API, in that it's more fine grained.
 
-Each <a>underlying connection type</a> has an associated <dfn>theoretical maximum bandwidth</dfn>, which is the standardized, or generally excepted, maximum amount of data, in <a>megabits</a> per second, that can be sent over the underlying connection type. The relationship between an underlying connection type and its <a>theoretical maximum bandwidth</a> is captured in the <a>table of maximum theoretical downlink speeds</a>. 
+Each <a>underlying connection type</a> has an associated <dfn>maximum downlink speed</dfn>, which is the standardized, or generally accepted, maximum data rate, in <a>megabits</a> per second, that can be delivered over the <a>underlying connection type</a>. The relationship between an <a>underlying connection type</a> and its <a>maximum downlink speed</a> is captured in the <a>table of maximum downlink speeds</a>.
 
 <div class="note">
-The <a>underlying connection type</a> is not directly exposed to script. Instead, the <a>theoretical maximum bandwidth</a> is exposed via the <a href="#widl-NetworkInformation-downlinkMax">`downlinkMax`</a> attribute.
+The <a>underlying connection type</a> is not directly exposed to script. Instead, the <a>maximum downlink speed</a> is exposed via the <a href="#widl-NetworkInformation-downlinkMax">`downlinkMax`</a> attribute.
 </div>
+
 <table>
-  <caption><dfn>Table of maximum theoretical downlink speeds</dfn></caption>
+  <caption><dfn>Table of maximum downlink speeds</dfn></caption>
 </table>
 
 ### Handling changes to the underlying connection
-If the <a>underlying connection type</a> changes (in either connection type or <a>maximum theoretical downlink speed</a>), the user agent MUST run the <dfn>steps to update the connection values</dfn>:  
+If the <a>underlying connection type</a> changes (in either connection type or <a>maximum downlink speed</a>), the user agent MUST run the <dfn>steps to update the connection values</dfn>:
 
 1. Let <var>new-type</var> be the <a>connection type</a> that represents the <a>underlying connection type</a>.
 1. Let <var>max-value</var> be `+Infinity`.
 1. If <var>new-type</var> is "none", set <var>max-value</var> to `0`.
 1. Otherwise, if <var>new-type</var> is not "unknown":
-    1. Set <var>max-value</var> to the <a>maximum theoretical downlink speed</a> of the <a>underlying connection type</a> from the <a>table of maximum theoretical downlink speeds</a>.
+    1. Set <var>max-value</var> to the <a>maximum downlink speed</a> of the <a>underlying connection type</a> from the <a>table of maximum downlink speeds</a>.
 1. If <var>max-value</var> is not equal to the value of `connection.downlinkMax` or if <var>new-type</var> is not equal to the value of `connection.type`:
     1. Using the <a>networking task source</a>, queue a <a>task</a> to perform the following:
-        1. Set `connection.downlinkMax` to <var>max-value</var>. 
-        1. Set `connection.type` to <var>new-type</var>. 
+        1. Set `connection.downlinkMax` to <var>max-value</var>.
+        1. Set `connection.type` to <var>new-type</var>.
         1. <a>Fire a simple event</a> named `change` at the `NetworkInformation` object.
 
 </section>
