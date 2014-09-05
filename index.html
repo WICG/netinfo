@@ -80,8 +80,8 @@ For the rationale for the changes, see the [Discussion](https://github.com/w3c-w
 <section id="use-cases">
 ## Use cases and requirements
 This document attempts to address the [requirements](https://github.com/w3c-webmob/netinfo/blob/master/README.md) from the <cite>[Review of Apps that Use Network Information](https://github.com/w3c-webmob/netinfo)</cite> document published by the <a href="http://www.w3.org/Mobile/IG/">Web and Mobile Interest Group</a>. Those are:
- 
- * Provide access to the connection type the system is using to communicate with the network (e.g., cellular, Wi-Fi, BlueTooth, other, or none). This information needs to be available either immediately on page load or as close as possible to it.
+
+ * Provide access to the connection type the system is using to communicate with the network (e.g., cellular, bluetooth, ethernet, wifi, other, or none). This information needs to be available either immediately on page load or as close as possible to it.
  * Provide a means for scripts to be notified if the connection type changes. This is to allow developers to make dynamic changes to the DOM and/or inform the user that the network connection type has changed (and that it could impact them in some way).
 </section>
 
@@ -134,15 +134,15 @@ This section defines the <dfn>connection types</dfn>:
 
 <dl>
   <dt><dfn id="idl-def-ConnectionType.bluetooth">bluetooth</dfn></dt>
-  <dd>The user agent is using a bluetooth connection as the <a>underlying connection type</a>.</dd>
+  <dd>The user agent is using a Bluetooth connection as the <a>underlying connection type</a>.</dd>
   <dt><dfn id="idl-def-ConnectionType.cellular">cellular</dfn></dt>
-  <dd>The user agent is using a cellular connection as the <a>underlying connection type</a> (e.g., EDGE, 3G, 4G, etc.).</dd>
+  <dd>The user agent is using a cellular connection as the <a>underlying connection type</a> (e.g., EDGE, HSPA, LTE, etc.).</dd>
   <dt><dfn id="idl-def-ConnectionType.ethernet">ethernet</dfn></dt>
-  <dd>The user agent is using an ethernet connection as the <a>underlying connection type</a>.</dd>
-  <dt><dfn id="idl-def-ConnectionType.none">none</dfn></dt> 
+  <dd>The user agent is using an Ethernet connection as the <a>underlying connection type</a>.</dd>
+  <dt><dfn id="idl-def-ConnectionType.none">none</dfn></dt>
   <dd>The user agent will not contact the network when the user follows links or when a script requests a remote page (or knows that such an attempt would fail) - i.e., equivalent to `navigator.onLine === false` in HTML.</dd>
   <dt><dfn id="idl-def-ConnectionType.wifi">wifi</dfn></dt>
-  <dd>The user agent is using a wifi connection as the <a>underlying connection type</a>.</dd>
+  <dd>The user agent is using a Wi-Fi connection as the <a>underlying connection type</a>.</dd>
   <dt><dfn id="idl-def-ConnectionType.other">other</dfn></dt>
   <dd>The user agent is using a connection type that is not one of enumerated connection types as the <a>underlying connection type</a>.</dd>
   <dt><dfn id="idl-def-ConnectionType.unknown">unknown</dfn></dt>
