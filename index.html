@@ -17,13 +17,11 @@
       name: 'Marcos Cáceres',
       company: 'Mozilla Corporation',
       companyURL: 'http://mozilla.com'
-  },
-  {
+  }, {
       name: 'Fernando Jiménez Moreno',
       company: 'Telefonica',
       companyURL: 'http://www.telefonica.com/en/home/jsp/home.jsp'
-  },
-  {
+  }, {
       name: 'Ilya Grigorik',
       company: 'Google',
       companyURL: 'http://google.com'
@@ -33,8 +31,7 @@
   wgPublicList: 'public-device-apis',
   wgPatentURI: 'http://www.w3.org/2004/01/pp-impl/43696/status',
   noLegacyStyle: true,
-  otherLinks: [
-      {
+  otherLinks: [{
       key: 'Repository',
       data: [{
           value: 'We are on Github.',
@@ -45,21 +42,19 @@
       }, {
           value: 'Commit history.',
           href: 'https://github.com/w3c/netinfo/commits/gh-pages'
-      }]},
-      {
-	  key: 'Implementations',
-	  data: [{
-	     value: 'Firefox OS',
-		  href: 'https://bugzilla.mozilla.org/show_bug.cgi?id=960426' 
-	  },
-	  {
-	    value: 'Chromium',
-		href: 'https://code.google.com/p/chromium/issues/detail?id=368358'
-	  }
-      ]
+      }]
+  }, {
+      key: 'Implementations',
+      data: [{
+          value: 'Firefox OS',
+          href: 'https://bugzilla.mozilla.org/show_bug.cgi?id=960426'
+      }, {
+          value: 'Chromium',
+          href: 'https://code.google.com/p/chromium/issues/detail?id=368358'
+      }]
   }]
   };
-  </script>
+</script>
 </head>
 <body>
 
@@ -69,7 +64,7 @@ The Network Information API enables web applications to access information about
 
 <section id='sotd'>
 ### What's new?
-* Introduced the `downlinkMax`. [Discussion on GH](https://github.com/w3c/netinfo/issues/13). 
+* Introduced the `downlinkMax`. [Discussion on GH](https://github.com/w3c/netinfo/issues/13).
 * Reintroduce the `type` attribute from the [20110607](http://www.w3.org/TR/2011/WD-netinfo-api-20110607) spec, but with a different set of <a>connection types</a>.
 * Remove the `bandwidth` and `metered` attributes from the [20121129](http://www.w3.org/TR/2012/WD-netinfo-api-20121129/) spec.
 * Keep the `onchange` event introduced in the [20121129](http://www.w3.org/TR/2012/WD-netinfo-api-20121129/) spec, but renamed to `ontypechange`.
@@ -80,8 +75,8 @@ For the rationale for the changes, see the [Discussion](https://github.com/w3c-w
 <section id="use-cases">
 ## Use cases and requirements
 This document attempts to address the [requirements](https://github.com/w3c-webmob/netinfo/blob/master/README.md) from the <cite>[Review of Apps that Use Network Information](https://github.com/w3c-webmob/netinfo)</cite> document published by the <a href="http://www.w3.org/Mobile/IG/">Web and Mobile Interest Group</a>. Those are:
- 
- * Provide access to the connection type the system is using to communicate with the network (e.g., cellular, Wi-Fi, BlueTooth, other, or none). This information needs to be available either immediately on page load or as close as possible to it.
+
+ * Provide access to the connection type the system is using to communicate with the network (e.g., cellular, bluetooth, ethernet, wifi, other, or none). This information needs to be available either immediately on page load or as close as possible to it.
  * Provide a means for scripts to be notified if the connection type changes. This is to allow developers to make dynamic changes to the DOM and/or inform the user that the network connection type has changed (and that it could impact them in some way).
 </section>
 
@@ -111,14 +106,14 @@ navigator.connection.addEventListener('change', changeHandler);
 <section>
 ## Dependencies and definitions
 
-The <a herf="http://www.whatwg.org/specs/web-apps/current-work/#task-source">task source</a> used by this specification is the the <dfn>networking task source</dfn> [[!HTML]].
+The <a href="http://www.whatwg.org/specs/web-apps/current-work/#task-source">task source</a> used by this specification is the the <dfn>networking task source</dfn> [[!HTML]].
 
 The following concepts are defined in [[!DOM]]:
 
  * <dfn>Queue a task</dfn>.
- * <dfn>Fire a simple event</dfn>. 
+ * <dfn>Fire a simple event</dfn>.
 
-For clarity, a <dfn>megabit</dfn> is 1,000,000 bits, and <dfn>megabits per second</dfn> is equivalent to transferring: 
+For clarity, a <dfn>megabit</dfn> is 1,000,000 bits, and <dfn>megabits per second</dfn> is equivalent to transferring:
 
 * 1,000,000 bits per second
 * 1,000 kilobits per second
@@ -129,24 +124,24 @@ For clarity, a <dfn>megabit</dfn> is 1,000,000 bits, and <dfn>megabits per secon
 </section>
 
 <section>
-## Connection types 
+## Connection types
 This section defines the <dfn>connection types</dfn>:
 
 <dl>
   <dt><dfn id="idl-def-ConnectionType.bluetooth">bluetooth</dfn></dt>
-  <dd>The user agent is using a bluetooth connection as the <a>underlying connection type</a>.</dd>
+  <dd>The user agent is using a Bluetooth connection as the <a>underlying connection technology</a>.</dd>
   <dt><dfn id="idl-def-ConnectionType.cellular">cellular</dfn></dt>
-  <dd>The user agent is using a cellular connection as the <a>underlying connection type</a> (e.g., EDGE, 3G, 4G, etc.).</dd>
+  <dd>The user agent is using a cellular connection as the <a>underlying connection technology</a> (e.g., EDGE, HSPA, LTE, etc.).</dd>
   <dt><dfn id="idl-def-ConnectionType.ethernet">ethernet</dfn></dt>
-  <dd>The user agent is using an ethernet connection as the <a>underlying connection type</a>.</dd>
-  <dt><dfn id="idl-def-ConnectionType.none">none</dfn></dt> 
+  <dd>The user agent is using an Ethernet connection as the <a>underlying connection technology</a>.</dd>
+  <dt><dfn id="idl-def-ConnectionType.none">none</dfn></dt>
   <dd>The user agent will not contact the network when the user follows links or when a script requests a remote page (or knows that such an attempt would fail) - i.e., equivalent to `navigator.onLine === false` in HTML.</dd>
   <dt><dfn id="idl-def-ConnectionType.wifi">wifi</dfn></dt>
-  <dd>The user agent is using a wifi connection as the <a>underlying connection type</a>.</dd>
+  <dd>The user agent is using a Wi-Fi connection as the <a>underlying connection technology</a>.</dd>
   <dt><dfn id="idl-def-ConnectionType.other">other</dfn></dt>
-  <dd>The user agent is using a connection type that is not one of enumerated connection types as the <a>underlying connection type</a>.</dd>
+  <dd>The user agent is using a connection type that is not one of enumerated connection types as the <a>underlying connection technology</a>.</dd>
   <dt><dfn id="idl-def-ConnectionType.unknown">unknown</dfn></dt>
-  <dd>The user agent has established a network connection, but is unable to determine what is the <a>underlying connection type</a>.</dd>
+  <dd>The user agent has established a network connection, but is unable to determine what is the <a>underlying connection technology</a>.</dd>
 </dl>
 </section>
 
@@ -172,43 +167,44 @@ The <dfn>`NetworkInformation`</dfn> interface provides a means to access informa
 </dl>
 
 <dl class="idl" title="typedef unrestricted double Megabit">
-  
+
 </dl>
 
 ### `type` attribute
 The <dfn id="netinfo.type">`type`</dfn> attribute, when getting, returns the <a title="connection types">connection type</a> that the user agent is using.
 
 ### `downlinkMax` attribute
-The <dfn>`downlinkMax`</dfn> attribute represents the <a>maximum theoretical downlink speed</a>, in <a>megabits per second</a>, for <a>underlying connection type</a>. 
+The <dfn>`downlinkMax`</dfn> attribute represents the <a>maximum theoretical downlink speed</a>, in <a>megabits per second</a> (Mbps), for <a>underlying connection technology</a>.
 
 </section>
 
 <section>
 
-##Underlying connection types
-The <dfn>underlying connection type</dfn> represents the generation and/or version of the network connection being used by the device. For example, "3G" for cellular, or "802.11g" for Wi-Fi. This differs from the <a>connection type</a> exposed by the API, in that it's more fine grained.  
+##Underlying connection technology
+The <dfn>underlying connection technology</dfn> represents the generation and/or version of the network connection being used by the device. For example, "HSPA" (3.5G) for cellular, or "802.11g" for Wi-Fi. This differs from the <a>connection type</a> exposed by the API, in that it is more fine grained.
 
-Each <a>underlying connection type</a> has an associated <dfn>theoretical maximum bandwidth</dfn>, which is the standardized, or generally excepted, maximum amount of data, in <a>megabits</a> per second, that can be sent over the underlying connection type. The relationship between an underlying connection type and its <a>theoretical maximum bandwidth</a> is captured in the <a>table of maximum theoretical downlink speeds</a>. 
+Each <a>underlying connection technology</a> has an associated <dfn>maximum downlink speed</dfn>, which is the standardized, or generally accepted, maximum download data rate in <a>megabits</a> per second. The relationship between an <a>underlying connection technology</a> and its <a>maximum downlink speed</a> is captured in the <a>table of maximum downlink speeds</a>.
 
 <div class="note">
-The <a>underlying connection type</a> is not directly exposed to script. Instead, the <a>theoretical maximum bandwidth</a> is exposed via the <a href="#widl-NetworkInformation-downlinkMax">`downlinkMax`</a> attribute.
+The <a>underlying connection technology</a> is not directly exposed to script. Instead, the <a>maximum downlink speed</a> is exposed via the <a href="#widl-NetworkInformation-downlinkMax">`downlinkMax`</a> attribute.
 </div>
+
 <table>
-  <caption><dfn>Table of maximum theoretical downlink speeds</dfn></caption>
+  <caption><dfn>Table of maximum downlink speeds</dfn></caption>
 </table>
 
 ### Handling changes to the underlying connection
-If the <a>underlying connection type</a> changes (in either connection type or <a>maximum theoretical downlink speed</a>), the user agent MUST run the <dfn>steps to update the connection values</dfn>:  
+If the <a>underlying connection technology</a> changes (in either connection type or <a>maximum downlink speed</a>), the user agent MUST run the <dfn>steps to update the connection values</dfn>:
 
-1. Let <var>new-type</var> be the <a>connection type</a> that represents the <a>underlying connection type</a>.
+1. Let <var>new-type</var> be the <a>connection type</a> that represents the <a>underlying connection technology</a>.
 1. Let <var>max-value</var> be `+Infinity`.
 1. If <var>new-type</var> is "none", set <var>max-value</var> to `0`.
 1. Otherwise, if <var>new-type</var> is not "unknown":
-    1. Set <var>max-value</var> to the <a>maximum theoretical downlink speed</a> of the <a>underlying connection type</a> from the <a>table of maximum theoretical downlink speeds</a>.
+    1. Set <var>max-value</var> to the <a>maximum downlink speed</a> of the <a>underlying connection technology</a> from the <a>table of maximum downlink speeds</a>.
 1. If <var>max-value</var> is not equal to the value of `connection.downlinkMax` or if <var>new-type</var> is not equal to the value of `connection.type`:
     1. Using the <a>networking task source</a>, queue a <a>task</a> to perform the following:
-        1. Set `connection.downlinkMax` to <var>max-value</var>. 
-        1. Set `connection.type` to <var>new-type</var>. 
+        1. Set `connection.downlinkMax` to <var>max-value</var>.
+        1. Set `connection.type` to <var>new-type</var>.
         1. <a>Fire a simple event</a> named `change` at the `NetworkInformation` object.
 
 </section>

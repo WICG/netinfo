@@ -2,7 +2,7 @@
  "cellular": [{
   "name": "IDEN",
   "version": "2G",
-  "ceiling": {
+  "max": {
    "downlink": 0.064,
    "uplink": 0.064
   },
@@ -13,7 +13,7 @@
  }, {
   "name": "CDMA",
   "version": "2G",
-  "ceiling": {
+  "max": {
    "downlink": 0.115,
    "uplink": 0.115
   },
@@ -24,7 +24,7 @@
  }, {
   "name": "1xRTT",
   "version": "2.5G",
-  "ceiling": {
+  "max": {
    "downlink": 0.153,
    "uplink": 0.153
   },
@@ -35,7 +35,7 @@
  }, {
   "name": "GPRS",
   "version": "2.5G",
-  "ceiling": {
+  "max": {
    "downlink": 0.237,
    "uplink": 0.237
   },
@@ -46,7 +46,7 @@
  }, {
   "name": "EDGE",
   "version": "2.75G",
-  "ceiling": {
+  "max": {
    "downlink": 0.384,
    "uplink": 0.384
   },
@@ -57,7 +57,7 @@
  }, {
   "name": "UMTS",
   "version": "3G",
-  "ceiling": {
+  "max": {
    "downlink": 2.0,
    "uplink": 2.0
   },
@@ -68,7 +68,7 @@
  }, {
   "name": "EVDO Rev 0",
   "version": "3.5G",
-  "ceiling": {
+  "max": {
    "downlink": 2.46,
    "uplink": 2.46
   },
@@ -79,7 +79,7 @@
  }, {
   "name": "EVDO Rev A",
   "version": "3.5G",
-  "ceiling": {
+  "max": {
    "downlink": 3.1,
    "uplink": 3.1
   },
@@ -90,7 +90,7 @@
  }, {
   "name": "HSPA",
   "version": "3.5G",
-  "ceiling": {
+  "max": {
    "downlink": 3.6,
    "uplink": 3.6
   },
@@ -101,7 +101,7 @@
  }, {
   "name": "EVDO Rev B",
   "version": "3.75G",
-  "ceiling": {
+  "max": {
    "downlink": 14.7,
    "uplink": 14.7
   },
@@ -112,7 +112,7 @@
  }, {
   "name": "HSDPA",
   "version": "3.75G",
-  "ceiling": {
+  "max": {
    "downlink": 14.4,
    "uplink": 14.4
   },
@@ -123,7 +123,7 @@
  }, {
   "name": "HSUPA",
   "version": "3.75G",
-  "ceiling": {
+  "max": {
    "downlink": 14.4,
    "uplink": 14.4
   },
@@ -134,19 +134,19 @@
  }, {
   "name": "EHRPD",
   "version": "3.9G",
-  "ceiling": {
+  "max": {
    "downlink": 21.0,
    "uplink": 21.0
   },
   "latencyRange": "50-150",
   "ref": {
    "url": "http://www.cdg.org/news/events/cdmaseminar/09_TechForum_Sept/presentations/5-Spirent-ehrpd_9_handouts.pdf",
-   "note": "eHRPD is a method of interworking multiple access networks (eHRPD, E-UTRAN), as such it's a mix of 3.75G-4G technologies, and there isn't a single ceiling value. As a result, 21000kbps is an in-between value."
+   "note": "eHRPD is a method of interworking multiple access networks (eHRPD, E-UTRAN), as such it's a mix of 3.75G-4G technologies, and there isn't a single max value. As a result, 21.0 Mbps is an in-between value."
   }
  }, {
   "name": "HSPAP",
   "version": "3.9G",
-  "ceiling": {
+  "max": {
    "downlink": 42.0,
    "uplink": 42.0
   },
@@ -157,7 +157,7 @@
  }, {
   "name": "LTE",
   "version": "4G",
-  "ceiling": {
+  "max": {
    "downlink": 100.0,
    "uplink": 100.0
   },
@@ -168,7 +168,7 @@
  }, {
   "name": "LTE Advanced",
   "version": "4G",
-  "ceiling": {
+  "max": {
    "downlink": 100.0,
    "uplink": 100.0
   },
