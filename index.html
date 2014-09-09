@@ -2,7 +2,7 @@
 <head>
 <meta charset='utf-8'>
 <title>Network Information API</title>
-<script class='remove' src='http://www.w3.org/Tools/respec/respec-w3c-common' async></script>
+<script class='remove' src='//www.w3.org/Tools/respec/respec-w3c-common' async></script>
 <script class='remove'>
 /**/
   var respecConfig = {
@@ -17,18 +17,21 @@
       name: 'Marcos Cáceres',
       company: 'Mozilla Corporation',
       companyURL: 'http://mozilla.com'
-  },{
+  }, {
       name: 'Fernando Jiménez Moreno',
       company: 'Telefonica',
       companyURL: 'http://www.telefonica.com/en/home/jsp/home.jsp'
+  }, {
+      name: 'Ilya Grigorik',
+      company: 'Google',
+      companyURL: 'http://google.com'
   }],
   wg: 'Device APIs Working Group',
   wgURI: 'http://www.w3.org/2009/dap/',
   wgPublicList: 'public-device-apis',
   wgPatentURI: 'http://www.w3.org/2004/01/pp-impl/43696/status',
   noLegacyStyle: true,
-  otherLinks: [
-      {
+  otherLinks: [{
       key: 'Repository',
       data: [{
           value: 'We are on Github.',
@@ -39,28 +42,29 @@
       }, {
           value: 'Commit history.',
           href: 'https://github.com/w3c/netinfo/commits/gh-pages'
-      }],
-	  key: 'Implementations',
-	  data: [{
-	     value: 'Firefox OS',
-		  href: 'https://bugzilla.mozilla.org/show_bug.cgi?id=960426' 
-	  }, 
-	  {
-	    value: 'Chromium',
-		href: 'https://code.google.com/p/chromium/issues/detail?id=368358'
-	  }]
+      }]
+  }, {
+      key: 'Implementations',
+      data: [{
+          value: 'Firefox OS',
+          href: 'https://bugzilla.mozilla.org/show_bug.cgi?id=960426'
+      }, {
+          value: 'Chromium',
+          href: 'https://code.google.com/p/chromium/issues/detail?id=368358'
+      }]
   }]
   };
-  </script>
+</script>
 </head>
 <body>
 
 <section id='abstract'>
-The Network Information API enables web applications to access the underlying connection information of the device.
+The Network Information API enables web applications to access information about the network connection in use by the device.
 </section>
 
 <section id='sotd'>
 ### What's new?
+* Introduced the `downlinkMax`. [Discussion on GH](https://github.com/w3c/netinfo/issues/13).
 * Reintroduce the `type` attribute from the [20110607](http://www.w3.org/TR/2011/WD-netinfo-api-20110607) spec, but with a different set of <a>connection types</a>.
 * Remove the `bandwidth` and `metered` attributes from the [20121129](http://www.w3.org/TR/2012/WD-netinfo-api-20121129/) spec.
 * Keep the `onchange` event introduced in the [20121129](http://www.w3.org/TR/2012/WD-netinfo-api-20121129/) spec, but renamed to `ontypechange`.
@@ -71,52 +75,73 @@ For the rationale for the changes, see the [Discussion](https://github.com/w3c-w
 <section id="use-cases">
 ## Use cases and requirements
 This document attempts to address the [requirements](https://github.com/w3c-webmob/netinfo/blob/master/README.md) from the <cite>[Review of Apps that Use Network Information](https://github.com/w3c-webmob/netinfo)</cite> document published by the <a href="http://www.w3.org/Mobile/IG/">Web and Mobile Interest Group</a>. Those are:
- 
- * Provide access to the connection type the system is using to communicate with the network (e.g., cellular, Wi-Fi, BlueTooth, other, or none). This information needs to be available either immediately on page load or as close as possible to it.
+
+ * Provide access to the connection type the system is using to communicate with the network (e.g., cellular, bluetooth, ethernet, wifi, other, or none). This information needs to be available either immediately on page load or as close as possible to it.
  * Provide a means for scripts to be notified if the connection type changes. This is to allow developers to make dynamic changes to the DOM and/or inform the user that the network connection type has changed (and that it could impact them in some way).
 </section>
 
 <section class="informative">
 ## Examples of usage
-The following are simple examples of how to use the API. More [sophisticated examples](https://github.com/w3c/netinfo/blob/gh-pages/examples/) are available on GitHub. 
-
 For examples of the kinds of applications one can build with this API, see the <cite>[Review of Apps that Use Network Information](https://github.com/w3c-webmob/netinfo)</cite>.
 
 <pre class="example highlight js">
 // Get the connection type.
 var type = navigator.connection.type;
 
+// The maximum downlink speed of the connection
+var max = navigator.connection.downlinkMax;
+
 function changeHandler(e) {
-  // Handle change of connection type here.
+  // Handle change to connection here.
 }
 
 // Register for event changes.
-navigator.connection.ontypechange = changeHandler;
+navigator.connection.onchange = changeHandler;
 
 // Alternatively.
-navigator.connection.addEventListener('typechange', changeHandler);
+navigator.connection.addEventListener('change', changeHandler);
 </pre>
 </section>
 
 <section>
-## Connection types 
+## Dependencies and definitions
+
+The <a href="http://www.whatwg.org/specs/web-apps/current-work/#task-source">task source</a> used by this specification is the the <dfn>networking task source</dfn> [[!HTML]].
+
+The following concepts are defined in [[!DOM]]:
+
+ * <dfn>Queue a task</dfn>.
+ * <dfn>Fire a simple event</dfn>.
+
+For clarity, a <dfn>megabit</dfn> is 1,000,000 bits, and <dfn>megabits per second</dfn> is equivalent to transferring:
+
+* 1,000,000 bits per second
+* 1,000 kilobits per second
+* 125,000 bytes per second
+* 125 kilobytes per second
+* and so on...
+
+</section>
+
+<section>
+## Connection types
 This section defines the <dfn>connection types</dfn>:
 
 <dl>
   <dt><dfn id="idl-def-ConnectionType.bluetooth">bluetooth</dfn></dt>
-  <dd>The user agent is using a bluetooth connection.</dd>
+  <dd>The user agent is using a Bluetooth connection as the <a>underlying connection technology</a>.</dd>
   <dt><dfn id="idl-def-ConnectionType.cellular">cellular</dfn></dt>
-  <dd>The user agent is using a cellular connection (e.g., EDGE, 3G, 4G, etc.).</dd>
+  <dd>The user agent is using a cellular connection as the <a>underlying connection technology</a> (e.g., EDGE, HSPA, LTE, etc.).</dd>
   <dt><dfn id="idl-def-ConnectionType.ethernet">ethernet</dfn></dt>
-  <dd>The user agent is using an ethernet connection.</dd>
-  <dt><dfn id="idl-def-ConnectionType.none">none</dfn></dt> 
+  <dd>The user agent is using an Ethernet connection as the <a>underlying connection technology</a>.</dd>
+  <dt><dfn id="idl-def-ConnectionType.none">none</dfn></dt>
   <dd>The user agent will not contact the network when the user follows links or when a script requests a remote page (or knows that such an attempt would fail) - i.e., equivalent to `navigator.onLine === false` in HTML.</dd>
   <dt><dfn id="idl-def-ConnectionType.wifi">wifi</dfn></dt>
-  <dd>The user agent is using a wifi connection.</dd>
+  <dd>The user agent is using a Wi-Fi connection as the <a>underlying connection technology</a>.</dd>
   <dt><dfn id="idl-def-ConnectionType.other">other</dfn></dt>
-  <dd>The user agent is using a connection type that is not one of enumerated connection types.</dd>
+  <dd>The user agent is using a connection type that is not one of enumerated connection types as the <a>underlying connection technology</a>.</dd>
   <dt><dfn id="idl-def-ConnectionType.unknown">unknown</dfn></dt>
-  <dd>The user agent has established a network connection, but is unable to determine what the connection type is.</dd>
+  <dd>The user agent has established a network connection, but is unable to determine what is the <a>underlying connection technology</a>.</dd>
 </dl>
 </section>
 
@@ -128,7 +153,7 @@ This section defines the <dfn>connection types</dfn>:
 </dl>
 
 ### The `connection` attribute
-The `connection` attribute, when getting, returns an object that implements the <a>`NetworkInformation`</a> interface.
+The `<dfn id="widl-Navigator-connection">connection</dfn>` attribute, when getting, returns an object that implements the <a>`NetworkInformation`</a> interface.
 </section>
 
 <section>
@@ -137,13 +162,65 @@ The <dfn>`NetworkInformation`</dfn> interface provides a means to access informa
 
 <dl class="idl" title="[Exposed=Window,Worker] interface NetworkInformation : EventTarget">
     <dt>readonly attribute ConnectionType type</dt>
-    <dt>attribute EventHandler ontypechange</dt>
+    <dt>readonly attribute Megabit downlinkMax</dt>
+    <dt>attribute EventHandler onchange</dt>
+</dl>
+
+<dl class="idl" title="typedef unrestricted double Megabit">
+
 </dl>
 
 ### `type` attribute
 The <dfn id="netinfo.type">`type`</dfn> attribute, when getting, returns the <a title="connection types">connection type</a> that the user agent is using.
 
-Whenever the user agent needs to make the `navigator.connection.type` attribute of a `Window` or `WorkerGlobalScope` object return a new <a title="connection types">connection type</a>, the user agent MUST [queue a task](http://www.whatwg.org/specs/web-apps/current-work/#queue-a-task) to [fire a simple event](http://www.whatwg.org/specs/web-apps/current-work/#fire-a-simple-event) named `typechange` at the `NetworkInformation` object and wait until that task begins to be executed before actually returning a new value.
+### `downlinkMax` attribute
+The <dfn>`downlinkMax`</dfn> attribute represents the <a>maximum downlink speed</a>, in <a>megabits per second</a> (Mbps), for <a>underlying connection technology</a>.
+
+</section>
+
+<section>
+
+##Underlying connection technology
+The <dfn>underlying connection technology</dfn> represents the generation and/or version of the network connection being used by the device. For example, "HSPA" (3.5G) for cellular, or "802.11g" for Wi-Fi. This differs from the <a>connection type</a> exposed by the API, in that it is more fine grained.
+
+Each <a>underlying connection technology</a> has an associated <dfn>maximum downlink speed</dfn>, which is the standardized, or generally accepted, maximum download data rate in <a>megabits</a> per second. The relationship between an <a>underlying connection technology</a> and its <a>maximum downlink speed</a> is captured in the <a>table of maximum downlink speeds</a>.
+
+<div class="note">
+The <a>underlying connection technology</a> is not directly exposed to script. Instead, the <a>maximum downlink speed</a> is exposed via the <a href="#widl-NetworkInformation-downlinkMax">`downlinkMax`</a> attribute.
+</div>
+
+<table id="max-downlink-table" class="simple">
+  <caption><dfn>Table of maximum downlink speeds</dfn></caption>
+  <thead>
+    <tr>
+      <th>Connection type</th>
+      <th>Name</th>
+      <th>Generation or Version</th>
+      <th>Max downlink speed (<a title="megabits per second">Mbit/s</a>)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <!-- fallback if JS disabled or xhr fails -->
+      <td colspan="4"><a href="downlink.json">Data available as JSON</a>.</td>
+    </tr>
+  </tbody>
+</table>
+
+### Handling changes to the underlying connection
+If the <a>underlying connection technology</a> changes (in either connection type or <a>maximum downlink speed</a>), the user agent MUST run the <dfn>steps to update the connection values</dfn>:
+
+1. Let <var>new-type</var> be the <a>connection type</a> that represents the <a>underlying connection technology</a>.
+1. Let <var>max-value</var> be `+Infinity`.
+1. If <var>new-type</var> is "none", set <var>max-value</var> to `0`.
+1. Otherwise, if <var>new-type</var> is not "unknown":
+    1. Set <var>max-value</var> to the <a>maximum downlink speed</a> of the <a>underlying connection technology</a> from the <a>table of maximum downlink speeds</a>.
+1. If <var>max-value</var> is not equal to the value of `connection.downlinkMax` or if <var>new-type</var> is not equal to the value of `connection.type`:
+    1. Using the <a>networking task source</a>, queue a <a>task</a> to perform the following:
+        1. Set `connection.downlinkMax` to <var>max-value</var>.
+        1. Set `connection.type` to <var>new-type</var>.
+        1. <a>Fire a simple event</a> named `change` at the `NetworkInformation` object.
+
 </section>
 
 <section>
@@ -170,3 +247,66 @@ Whenever the user agent needs to make the `navigator.connection.type` attribute 
   This document reuses text from the [[!HTML]] specification, edited by
   Ian Hickson, as permitted by the license of that specification.
 </section>
+
+<script>
+(function() {
+  "use strict";
+  window.addEventListener("DOMContentLoaded", loadTableData);
+
+  function loadTableData() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "downlink.json");
+
+    xhr.onload = xhr.onerror = function(ev) {
+      var data = {};
+      try {
+        data = JSON.parse(xhr.responseText);
+      } catch (ex) {
+        console.log(ev, ex)
+      }
+
+      populateTable(data)
+    }
+    xhr.send();
+  }
+
+  function populateTable(data) {
+    var tbody = document.querySelector("#max-downlink-table > tbody"),
+      head = document.querySelector("#max-downlink-table > thead"),
+      headsize = head.rows[0].children.length,
+      trs = "";
+    //for each entry in the JSON 
+    for (var connection in data) {
+      var connectionTypes = data[connection];
+      trs += "<tr>"
+      trs += (connectionTypes.length > 1) ?
+        "<td rowspan=" + connectionTypes.length + ">" :
+        "<td>"
+      trs += "<a href='#idl-def-ConnectionType." + connection + "'>"
+      trs += connection + "</a>"
+      trs += "</td>";
+
+      //Tell reader we don't have any data for connection
+      if (connectionTypes.length === 0) {
+        trs += "<td " + "colspan=" + headsize + ">"
+        trs += "No data available for this"
+        trs += " <a title='connection types'>connection type</a>.</td>"
+      } else {
+        //loop through and populate the table
+        for (var j = 0; j < connectionTypes.length; j++) {
+          var conObj = connectionTypes[j];
+          if (j) {
+            trs += "<tr>"
+          }
+          trs += "<td>" + conObj.name + "</td>"
+          trs += "<td>" + conObj.version + "</td>"
+          trs += "<td>" + conObj.max.downlink + "</td>"
+          trs += "</tr>"
+        }
+      }
+    }
+    //finally, add the data
+    tbody.innerHTML = trs;
+  }
+}());
+</script>
