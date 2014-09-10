@@ -177,7 +177,54 @@
       "url": "http://www.4gamericas.org/index.cfm?fuseaction=page&sectionid=249"
     }
   }],
-  "bluetooth": [],
+
+  "bluetooth": [{
+    "name": "1.2",
+    "version": "1.2",
+    "max": {
+      "downlink": 1.0,
+      "uplink": 1.0
+    },
+    "latencyRange": "75-125",
+    "ref": {
+      "url": "http://en.wikipedia.org/wiki/Bluetooth#Uses"
+    }
+  }, {
+    "name": "2.1 + Enhanced Data Rate (EDR)",
+    "version": "2.1+EDR",
+    "max": {
+      "downlink": 3.0,
+      "uplink": 3.0
+    },
+    "latencyRange": "75-125",
+    "ref": {
+      "url": "http://en.wikipedia.org/wiki/Bluetooth#Uses"
+    }
+  }, {
+    "name": "3.0 + High Speed (HS)",
+    "version": "3.0+HS",
+    "max": {
+      "downlink": 24.0,
+      "uplink": 24.0
+    },
+    "latencyRange": "75-125",
+    "ref": {
+      "url1": "http://en.wikipedia.org/wiki/Bluetooth#Uses",
+      "url2": "https://learn.sparkfun.com/tutorials/bluetooth-basics/common-versions"
+    }
+  }, {
+    "name": "4.0 + Bluetooth Low Energy (BLE)",
+    "version": "4.0+BLE",
+    "max": {
+      "downlink": 1.0,
+      "uplink": 1.0
+    },
+    "latencyRange": "3-6",
+    "ref": {
+      "url": "http://en.wikipedia.org/wiki/Bluetooth_low_energy"
+    }
+  }],
+
   "ethernet": [],
   "wifi": [],
   "unknown": [{
