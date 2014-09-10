@@ -125,23 +125,26 @@
     "name": "HSDPA",
     "version": "3.75G",
     "max": {
-      "downlink": 14.4,
-      "uplink": 14.4
+      "downlink": 14.3,
+      "uplink": 0.384
     },
     "latencyRange": "70-150",
     "ref": {
-      "url": "http://www.4gamericas.org/index.cfm?fuseaction=page&sectionid=247"
+      "url1": "http://www.4gamericas.org/index.cfm?fuseaction=page&sectionid=247",
+      "url2": "http://en.wikipedia.org/wiki/High-Speed_Downlink_Packet_Access#Other_improvements",
+      "note": "HSDPA/HSUPA max downlink speeds are 14.4Mbps. However, reporting the same value via maxDownlink does not allow us to differentiate between these versions, and given the uplink performance difference (0.384Mbps vs 5.76Mbps), this is an important distinction. As a result, we're intentionally setting the downlink value for HSDPA to 14.3."
     }
   }, {
     "name": "HSUPA",
     "version": "3.75G",
     "max": {
       "downlink": 14.4,
-      "uplink": 14.4
+      "uplink": 5.76
     },
     "latencyRange": "70-150",
     "ref": {
-      "url": "http://www.4gamericas.org/index.cfm?fuseaction=page&sectionid=247"
+      "url1": "http://www.4gamericas.org/index.cfm?fuseaction=page&sectionid=247",
+      "url2": "http://en.wikipedia.org/wiki/High-Speed_Uplink_Packet_Access"
     }
   }, {
     "name": "EHRPD",
