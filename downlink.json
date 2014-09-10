@@ -3,8 +3,8 @@
     "name": "GSM",
     "version": "2G",
     "max": {
-      "downlink": 0.001,
-      "uplink": 0.001
+      "downlink": 0.010,
+      "uplink": 0.010
     },
     "latencyRange": "1000+",
     "ref": {
