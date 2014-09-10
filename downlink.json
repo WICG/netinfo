@@ -225,7 +225,52 @@
     }
   }],
 
-  "ethernet": [],
+  "ethernet": [{
+    "name": "Ethernet",
+    "version": "10",
+    "max": {
+      "downlink": 10.0,
+      "uplink": 10.0
+    },
+    "latencyRange": "0+",
+    "ref": {
+      "url": "http://en.wikipedia.org/wiki/Ethernet"
+    }
+  }, {
+    "name": "Fast Ethernet",
+    "version": "100",
+    "max": {
+      "downlink": 100.0,
+      "uplink": 100.0
+    },
+    "latencyRange": "0+",
+    "ref": {
+      "url": "http://en.wikipedia.org/wiki/Fast_Ethernet"
+    }
+  }, {
+    "name": "Gigabit Ethernet",
+    "version": "GigE",
+    "max": {
+      "downlink": 1000.0,
+      "uplink": 1000.0
+    },
+    "latencyRange": "0+",
+    "ref": {
+      "url": "http://en.wikipedia.org/wiki/Gigabit_Ethernet"
+    }
+  }, {
+    "name": "10-gigabit Ethernet",
+    "version": "10 GigE",
+    "max": {
+      "downlink": 10000.0,
+      "uplink": 10000.0
+    },
+    "latencyRange": "0+",
+    "ref": {
+      "url": "http://en.wikipedia.org/wiki/10-gigabit_Ethernet"
+    }
+  }],
+
   "wifi": [],
   "unknown": [{
     "name": "unknown",
