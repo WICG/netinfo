@@ -1,5 +1,17 @@
 {
   "cellular": [{
+    "name": "GSM",
+    "version": "2G",
+    "max": {
+      "downlink": 0.001,
+      "uplink": 0.001
+    },
+    "latencyRange": "1000+",
+    "ref": {
+      "url1": "http://en.wikipedia.org/wiki/High-Speed_Circuit-Switched_Data",
+      "url2": "http://www.cni.co.th/download/cni_co_th/kb_dc_gsm%20vs.%20gprs.pdf"
+    }
+  }, {
     "name": "IDEN",
     "version": "2G",
     "max": {
