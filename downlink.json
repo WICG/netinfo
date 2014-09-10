@@ -271,7 +271,63 @@
     }
   }],
 
-  "wifi": [],
+  "wifi": [{
+    "name": "b",
+    "version": "802.11b",
+    "max": {
+      "downlink": 11.0,
+      "uplink": 11.0
+    },
+    "latencyRange": "0+",
+    "ref": {
+      "url": "http://en.wikipedia.org/wiki/IEEE_802.11#802.11b"
+    }
+  }, {
+    "name": "g",
+    "version": "802.11g",
+    "max": {
+      "downlink": 54.0,
+      "uplink": 54.0
+    },
+    "latencyRange": "0+",
+    "ref": {
+      "url": "http://en.wikipedia.org/wiki/IEEE_802.11#802.11g"
+    }
+  }, {
+    "name": "n",
+    "version": "802.11n",
+    "max": {
+      "downlink": 600.0,
+      "uplink": 600.0
+    },
+    "latencyRange": "0+",
+    "ref": {
+      "url": "http://en.wikipedia.org/wiki/IEEE_802.11#802.11n"
+    }
+  }, {
+    "name": "ac",
+    "version": "802.11ac",
+    "max": {
+      "downlink": 1300.0,
+      "uplink": 1300.0
+    },
+    "latencyRange": "0+",
+    "ref": {
+      "url": "http://en.wikipedia.org/wiki/IEEE_802.11#802.11ac"
+    }
+  }, {
+    "name": "ad",
+    "version": "802.11ad",
+    "max": {
+      "downlink": 7000.0,
+      "uplink": 7000.0
+    },
+    "latencyRange": "0+",
+    "ref": {
+      "url": "http://en.wikipedia.org/wiki/IEEE_802.11#802.11ad"
+    }
+  }],
+
   "unknown": [{
     "name": "unknown",
     "version": "unknown",
