@@ -1,4 +1,35 @@
 {
+  "wimax":[{
+    "name": "WiMAX 1",
+    "version": "rel 1",
+    "max": {
+      "downlink": 37.0,
+      "uplink": 17.0
+    },
+    "ref": {
+      "url": "http://en.wikipedia.org/wiki/WiMAX#Comparison_with_other_mobile_Internet_standards"
+    }
+  },{
+    "name": "WiMAX 1.5",
+    "version": "rel 1.5",
+    "max": {
+      "downlink": 141.0,
+      "uplink": 138.0
+    },
+    "ref": {
+      "url": "http://en.wikipedia.org/wiki/WiMAX#Comparison_with_other_mobile_Internet_standards"
+    }
+  },{
+    "name": "WiMAX 2",
+    "version": "rel 2",
+    "max": {
+      "downlink": 365.0,
+      "uplink": 376.0
+    },
+    "ref": {
+      "url": "http://en.wikipedia.org/wiki/WiMAX#Comparison_with_other_mobile_Internet_standards"
+    }
+  }],
   "cellular": [{
     "name": "GSM",
     "version": "2G",
