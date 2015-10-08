@@ -68,8 +68,8 @@ The Network Information API enables web applications to access information about
 ## Use cases and requirements
 This document attempts to address the [requirements](https://github.com/w3c-webmob/netinfo/blob/master/README.md) from the <cite>[Review of Apps that Use Network Information](https://github.com/w3c-webmob/netinfo)</cite> document published by the <a href="http://www.w3.org/Mobile/IG/">Web and Mobile Interest Group</a>. Those are:
 
- * Provide access to the <a title="connection types">connection type</a> the system is using to communicate with the network (e.g., cellular, bluetooth, ethernet, wifi, other, or none). This information needs to be available either immediately on page load or as close as possible to it.
- * Provide a means for scripts to be notified if the <a title="connection types">connection type</a> changes. This is to allow developers to make dynamic changes to the DOM and/or inform the user that the network <a title="connection types">connection type</a> has changed (and that it could impact them in some way).
+ * Provide access to the <a>connection type</a> the system is using to communicate with the network (e.g., cellular, bluetooth, ethernet, wifi, other, or none). This information needs to be available either immediately on page load or as close as possible to it.
+ * Provide a means for scripts to be notified if the <a>connection type</a> changes. This is to allow developers to make dynamic changes to the DOM and/or inform the user that the network <a>connection type</a> has changed (and that it could impact them in some way).
 </section>
 
 <section class="informative">
@@ -105,7 +105,7 @@ The following concepts are defined in [[!DOM]]:
  * <dfn>Queue a task</dfn>.
  * <dfn>Fire a simple event</dfn>.
 
-For clarity, a <dfn>megabit</dfn> is 1,000,000 bits, and <dfn>megabits per second</dfn> is equivalent to transferring:
+For clarity, a <dfn>megabit</dfn> is 1,000,000 bits, and <dfn data-lt="Mbit/s">megabits per second</dfn> is equivalent to transferring:
 
 * 1,000,000 bits per second
 * 1,000 kilobits per second
@@ -117,7 +117,7 @@ For clarity, a <dfn>megabit</dfn> is 1,000,000 bits, and <dfn>megabits per secon
 
 <section>
 ## Connection types
-This section defines the <dfn>connection types</dfn>:
+This section defines the <dfn data-lt="connection type">connection types</dfn>:
 
 <dl>
   <dt><dfn id="idl-def-ConnectionType.bluetooth">bluetooth</dfn></dt>
@@ -165,7 +165,7 @@ The <dfn>`NetworkInformation`</dfn> interface provides a means to access informa
 </dl>
 
 ### `type` attribute
-The <dfn id="netinfo.type">`type`</dfn> attribute, when getting, returns the <a title="connection types">connection type</a> that the user agent is using.
+The <dfn id="netinfo.type">`type`</dfn> attribute, when getting, returns the <a>connection type</a> that the user agent is using.
 
 ### `downlinkMax` attribute
 The <dfn>`downlinkMax`</dfn> attribute represents the <dfn>upper bound on the downlink speed of the first network hop</dfn>. The reported value is in <a>megabits per second</a> and determined by the properties of the <a>underlying connection technology</a>.
@@ -181,7 +181,7 @@ The relationship between an <dfn>underlying connection technology</dfn> and its 
 In absence of relevant "network weather" information from the primary interface the <a>upper bound on the downlink speed of the first network hop</a> is determined via the standardized, or generally accepted, maximum download data rate captured in the <a>table of maximum downlink speeds</a>. When additional "network weather" information is available, it may be used to report a more accurate <a>upper bound on the downlink speed of the first network hop</a> - e.g. lower rate due to poor signal quality.
 
 <div class="note">
-The generation and version of the primary network interface is not directly exposed to script. Instead, `downlinkMax` exposes a value in <a>megabits per second</a> that can account for current "network weather" conditions. When the <a title="connection types">connection type</a> of the network interface is `unknown`, the value reported by `downlinkMax` is set to `+Infinity`.
+The generation and version of the primary network interface is not directly exposed to script. Instead, `downlinkMax` exposes a value in <a>megabits per second</a> that can account for current "network weather" conditions. When the <a>connection type</a> of the network interface is `unknown`, the value reported by `downlinkMax` is set to `+Infinity`.
 </div>
 
 <table id="max-downlink-table" class="simple">
@@ -191,7 +191,7 @@ The generation and version of the primary network interface is not directly expo
       <th>Connection type</th>
       <th>Underlying connection technology</th>
       <th>Generation or Version</th>
-      <th>Max downlink speed (<a title="megabits per second">Mbit/s</a>)</th>
+      <th>Max downlink speed (<a>Mbit/s</a>)</th>
     </tr>
   </thead>
   <tbody>
@@ -204,9 +204,9 @@ The generation and version of the primary network interface is not directly expo
 
 ### Handling changes to the underlying connection
 
-When the properties of the <a>underlying connection technology</a> change (e.g. due to a switch to a different <a title="connection types">connection type</a>, or change in <a>upper bound on the downlink speed of the first network hop</a> due to "network weather" or related variables), the user agent MUST run the <dfn>steps to update the connection values</dfn>:
+When the properties of the <a>underlying connection technology</a> change (e.g. due to a switch to a different <a>connection type</a>, or change in <a>upper bound on the downlink speed of the first network hop</a> due to "network weather" or related variables), the user agent MUST run the <dfn>steps to update the connection values</dfn>:
 
-1. Let <var>new-type</var> be the <a title="connection types">connection type</a> that represents the <a>underlying connection technology</a>.
+1. Let <var>new-type</var> be the <a>connection type</a> that represents the <a>underlying connection technology</a>.
 1. Let <var>max-value</var> be `+Infinity`.
 1. If <var>new-type</var> is "none", set <var>max-value</var> to `0`.
 1. Otherwise, if <var>new-type</var> is not "unknown":
@@ -287,7 +287,7 @@ When the properties of the <a>underlying connection technology</a> change (e.g. 
       if (connectionTypes.length === 0) {
         trs += "<td " + "colspan=" + headsize + ">"
         trs += "No data available for this"
-        trs += " <a title='connection types'>connection type</a>.</td>"
+        trs += " <a>connection type</a>.</td>"
       } else {
         //loop through and populate the table
         for (var j = 0; j < connectionTypes.length; j++) {
