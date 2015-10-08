@@ -169,19 +169,20 @@ The <dfn>`NetworkInformation`</dfn> interface provides a means to access informa
 The <dfn id="netinfo.type">`type`</dfn> attribute, when getting, returns the <a title="connection types">connection type</a> that the user agent is using.
 
 ### `downlinkMax` attribute
-The <dfn>`downlinkMax`</dfn> attribute represents the <a>maximum downlink speed</a>, in <a>megabits per second</a> (Mbps), for <a>underlying connection technology</a>.
-
-</section>
-
-<section>
-
-## Underlying connection technology
-The <dfn>underlying connection technology</dfn> represents the generation and/or version of the network connection being used by the device. For example, "HSPA" (3.5G) for cellular, or "802.11g" for Wi-Fi. This differs from the <a title="connection types">connection type</a> exposed by the API, in that it is more fine grained.
-
-Each <a>underlying connection technology</a> has an associated <dfn>maximum downlink speed</dfn>, which is the maximum download data rate of the current network interface in <a>megabits per second</a>. The relationship between an <a>underlying connection technology</a> and its <a>maximum downlink speed</a> is determined by the properties of the current network interface (e.g signal strength, modulation algorithm, and other relevant "network weather" variables), or where such interface information is not available, is determined by the standardized, or generally accepted, maximum download data rate captured in the <a>table of maximum downlink speeds</a>.
+The <dfn>`downlinkMax`</dfn> attribute represents the <a>maximum downlink speed</a>, in <a>megabits per second</a> (Mbps), of the first network hop, which is determined by the properties of the <a>underlying connection technology</a>.
 
 <div class="note">
-The <a>underlying connection technology</a> is not directly exposed to script. Instead, the <a>maximum downlink speed</a> is exposed via the <a href="#widl-NetworkInformation-downlinkMax">`downlinkMax`</a> attribute.
+The user agent has no knowledge of the total number or the performance characteristics of the various network hops required to fulfill a particular request; different requests may follow different route and have different performance characteristics. The reported <dfn>maximum downlink speed</dfn> value is the maximum data rate of the first network hop, as determined by the properties of the <a>underlying connection technology</a>. The end-to-end performance of any request cannot exceed this value, but it is also not a guarantee of performance.
+</div>
+
+## Underlying connection technology
+
+The relationship between an <dfn>underlying connection technology</dfn> and its <a>maximum downlink speed</a> is determined by the current properties of the primary network interface that will be used to fulfill new network requests: type and version of the interface and relevant "network weather" variables that may affect its performance - e.g. signal strength, modulation algorithm, and so on. The reported value is the maximum download data rate of the first hop in <a>megabits per second</a>.
+
+In absence of relevant "network weather" information from the primary interface the <a>maximum downlink speed</a> is determined via the standardized, or generally accepted, maximum download data rate captured in the <a>table of maximum downlink speeds</a>. When additional "network weather" information is available, it may be used to report a more accurate <a>maximum downlink speed</a> - e.g. lower rate due to poor signal quality.
+
+<div class="note">
+The generation and version of the primary network interface is not directly exposed to script. Instead, `downlinkMax` exposes a value in <a>megabits per second</a> that can account for current "network weather" conditions. When the <a title="connection types">connection type</a> of the network interface is `unknown`, the value reported by `downlinkMax` is set to `+Infinity`.
 </div>
 
 <table id="max-downlink-table" class="simple">
