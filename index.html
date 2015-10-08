@@ -80,7 +80,7 @@ For examples of the kinds of applications one can build with this API, see the <
 // Get the connection type.
 var type = navigator.connection.type;
 
-// Get the upper bound on the downlink speed of the first network hop
+// Get an upper bound on the downlink speed of the first network hop
 var max = navigator.connection.downlinkMax;
 
 function changeHandler(e) {
@@ -168,7 +168,7 @@ The <dfn>`NetworkInformation`</dfn> interface provides a means to access informa
 The <dfn id="netinfo.type">`type`</dfn> attribute, when getting, returns the <a>connection type</a> that the user agent is using.
 
 ### `downlinkMax` attribute
-The <dfn>`downlinkMax`</dfn> attribute represents the <dfn>upper bound on the downlink speed of the first network hop</dfn>. The reported value is in <a>megabits per second</a> and determined by the properties of the <a>underlying connection technology</a>.
+The <dfn>`downlinkMax`</dfn> attribute represents an <dfn>upper bound on the downlink speed of the first network hop</dfn>. The reported value is in <a>megabits per second</a> and determined by the properties of the <a>underlying connection technology</a>.
 
 <div class="note">
 The user agent has no knowledge of the total number or the performance characteristics of the various network hops required to fulfill a particular request; different requests may follow different routes and have different performance characteristics. The reported <a>upper bound on the downlink speed of the first network hop</a> value is determined by the properties of the <a>underlying connection technology</a> of the first network hop. The end-to-end performance of any request cannot exceed this value, but it is also not a guarantee of performance and may be significantly worse.
@@ -178,10 +178,10 @@ The user agent has no knowledge of the total number or the performance character
 
 The relationship between an <dfn>underlying connection technology</dfn> and its <a>upper bound on the downlink speed of the first network hop</a> is determined by the current properties of the primary network interface that will be used to fulfill new network requests: type and version of the interface and relevant "network weather" variables that may affect its performance - e.g. signal strength, modulation algorithm, and so on.
 
-In absence of relevant "network weather" information from the primary interface the <a>upper bound on the downlink speed of the first network hop</a> is determined via the standardized, or generally accepted, maximum download data rate captured in the <a>table of maximum downlink speeds</a>. When additional "network weather" information is available, it may be used to report a more accurate <a>upper bound on the downlink speed of the first network hop</a> - e.g. lower rate due to poor signal quality.
+In absence of relevant "network weather" variables from the primary interface the <a>upper bound on the downlink speed of the first network hop</a> is determined via the standardized, or generally accepted, maximum download data rate captured in the <a>table of maximum downlink speeds</a>. When such information is available, it should be used to report a more accurate <a>upper bound on the downlink speed of the first network hop</a> - e.g. lower rate due to poor signal quality.
 
 <div class="note">
-The generation and version of the primary network interface is not directly exposed to script. Instead, `downlinkMax` exposes a value in <a>megabits per second</a> that can account for current "network weather" conditions. When the <a>connection type</a> of the network interface is `unknown`, the value reported by `downlinkMax` is set to `+Infinity`.
+The generation and version of the primary network interface is not directly exposed to script. Instead, `downlinkMax` exposes a value in <a>megabits per second</a> that can account for current network conditions. When the <a>connection type</a> of the network interface is `unknown`, the value reported by `downlinkMax` is set to `+Infinity`.
 </div>
 
 <table id="max-downlink-table" class="simple">
@@ -204,7 +204,7 @@ The generation and version of the primary network interface is not directly expo
 
 ### Handling changes to the underlying connection
 
-When the properties of the <a>underlying connection technology</a> change (e.g. due to a switch to a different <a>connection type</a>, or change in <a>upper bound on the downlink speed of the first network hop</a> due to "network weather" or related variables), the user agent MUST run the <dfn>steps to update the connection values</dfn>:
+When the properties of the <a>underlying connection technology</a> change (e.g. due to a switch to a different <a>connection type</a>, or change in <a>upper bound on the downlink speed of the first network hop</a> due to relevant "network weather" variables), the user agent MUST run the <dfn>steps to update the connection values</dfn>:
 
 1. Let <var>new-type</var> be the <a>connection type</a> that represents the <a>underlying connection technology</a>.
 1. Let <var>max-value</var> be `+Infinity`.
