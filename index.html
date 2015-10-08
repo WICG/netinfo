@@ -203,7 +203,8 @@ The <a>underlying connection technology</a> is not directly exposed to script. I
 </table>
 
 ### Handling changes to the underlying connection
-If the <a>underlying connection technology</a> changes (in either <a title="connection types">connection type</a> or <a>maximum downlink speed</a>), the user agent MUST run the <dfn>steps to update the connection values</dfn>:
+
+When the properties of the <a>underlying connection technology</a> change (e.g. due to a switch to a different <a title="connection types">connection type</a>, or change of <a>maximum downlink speed</a> due to signal strength or other "network weather" variables), the user agent MUST run the <dfn>steps to update the connection values</dfn>:
 
 1. Let <var>new-type</var> be the <a title="connection types">connection type</a> that represents the <a>underlying connection technology</a>.
 1. Let <var>max-value</var> be `+Infinity`.
