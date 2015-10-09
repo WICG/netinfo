@@ -134,6 +134,8 @@ This section defines the <dfn data-lt="connection type">connection types</dfn>:
   <dd>The user agent is using a WiMAX connection as the underlying connection technology.</dd>
   <dt><dfn id="idl-def-ConnectionType.other">other</dfn></dt>
   <dd>The user agent is using a connection type that is not one of enumerated connection types as the <a>underlying connection technology</a>.</dd>
+  <dt><dfn id="idl-def-ConnectionType.mixed">mixed</dfn></dt>
+  <dd>The user agent is using multiple connection types as the <a>underlying connection technology</a>.</dd>
   <dt><dfn id="idl-def-ConnectionType.unknown">unknown</dfn></dt>
   <dd>The user agent has established a network connection, but is unable to determine what is the <a>underlying connection technology</a>.</dd>
 </dl>
@@ -176,12 +178,21 @@ The user agent has no knowledge of the total number or the performance character
 
 ## Underlying connection technology
 
-The relationship between an <dfn>underlying connection technology</dfn> and its <a>upper bound on the downlink speed of the first network hop</a> is determined by the current properties of the primary network interface that will be used to fulfill new network requests: type and version of the interface and relevant "network weather" variables that may affect its performance - e.g. signal strength, modulation algorithm, and so on.
+The relationship between an <dfn>underlying connection technology</dfn> and its <a>upper bound on the downlink speed of the first network hop</a> is determined by the current properties of one or more available network interfaces that may be used to fulfill new network requests - e.g. type and version of each interface and relevant "network weather" variables (signal strength, modulation algorithm, etc) that may affect their performance.
 
-In absence of relevant "network weather" variables from the primary interface the <a>upper bound on the downlink speed of the first network hop</a> is determined via the standardized, or generally accepted, maximum download data rate captured in the <a>table of maximum downlink speeds</a>. When such information is available, it should be used to report a more accurate <a>upper bound on the downlink speed of the first network hop</a> - e.g. lower rate due to poor signal quality.
+The <dfn>downlinkMax for a particular interface</dfn> is determined via the standardized, or generally accepted, maximum download data rate captured in the <a>table of maximum downlink speeds</a>. Where possible, this value may be further refined to report a more accurate upper bound based on relevant "network weather" variables - e.g. lower upper bound due to poor signal quality.
+
+The <dfn>downlinkMax for all available interfaces</dfn> is determined via the following rules:
+
+ <ul>
+  <li>If no interfaces are available to fulfill new network requests, set to `0`.</li>
+  <li>If <a>connection type</a> of one or more available network interfaces is `unknown` or `other`, set to `+Infinity`.</li>
+  <li>If <a>connection type</a> is `mixed`, set to the sum of <a>downlinkMax for a particular interface</a> values.
+  <li>Otherwise set to <a>downlinkMax for a particular interface</a>.
+</ul>
 
 <div class="note">
-The generation and version of the primary network interface is not directly exposed to script. Instead, `downlinkMax` exposes a value in <a>megabits per second</a> that can account for current network conditions. When the <a>connection type</a> of the network interface is `unknown`, the value reported by `downlinkMax` is set to `+Infinity`.
+The enumeration of available network interfaces and their generation and version is not directly exposed to script. Instead, `downlinkMax` exposes a single value in <a>megabits per second</a> that accounts for all available interfaces and their current network conditions.
 </div>
 
 <table id="max-downlink-table" class="simple">
@@ -204,7 +215,7 @@ The generation and version of the primary network interface is not directly expo
 
 ### Handling changes to the underlying connection
 
-When the properties of the <a>underlying connection technology</a> change (e.g. due to a switch to a different <a>connection type</a>, or change in <a>upper bound on the downlink speed of the first network hop</a> due to relevant "network weather" variables), the user agent MUST run the <dfn>steps to update the connection values</dfn>:
+When the properties of the <a>underlying connection technology</a> change (e.g. due to a switch to a different <a>connection type</a>, or change in <a>upper bound on the downlink speed of the first network hop</a>, the user agent MUST run the <dfn>steps to update the connection values</dfn>:
 
 1. Let <var>new-type</var> be the <a>connection type</a> that represents the <a>underlying connection technology</a>.
 1. Let <var>max-value</var> be `+Infinity`.
@@ -230,6 +241,7 @@ When the properties of the <a>underlying connection technology</a> change (e.g. 
   <dt>wimax</dt>
   <dt>other</dt>
   <dt>none</dt>
+  <dt>mixed</dt>
   <dt>unknown</dt>
 </dl>
 </section>
