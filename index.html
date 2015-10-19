@@ -4,7 +4,6 @@
 <title>Network Information API</title>
 <script class='remove' src='//www.w3.org/Tools/respec/respec-w3c-common' async></script>
 <script class='remove'>
-/**/
   var respecConfig = {
   specStatus: 'ED',
   shortName: 'netinfo-api',
@@ -69,8 +68,8 @@ The Network Information API enables web applications to access information about
 ## Use cases and requirements
 This document attempts to address the [requirements](https://github.com/w3c-webmob/netinfo/blob/master/README.md) from the <cite>[Review of Apps that Use Network Information](https://github.com/w3c-webmob/netinfo)</cite> document published by the <a href="http://www.w3.org/Mobile/IG/">Web and Mobile Interest Group</a>. Those are:
 
- * Provide access to the <a title="connection types">connection type</a> the system is using to communicate with the network (e.g., cellular, bluetooth, ethernet, wifi, other, or none). This information needs to be available either immediately on page load or as close as possible to it.
- * Provide a means for scripts to be notified if the <a title="connection types">connection type</a> changes. This is to allow developers to make dynamic changes to the DOM and/or inform the user that the network <a title="connection types">connection type</a> has changed (and that it could impact them in some way).
+ * Provide access to the <a>connection type</a> the system is using to communicate with the network (e.g., cellular, bluetooth, ethernet, wifi, other, or none). This information needs to be available either immediately on page load or as close as possible to it.
+ * Provide a means for scripts to be notified if the <a>connection type</a> changes. This is to allow developers to make dynamic changes to the DOM and/or inform the user that the network <a>connection type</a> has changed (and that it could impact them in some way).
 </section>
 
 <section class="informative">
@@ -81,7 +80,7 @@ For examples of the kinds of applications one can build with this API, see the <
 // Get the connection type.
 var type = navigator.connection.type;
 
-// The maximum downlink speed of the connection
+// Get an upper bound on the downlink speed of the first network hop
 var max = navigator.connection.downlinkMax;
 
 function changeHandler(e) {
@@ -106,7 +105,7 @@ The following concepts are defined in [[!DOM]]:
  * <dfn>Queue a task</dfn>.
  * <dfn>Fire a simple event</dfn>.
 
-For clarity, a <dfn>megabit</dfn> is 1,000,000 bits, and <dfn>megabits per second</dfn> is equivalent to transferring:
+For clarity, a <dfn>megabit</dfn> is 1,000,000 bits, and <dfn data-lt="Mbit/s">megabits per second</dfn> is equivalent to transferring:
 
 * 1,000,000 bits per second
 * 1,000 kilobits per second
@@ -118,7 +117,7 @@ For clarity, a <dfn>megabit</dfn> is 1,000,000 bits, and <dfn>megabits per secon
 
 <section>
 ## Connection types
-This section defines the <dfn>connection types</dfn>:
+This section defines the <dfn data-lt="connection type">connection types</dfn>:
 
 <dl>
   <dt><dfn id="idl-def-ConnectionType.bluetooth">bluetooth</dfn></dt>
@@ -135,6 +134,8 @@ This section defines the <dfn>connection types</dfn>:
   <dd>The user agent is using a WiMAX connection as the underlying connection technology.</dd>
   <dt><dfn id="idl-def-ConnectionType.other">other</dfn></dt>
   <dd>The user agent is using a connection type that is not one of enumerated connection types as the <a>underlying connection technology</a>.</dd>
+  <dt><dfn id="idl-def-ConnectionType.mixed">mixed</dfn></dt>
+  <dd>The user agent is using multiple connection types as the <a>underlying connection technology</a>.</dd>
   <dt><dfn id="idl-def-ConnectionType.unknown">unknown</dfn></dt>
   <dd>The user agent has established a network connection, but is unable to determine what is the <a>underlying connection technology</a>.</dd>
 </dl>
@@ -166,22 +167,25 @@ The <dfn>`NetworkInformation`</dfn> interface provides a means to access informa
 </dl>
 
 ### `type` attribute
-The <dfn id="netinfo.type">`type`</dfn> attribute, when getting, returns the <a title="connection types">connection type</a> that the user agent is using.
+The <dfn id="netinfo.type">`type`</dfn> attribute, when getting, returns the <a>connection type</a> that the user agent is using.
 
 ### `downlinkMax` attribute
-The <dfn>`downlinkMax`</dfn> attribute represents the <a>maximum downlink speed</a>, in <a>megabits per second</a> (Mbps), for <a>underlying connection technology</a>.
-
-</section>
-
-<section>
-
-## Underlying connection technology
-The <dfn>underlying connection technology</dfn> represents the generation and/or version of the network connection being used by the device. For example, "HSPA" (3.5G) for cellular, or "802.11g" for Wi-Fi. This differs from the <a title="connection types">connection type</a> exposed by the API, in that it is more fine grained.
-
-Each <a>underlying connection technology</a> has an associated <dfn>maximum downlink speed</dfn>, which is the maximum download data rate of the current network interface in <a>megabits per second</a>. The relationship between an <a>underlying connection technology</a> and its <a>maximum downlink speed</a> is determined by the properties of the current network interface (e.g signal strength, modulation algorithm, and other relevant "network weather" variables), or where such interface information is not available, is determined by the standardized, or generally accepted, maximum download data rate captured in the <a>table of maximum downlink speeds</a>.
+The <dfn>`downlinkMax`</dfn> attribute represents an <dfn>upper bound on the downlink speed of the first network hop</dfn>. The reported value is in <a>megabits per second</a> and determined by the properties of the <a>underlying connection technology</a>.
 
 <div class="note">
-The <a>underlying connection technology</a> is not directly exposed to script. Instead, the <a>maximum downlink speed</a> is exposed via the <a href="#widl-NetworkInformation-downlinkMax">`downlinkMax`</a> attribute.
+The user agent has no knowledge of the total number or the performance characteristics of the various network hops required to fulfill a particular request; different requests may follow different routes and have different performance characteristics. The reported <a>upper bound on the downlink speed of the first network hop</a> value is determined by the properties of the <a>underlying connection technology</a> of the first network hop. The end-to-end performance of any request cannot exceed this value, but it is also not a guarantee of performance and may be significantly worse.
+</div>
+
+## Underlying connection technology
+
+The relationship between an <dfn>underlying connection technology</dfn> and its <a>upper bound on the downlink speed of the first network hop</a> is determined by the available network interfaces that may be used to fulfill new network requests.
+
+The <dfn>downlinkMax for an available interface</dfn> is determined via the standardized, or generally accepted, maximum download data rate captured in the <a>table of maximum downlink speeds</a>. Where possible, this value may be refined to report a more accurate upper bound based on current properties of the interface - e.g. signal strength, modulation algorithm, and other "network weather" variables.
+
+The <a>upper bound on the downlink speed of the first network hop</a> is determined by the rules described in <a href="#handling-changes-to-the-underlying-connection">handling changes to the underlying connection</a>.
+
+<div class="note">
+The enumeration of available network interfaces and their generation and version is not directly exposed to script. Instead, `downlinkMax` exposes a single value in <a>megabits per second</a> that accounts for all available interfaces and their current network conditions.
 </div>
 
 <table id="max-downlink-table" class="simple">
@@ -191,7 +195,7 @@ The <a>underlying connection technology</a> is not directly exposed to script. I
       <th>Connection type</th>
       <th>Underlying connection technology</th>
       <th>Generation or Version</th>
-      <th>Max downlink speed (<a title="megabits per second">Mbit/s</a>)</th>
+      <th>Max downlink speed (<a>Mbit/s</a>)</th>
     </tr>
   </thead>
   <tbody>
@@ -204,13 +208,13 @@ The <a>underlying connection technology</a> is not directly exposed to script. I
 
 ### Handling changes to the underlying connection
 
-When the properties of the <a>underlying connection technology</a> change (e.g. due to a switch to a different <a title="connection types">connection type</a>, or change of <a>maximum downlink speed</a> due to signal strength or other "network weather" variables), the user agent MUST run the <dfn>steps to update the connection values</dfn>:
+When the properties of the <a>underlying connection technology</a> change (e.g. due to a switch to a different <a>connection type</a>, or change in <a>upper bound on the downlink speed of the first network hop</a>), the user agent MUST run the <dfn>steps to update the connection values</dfn>:
 
-1. Let <var>new-type</var> be the <a title="connection types">connection type</a> that represents the <a>underlying connection technology</a>.
-1. Let <var>max-value</var> be `+Infinity`.
+1. Let <var>new-type</var> be the <a>connection type</a> that represents the <a>underlying connection technology</a>.
 1. If <var>new-type</var> is "none", set <var>max-value</var> to `0`.
-1. Otherwise, if <var>new-type</var> is not "unknown":
-    1. Set <var>max-value</var> to the <a>maximum downlink speed</a> of the <a>underlying connection technology</a> as determined by the properties of the current network interface, or where such interface information is not available, using the <a>table of maximum downlink speeds</a>.
+1. if <var>new-type</var> is "unknown", set <var>max-value</var> to `+Infinity`.
+1. If <var>new-type</var> is "mixed", set <var>max-value</var> to an applicable value for the interface configuration used to service new network requests - e.g. if multiple interfaces may be used, sum their <a>downlinkMax for an available interface</a> values.
+1. Otherwise, set <var>max-value</var> to <a>downlinkMax for an available interface</a>.
 1. If <var>max-value</var> is not equal to the value of `connection.downlinkMax` or if <var>new-type</var> is not equal to the value of `connection.type`:
     1. Using the <a>networking task source</a>, <a>queue a task</a> to perform the following:
         1. Set `connection.downlinkMax` to <var>max-value</var>.
@@ -230,6 +234,7 @@ When the properties of the <a>underlying connection technology</a> change (e.g. 
   <dt>wimax</dt>
   <dt>other</dt>
   <dt>none</dt>
+  <dt>mixed</dt>
   <dt>unknown</dt>
 </dl>
 </section>
@@ -287,7 +292,7 @@ When the properties of the <a>underlying connection technology</a> change (e.g. 
       if (connectionTypes.length === 0) {
         trs += "<td " + "colspan=" + headsize + ">"
         trs += "No data available for this"
-        trs += " <a title='connection types'>connection type</a>.</td>"
+        trs += " <a>connection type</a>.</td>"
       } else {
         //loop through and populate the table
         for (var j = 0; j < connectionTypes.length; j++) {
