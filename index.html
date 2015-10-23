@@ -239,6 +239,16 @@ When the properties of the <a>underlying connection technology</a> change (e.g. 
 </dl>
 </section>
 
+<section id="privacy">
+  ## Privacy Considerations
+
+  Network Information API exposes information to the application about the type and the upper bound of the downlink speed of the first network hop.
+
+  Similar information can also be obtained by the application by observing properties of one or more <a href="https://fetch.spec.whatwg.org/#http-network-fetch">HTTP-network fetch</a> requests - e.g. measured RTT and throughput, IP subnet matches on the server, and so on. The end-to-end performance cannot exceed the performance of the first hop, and knowing end-to-end properties reveals information about the first network hop.
+
+  Unlike the above mechanism, the Network Information API does not require making a HTTP-network fetch request. However, for practical considerations, the additional exposure is not substantial.
+</section>
+
 <section id="conformance">
   There is only one class of product that can claim conformance to this
   specification: a <dfn>user agent</dfn>.
