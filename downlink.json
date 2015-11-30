@@ -354,8 +354,8 @@
     "name": "ac",
     "version": "802.11ac",
     "max": {
-      "downlink": 1300.0,
-      "uplink": 1300.0
+      "downlink": 6900.0,
+      "uplink": 6900.0
     },
     "latencyRange": "0+",
     "ref": {
