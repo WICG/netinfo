@@ -144,9 +144,11 @@ This section defines the <dfn data-lt="connection type">connection types</dfn>:
 <section>
 ## Extensions to the `Navigator` interface
 
-<dl class="idl" title="partial interface Navigator">
-   <dt>readonly attribute NetworkInformation connection</dt>
-</dl>
+<pre class=idl>
+partial interface Navigator{
+   readonly attribute NetworkInformation connection;
+};
+</pre>
 
 ### The `connection` attribute
 The <dfn id="widl-Navigator-connection">`connection`</dfn> attribute, when getting, returns an object that implements the <a>`NetworkInformation`</a> interface.
@@ -156,15 +158,17 @@ The <dfn id="widl-Navigator-connection">`connection`</dfn> attribute, when getti
 ## The `NetworkInformation` interface
 The <dfn>`NetworkInformation`</dfn> interface provides a means to access information about the network connection the user agent is currently using.
 
-<dl class="idl" title="[Exposed=Window,Worker] interface NetworkInformation : EventTarget">
-    <dt>readonly attribute ConnectionType type</dt>
-    <dt>readonly attribute Megabit downlinkMax</dt>
-    <dt>attribute EventHandler onchange</dt>
-</dl>
+<pre class="idl">
+[Exposed=Window,Worker]
+interface NetworkInformation : EventTarget{
+  readonly attribute ConnectionType type;
+  readonly attribute Megabit downlinkMax;
+  attribute EventHandler onchange;
+};
 
-<dl class="idl" title="typedef unrestricted double Megabit">
+typedef unrestricted double Megabit;
+</pre>
 
-</dl>
 
 ### `type` attribute
 The <dfn id="netinfo.type">`type`</dfn> attribute, when getting, returns the <a>connection type</a> that the user agent is using.
@@ -224,19 +228,21 @@ When the properties of the <a>underlying connection technology</a> change (e.g. 
 </section>
 
 <section>
-## The `ConnectionType` enum
+  ## The `ConnectionType` enum
 
-<dl class="idl" title="enum ConnectionType">
-  <dt>cellular</dt>
-  <dt>bluetooth</dt>
-  <dt>ethernet</dt>
-  <dt>wifi</dt>
-  <dt>wimax</dt>
-  <dt>other</dt>
-  <dt>none</dt>
-  <dt>mixed</dt>
-  <dt>unknown</dt>
-</dl>
+  <pre class="idl">
+  enum ConnectionType{
+    "bluetooth",
+    "cellular",
+    "ethernet",
+    "mixed",
+    "none",
+    "other",
+    "unknown",
+    "wifi",
+    "wimax",
+  };
+  </pre>
 </section>
 
 <section id="privacy">
