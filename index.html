@@ -2,14 +2,14 @@
 <head>
 <meta charset='utf-8'>
 <title>Network Information API</title>
-<script class='remove' src='//www.w3.org/Tools/respec/respec-w3c-common' async></script>
+<script class='remove' src='//www.w3.org/Tools/respec/respec-w3c-common'></script>
 <script class='remove'>
   var respecConfig = {
   specStatus: 'ED',
   shortName: 'netinfo-api',
   format: "markdown",
   subtitle: 'Living Document',
-  edDraftURI: 'http://w3c.github.io/netinfo/',
+  edDraftURI: 'https://wicg.github.io/netinfo/',
   previousMaturity: 'ED',
   previousURI: 'http://www.w3.org/TR/2012/WD-netinfo-api-20121129/',
   editors: [{
@@ -25,29 +25,25 @@
       company: 'Google',
       companyURL: 'http://google.com'
   }],
-  wg: 'Device APIs Working Group',
-  wgURI: 'http://www.w3.org/2009/dap/',
-  wgPublicList: 'public-device-apis',
-  wgPatentURI: 'http://www.w3.org/2004/01/pp-impl/43696/status',
+  wg: 'Web Incubator Community Group',
+  wgURI: 'https://wicg.io',
+  wgPublicList: "public-wicg",
   noLegacyStyle: true,
   otherLinks: [{
       key: 'Repository',
       data: [{
           value: 'We are on Github.',
-          href: 'https://github.com/w3c/netinfo'
+          href: 'https://github.com/WICG/netinfo'
       }, {
           value: 'File a bug.',
-          href: 'https://github.com/w3c/netinfo/issues'
+          href: 'https://github.com/WICG/netinfo/issues'
       }, {
           value: 'Commit history.',
-          href: 'https://github.com/w3c/netinfo/commits/gh-pages'
+          href: 'https://github.com/WICG/netinfo/commits/gh-pages'
       }]
   }, {
       key: 'Implementations',
       data: [{
-          value: 'Firefox OS',
-          href: 'https://bugzilla.mozilla.org/show_bug.cgi?id=960426'
-      }, {
           value: 'Chromium',
           href: 'https://code.google.com/p/chromium/issues/detail?id=368358'
       }]
@@ -76,7 +72,7 @@ This document attempts to address the [requirements](https://github.com/w3c-webm
 ## Examples of usage
 For examples of the kinds of applications one can build with this API, see the <cite>[Review of Apps that Use Network Information](https://github.com/w3c-webmob/netinfo)</cite>.
 
-<pre class="example highlight js">
+<pre class="example">
 // Get the connection type.
 var type = navigator.connection.type;
 
@@ -120,23 +116,23 @@ For clarity, a <dfn>megabit</dfn> is 1,000,000 bits, and <dfn data-lt="Mbit/s">m
 This section defines the <dfn data-lt="connection type">connection types</dfn>:
 
 <dl>
-  <dt><dfn id="idl-def-ConnectionType.bluetooth">bluetooth</dfn></dt>
+  <dt><dfn id="dom-connectiontype-bluetooth">bluetooth</dfn></dt>
   <dd>The user agent is using a Bluetooth connection as the <a>underlying connection technology</a>.</dd>
-  <dt><dfn id="idl-def-ConnectionType.cellular">cellular</dfn></dt>
+  <dt><dfn id="dom-connectiontype-cellular">cellular</dfn></dt>
   <dd>The user agent is using a cellular connection as the <a>underlying connection technology</a> (e.g., EDGE, HSPA, LTE, etc.).</dd>
-  <dt><dfn id="idl-def-ConnectionType.ethernet">ethernet</dfn></dt>
+  <dt><dfn id="dom-connectiontype-ethernet">ethernet</dfn></dt>
   <dd>The user agent is using an Ethernet connection as the <a>underlying connection technology</a>.</dd>
-  <dt><dfn id="idl-def-ConnectionType.none">none</dfn></dt>
+  <dt><dfn id="dom-connectiontype-none">none</dfn></dt>
   <dd>The user agent will not contact the network when the user follows links or when a script requests a remote page (or knows that such an attempt would fail) - i.e., equivalent to `navigator.onLine === false` in HTML.</dd>
-  <dt><dfn id="idl-def-ConnectionType.wifi">wifi</dfn></dt>
+  <dt><dfn id="dom-connectiontype-wifi">wifi</dfn></dt>
   <dd>The user agent is using a Wi-Fi connection as the <a>underlying connection technology</a>.</dd>
-  <dt><dfn id="idl-def-ConnectionType.wimax">wimax</dfn></dt>
+  <dt><dfn id="dom-connectiontype-wimax">wimax</dfn></dt>
   <dd>The user agent is using a WiMAX connection as the underlying connection technology.</dd>
-  <dt><dfn id="idl-def-ConnectionType.other">other</dfn></dt>
+  <dt><dfn id="dom-connectiontype-other">other</dfn></dt>
   <dd>The user agent is using a connection type that is not one of enumerated connection types as the <a>underlying connection technology</a>.</dd>
-  <dt><dfn id="idl-def-ConnectionType.mixed">mixed</dfn></dt>
+  <dt><dfn id="dom-connectiontype-mixed">mixed</dfn></dt>
   <dd>The user agent is using multiple connection types as the <a>underlying connection technology</a>.</dd>
-  <dt><dfn id="idl-def-ConnectionType.unknown">unknown</dfn></dt>
+  <dt><dfn id="dom-connectiontype-unknown">unknown</dfn></dt>
   <dd>The user agent has established a network connection, but is unable to determine what is the <a>underlying connection technology</a>.</dd>
 </dl>
 </section>
@@ -144,9 +140,11 @@ This section defines the <dfn data-lt="connection type">connection types</dfn>:
 <section>
 ## Extensions to the `Navigator` interface
 
-<dl class="idl" title="partial interface Navigator">
-   <dt>readonly attribute NetworkInformation connection</dt>
-</dl>
+<pre class=idl>
+partial interface Navigator{
+   readonly attribute NetworkInformation connection;
+};
+</pre>
 
 ### The `connection` attribute
 The <dfn id="widl-Navigator-connection">`connection`</dfn> attribute, when getting, returns an object that implements the <a>`NetworkInformation`</a> interface.
@@ -156,15 +154,17 @@ The <dfn id="widl-Navigator-connection">`connection`</dfn> attribute, when getti
 ## The `NetworkInformation` interface
 The <dfn>`NetworkInformation`</dfn> interface provides a means to access information about the network connection the user agent is currently using.
 
-<dl class="idl" title="[Exposed=Window,Worker] interface NetworkInformation : EventTarget">
-    <dt>readonly attribute ConnectionType type</dt>
-    <dt>readonly attribute Megabit downlinkMax</dt>
-    <dt>attribute EventHandler onchange</dt>
-</dl>
+<pre class="idl">
+[Exposed=Window,Worker]
+interface NetworkInformation : EventTarget{
+  readonly attribute ConnectionType type;
+  readonly attribute Megabit downlinkMax;
+  attribute EventHandler onchange;
+};
 
-<dl class="idl" title="typedef unrestricted double Megabit">
+typedef unrestricted double Megabit;
+</pre>
 
-</dl>
 
 ### `type` attribute
 The <dfn id="netinfo.type">`type`</dfn> attribute, when getting, returns the <a>connection type</a> that the user agent is using.
@@ -224,19 +224,21 @@ When the properties of the <a>underlying connection technology</a> change (e.g. 
 </section>
 
 <section>
-## The `ConnectionType` enum
+  ## The `ConnectionType` enum
 
-<dl class="idl" title="enum ConnectionType">
-  <dt>cellular</dt>
-  <dt>bluetooth</dt>
-  <dt>ethernet</dt>
-  <dt>wifi</dt>
-  <dt>wimax</dt>
-  <dt>other</dt>
-  <dt>none</dt>
-  <dt>mixed</dt>
-  <dt>unknown</dt>
-</dl>
+  <pre class="idl">
+  enum ConnectionType{
+    "bluetooth",
+    "cellular",
+    "ethernet",
+    "mixed",
+    "none",
+    "other",
+    "unknown",
+    "wifi",
+    "wimax",
+  };
+  </pre>
 </section>
 
 <section id="privacy">
@@ -260,16 +262,16 @@ When the properties of the <a>underlying connection technology</a> change (e.g. 
 
   Further, by repeating one of the above strategies (e.g. via invoking periodic fetch or refresh of a resource; via periodic SSE or WebSocket messages; via periodic STUN requests, etc.), the attacker can observe changes over time in the performance characteristics of client's connection and IP address. Such data can then be used to refine the user fingerprint, infer users location (e.g. are they home, at work, or in transit), and extract various behavioral patterns.
 
-  The above list is not a complete overview. However, as the above examples illustrate, the attacks are possible both from the sender and the receiver: 
+  The above list is not a complete overview. However, as the above examples illustrate, the attacks are possible both from the sender and the receiver:
 
   <ul>
     <li>If the attacker can initiate or observe a network fetch of any kind from the client, then they can observe its performance characteristics and how they change over time.</li>
     <li>If the attacker can convince the client to fetch a resource from their server, then they can similarly observe the performance characteristics of the fetch and how they change over time.</li>
   </ul>
 
-  Mitigating such attacks initiated from the client requires preventing the attacker from observing and initiating network requests - e.g., use HTTPS to prevent trivial content injection by malicious parties; disable JavaScript to prevent scripted resource fetch of any kind. Mitigating attacks from the sender is possible via the use of a VPN or an HTTP proxy - e.g. to hide the client's true IP address, to introduce additional latency, and so on. 
+  Mitigating such attacks initiated from the client requires preventing the attacker from observing and initiating network requests - e.g., use HTTPS to prevent trivial content injection by malicious parties; disable JavaScript to prevent scripted resource fetch of any kind. Mitigating attacks from the sender is possible via the use of a VPN or an HTTP proxy - e.g. to hide the client's true IP address, to introduce additional latency, and so on.
 
-  As such, while the Network Information API makes it easier to obtain information about the first network hop, by avoiding the need to observe or make network requests, it does not expose anything that is not already available to a sufficiently-motivated attacker. 
+  As such, while the Network Information API makes it easier to obtain information about the first network hop, by avoiding the need to observe or make network requests, it does not expose anything that is not already available to a sufficiently-motivated attacker.
 
   If the client wants to mitigate this class of attacks, they should disable JavaScript, monitor that all outbound requests are made to trusted origins, and make diligent use of anonymizing VPN/proxy services.
 </section>
@@ -281,8 +283,8 @@ When the properties of the <a>underlying connection technology</a> change (e.g. 
 
 <section class="appendix">
   ## Acknowledgments
-  This document reuses text from the [[!HTML]] specification, edited by
-  Ian Hickson, as permitted by the license of that specification.
+  This document reuses text from the [[!HTML]] specification
+  as permitted by the license of that specification.
 </section>
 
 <script>
