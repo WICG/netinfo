@@ -263,16 +263,16 @@ When the properties of the <a>underlying connection technology</a> change (e.g. 
 
   Further, by repeating one of the above strategies (e.g. via invoking periodic fetch or refresh of a resource; via periodic SSE or WebSocket messages; via periodic STUN requests, etc.), the attacker can observe changes over time in the performance characteristics of client's connection and IP address. Such data can then be used to refine the user fingerprint, infer users location (e.g. are they home, at work, or in transit), and extract various behavioral patterns.
 
-  The above list is not a complete overview. However, as the above examples illustrate, the attacks are possible both from the sender and the receiver: 
+  The above list is not a complete overview. However, as the above examples illustrate, the attacks are possible both from the sender and the receiver:
 
   <ul>
     <li>If the attacker can initiate or observe a network fetch of any kind from the client, then they can observe its performance characteristics and how they change over time.</li>
     <li>If the attacker can convince the client to fetch a resource from their server, then they can similarly observe the performance characteristics of the fetch and how they change over time.</li>
   </ul>
 
-  Mitigating such attacks initiated from the client requires preventing the attacker from observing and initiating network requests - e.g., use HTTPS to prevent trivial content injection by malicious parties; disable JavaScript to prevent scripted resource fetch of any kind. Mitigating attacks from the sender is possible via the use of a VPN or an HTTP proxy - e.g. to hide the client's true IP address, to introduce additional latency, and so on. 
+  Mitigating such attacks initiated from the client requires preventing the attacker from observing and initiating network requests - e.g., use HTTPS to prevent trivial content injection by malicious parties; disable JavaScript to prevent scripted resource fetch of any kind. Mitigating attacks from the sender is possible via the use of a VPN or an HTTP proxy - e.g. to hide the client's true IP address, to introduce additional latency, and so on.
 
-  As such, while the Network Information API makes it easier to obtain information about the first network hop, by avoiding the need to observe or make network requests, it does not expose anything that is not already available to a sufficiently-motivated attacker. 
+  As such, while the Network Information API makes it easier to obtain information about the first network hop, by avoiding the need to observe or make network requests, it does not expose anything that is not already available to a sufficiently-motivated attacker.
 
   If the client wants to mitigate this class of attacks, they should disable JavaScript, monitor that all outbound requests are made to trusted origins, and make diligent use of anonymizing VPN/proxy services.
 </section>
