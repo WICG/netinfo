@@ -141,7 +141,13 @@ This section defines the <dfn data-lt="connection type">connection types</dfn>:
 ## Extensions to the `Navigator` interface
 
 <pre class=idl>
+[Exposed=(Window)]
 partial interface Navigator{
+   readonly attribute NetworkInformation connection;
+};
+
+[Exposed=(Worker)]
+partial interface WorkerNavigator{
    readonly attribute NetworkInformation connection;
 };
 </pre>
@@ -155,7 +161,7 @@ The <dfn id="widl-Navigator-connection">`connection`</dfn> attribute, when getti
 The <dfn>`NetworkInformation`</dfn> interface provides a means to access information about the network connection the user agent is currently using.
 
 <pre class="idl">
-[Exposed=Window,Worker]
+[Exposed=(Window,Worker)]
 interface NetworkInformation : EventTarget{
   readonly attribute ConnectionType type;
   readonly attribute Megabit downlinkMax;
