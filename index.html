@@ -5,7 +5,7 @@
 <script class='remove' src='//www.w3.org/Tools/respec/respec-w3c-common'></script>
 <script>
 function loadTableData() {
-  fetch("downlink.json")
+  return fetch("downlink.json")
     .then(res => res.json())
     .then(populateTable)
     .catch(err => {
