@@ -152,14 +152,7 @@ navigator.connection.addEventListener('change', changeHandler);
 </section>
 
 <section>
-## Dependencies and definitions
-
-The <a href="http://www.whatwg.org/specs/web-apps/current-work/#task-source">task source</a> used by this specification is the the <dfn>networking task source</dfn> [[!HTML]].
-
-The following concepts are defined in [[!DOM]]:
-
- * <dfn>Queue a task</dfn>.
- * <dfn>Fire a simple event</dfn>.
+## Definitions
 
 For clarity, a <dfn>megabit</dfn> is 1,000,000 bits, and <dfn data-lt="Mbit/s">megabits per second</dfn> is equivalent to transferring:
 
@@ -349,12 +342,12 @@ When the properties of the <a>underlying connection technology</a> change (e.g. 
 1. If <var>new-type</var> is "mixed", set <var>max-value</var> to an applicable value for the interface configuration used to service new network requests - e.g. if multiple interfaces may be used, sum their <a>downlinkMax for an available interface</a> values.
 1. Otherwise, set <var>max-value</var> to <a>downlinkMax for an available interface</a>.
 1. If <var>max-value</var> is not equal to the value of `connection.downlinkMax`, or if <var>new-type</var> is not equal to the value of `connection.type`, or if <var>new-downlink</var> is not equal to the value of `connection.downlink`, or if <var>new-rtt</var> is not equal to the value of `connection.rtt`:
-    1. Using the <a>networking task source</a>, <a>queue a task</a> to perform the following:
+    1. Using the <a data-cite="!HTML#networking-task-source">networking task source</a>, <a data-cite="!HTML#queue-a-task">queue a task</a> to perform the following:
         1. Set `connection.downlinkMax` to <var>max-value</var>.
         1. Set `connection.type` to <var>new-type</var>.
         1. Set `connection.downlink` to <var>new-downlink</var>.
         1. Set `connection.rtt` to <var>new-rtt</var>.
-        1. <a>Fire a simple event</a> named `change` at the `NetworkInformation` object.
+        1. <a data-cite="!DOM#concept-event-fire">Fire an event</a> named `change` at the `NetworkInformation` object.
 </section>
 
 <section>
