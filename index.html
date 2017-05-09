@@ -10,7 +10,7 @@ function loadTableData() {
     .then(populateTable)
     .catch(err => {
       console.error("Error trying to get downlink.json", err);
-      populateTable({})
+      populateTable({});
     });
 }
 
