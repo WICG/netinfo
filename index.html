@@ -3,50 +3,112 @@
 <meta charset='utf-8'>
 <title>Network Information API</title>
 <script class='remove' src='//www.w3.org/Tools/respec/respec-w3c-common'></script>
-<script class='remove'>
-  var respecConfig = {
-  specStatus: 'CG-DRAFT',
-  shortName: 'netinfo-api',
+<script>
+function loadTableData() {
+  return fetch("downlink.json")
+    .then(res => res.json())
+    .then(populateTable)
+    .catch(err => {
+      console.error("Error trying to get downlink.json", err);
+      populateTable({});
+    });
+}
+
+function populateTable(data) {
+  const tbody = document.querySelector("#max-downlink-table > tbody");
+  const head = document.querySelector("#max-downlink-table > thead");
+  const headsize = head.rows[0].children.length;
+  let trs = "";
+  //for each entry in the JSON
+  for (var connection in data) {
+    var connectionTypes = data[connection];
+    trs += "<tr>";
+    trs += connectionTypes.length > 1
+      ? "<td rowspan=" + connectionTypes.length + ">"
+      : "<td>";
+    trs += "<a>" + connection + "</a>";
+    trs += "</td>";
+
+    //Tell reader we don't have any data for connection
+    if (connectionTypes.length === 0) {
+      trs += "<td colspan=" + headsize + ">";
+      trs += "No data available for this";
+      trs += " <a>connection type</a>.</td>";
+    } else {
+      //loop through and populate the table
+      for (var j = 0; j < connectionTypes.length; j++) {
+        var conObj = connectionTypes[j];
+        if (j) {
+          trs += "<tr>";
+        }
+        trs += "<td>" + conObj.name + "</td>";
+        trs += "<td>" + conObj.version + "</td>";
+        trs += "<td>" + conObj.max.downlink + "</td>";
+        trs += "</tr>";
+      }
+    }
+  }
+  //finally, add the data
+  tbody.innerHTML = trs;
+}
+
+var respecConfig = {
+  specStatus: "CG-DRAFT",
+  shortName: "netinfo-api",
   format: "markdown",
-  subtitle: 'Living Document',
-  edDraftURI: 'https://wicg.github.io/netinfo/',
-  editors: [{
-      name: 'Marcos Cáceres',
-      company: 'Mozilla Corporation',
-      companyURL: 'http://mozilla.com'
-  }, {
-      name: 'Fernando Jiménez Moreno',
-      company: 'Telefonica',
-      companyURL: 'http://www.telefonica.com/en/home/jsp/home.jsp'
-  }, {
-      name: 'Ilya Grigorik',
-      company: 'Google',
-      companyURL: 'http://google.com'
-  }],
-  wg: 'Web Incubator Community Group',
-  wgURI: 'https://wicg.io',
+  subtitle: "Living Document",
+  edDraftURI: "https://wicg.github.io/netinfo/",
+  editors: [
+    {
+      name: "Marcos Cáceres",
+      company: "Mozilla Corporation",
+      companyURL: "http://mozilla.com",
+    },
+    {
+      name: "Fernando Jiménez Moreno",
+      company: "Telefonica",
+      companyURL: "http://www.telefonica.com/en/home/jsp/home.jsp",
+    },
+    {
+      name: "Ilya Grigorik",
+      company: "Google",
+      companyURL: "http://google.com",
+    },
+  ],
+  wg: "Web Incubator Community Group",
+  wgURI: "https://wicg.io",
   wgPublicList: "public-wicg",
   noLegacyStyle: true,
-  otherLinks: [{
-      key: 'Repository',
-      data: [{
-          value: 'We are on Github.',
-          href: 'https://github.com/WICG/netinfo'
-      }, {
-          value: 'File a bug.',
-          href: 'https://github.com/WICG/netinfo/issues'
-      }, {
-          value: 'Commit history.',
-          href: 'https://github.com/WICG/netinfo/commits/gh-pages'
-      }]
-  }, {
-      key: 'Implementations',
-      data: [{
-          value: 'Chromium',
-          href: 'https://code.google.com/p/chromium/issues/detail?id=368358'
-      }]
-  }]
-  };
+  otherLinks: [
+    {
+      key: "Repository",
+      data: [
+        {
+          value: "We are on Github.",
+          href: "https://github.com/WICG/netinfo",
+        },
+        {
+          value: "File a bug.",
+          href: "https://github.com/WICG/netinfo/issues",
+        },
+        {
+          value: "Commit history.",
+          href: "https://github.com/WICG/netinfo/commits/gh-pages",
+        },
+      ],
+    },
+    {
+      key: "Implementations",
+      data: [
+        {
+          value: "Chromium",
+          href: "https://code.google.com/p/chromium/issues/detail?id=368358",
+        },
+      ],
+    },
+  ],
+  preProcess: [loadTableData],
+};
 </script>
 </head>
 <body>
@@ -288,66 +350,3 @@ When the properties of the <a>underlying connection technology</a> change (e.g. 
   This document reuses text from the [[!HTML]] specification
   as permitted by the license of that specification.
 </section>
-
-<script>
-(function() {
-  "use strict";
-  window.addEventListener("DOMContentLoaded", loadTableData);
-
-  function loadTableData() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "downlink.json");
-
-    xhr.onload = xhr.onerror = function(ev) {
-      var data = {};
-      try {
-        data = JSON.parse(xhr.responseText);
-      } catch (ex) {
-        console.log(ev, ex)
-      }
-
-      populateTable(data)
-    }
-    xhr.send();
-  }
-
-  function populateTable(data) {
-    var tbody = document.querySelector("#max-downlink-table > tbody"),
-      head = document.querySelector("#max-downlink-table > thead"),
-      headsize = head.rows[0].children.length,
-      trs = "";
-    //for each entry in the JSON
-    for (var connection in data) {
-      var connectionTypes = data[connection];
-      trs += "<tr>"
-      trs += (connectionTypes.length > 1) ?
-        "<td rowspan=" + connectionTypes.length + ">" :
-        "<td>"
-      trs += "<a href='#idl-def-ConnectionType." + connection + "'>"
-      trs += connection + "</a>"
-      trs += "</td>";
-
-      //Tell reader we don't have any data for connection
-      if (connectionTypes.length === 0) {
-        trs += "<td " + "colspan=" + headsize + ">"
-        trs += "No data available for this"
-        trs += " <a>connection type</a>.</td>"
-      } else {
-        //loop through and populate the table
-        for (var j = 0; j < connectionTypes.length; j++) {
-          var conObj = connectionTypes[j];
-          if (j) {
-            trs += "<tr>"
-          }
-          trs += "<td>" + conObj.name + "</td>"
-          trs += "<td>" + conObj.version + "</td>"
-          trs += "<td>" + conObj.max.downlink + "</td>"
-          trs += "</tr>"
-        }
-      }
-    }
-    //finally, add the data
-    tbody.innerHTML = trs;
-  }
-}());
-</script>
