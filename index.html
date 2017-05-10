@@ -193,11 +193,11 @@ For clarity, a <dfn>megabit</dfn> is 1,000,000 bits, and <dfn data-lt="Mbit/s">m
   </dl>
   </section>
 
-  <section data-dfn-for="EffectiveConnectionType" data-link-for="EffectiveConnectionType">
+  <section>
   ### Effective connection types
   This section defines the <dfn data-lt="effective connection type">effective connection types</dfn> (ECT):
 
-  <table id="effective-connection-type-table" >
+  <table id="effective-connection-type-table" data-dfn-for="EffectiveConnectionType">
     <caption><dfn>Table of effective connection types</dfn></caption>
     <thead>
       <tr>
@@ -319,7 +319,7 @@ The <a>upper bound on the downlink speed of the first network hop</a> is determi
 The enumeration of available network interfaces and their generation and version is not directly exposed to script. Instead, `downlinkMax` exposes a single value in <a>megabits per second</a> that accounts for all available interfaces and their current network conditions.
 </div>
 
-<table id="max-downlink-table" class="simple">
+<table id="max-downlink-table" class="simple" data-link-for="ConnectionType">
   <caption><dfn>Table of maximum downlink speeds</dfn></caption>
   <thead>
     <tr>
@@ -363,7 +363,7 @@ When the properties of the <a>underlying connection technology</a> change, due t
   ## The <dfn>ConnectionType</dfn> enum
 
   <pre class="idl">
-  enum ConnectionType{
+  enum ConnectionType {
     "bluetooth",
     "cellular",
     "ethernet",
