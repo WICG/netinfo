@@ -114,7 +114,7 @@ var respecConfig = {
 <body>
 
 <section id='abstract'>
-The Network Information API enables web applications to access information about the network connection in use by the device.
+The <cite>Network Information API</cite> enables web applications to access information about the network connection in use by the device.
 </section>
 
 <section id='sotd'>
@@ -152,14 +152,7 @@ navigator.connection.addEventListener('change', changeHandler);
 </section>
 
 <section>
-## Dependencies and definitions
-
-The <a href="http://www.whatwg.org/specs/web-apps/current-work/#task-source">task source</a> used by this specification is the the <dfn>networking task source</dfn> [[!HTML]].
-
-The following concepts are defined in [[!DOM]]:
-
- * <dfn>Queue a task</dfn>.
- * <dfn>Fire a simple event</dfn>.
+## Definitions
 
 For clarity, a <dfn>megabit</dfn> is 1,000,000 bits, and <dfn data-lt="Mbit/s">megabits per second</dfn> is equivalent to transferring:
 
@@ -173,32 +166,88 @@ For clarity, a <dfn>megabit</dfn> is 1,000,000 bits, and <dfn data-lt="Mbit/s">m
 
 <section>
 ## Connection types
-This section defines the <dfn data-lt="connection type">connection types</dfn>:
 
-<dl>
-  <dt><dfn id="dom-connectiontype-bluetooth">bluetooth</dfn></dt>
-  <dd>The user agent is using a Bluetooth connection as the <a>underlying connection technology</a>.</dd>
-  <dt><dfn id="dom-connectiontype-cellular">cellular</dfn></dt>
-  <dd>The user agent is using a cellular connection as the <a>underlying connection technology</a> (e.g., EDGE, HSPA, LTE, etc.).</dd>
-  <dt><dfn id="dom-connectiontype-ethernet">ethernet</dfn></dt>
-  <dd>The user agent is using an Ethernet connection as the <a>underlying connection technology</a>.</dd>
-  <dt><dfn id="dom-connectiontype-none">none</dfn></dt>
-  <dd>The user agent will not contact the network when the user follows links or when a script requests a remote page (or knows that such an attempt would fail) - i.e., equivalent to `navigator.onLine === false` in HTML.</dd>
-  <dt><dfn id="dom-connectiontype-wifi">wifi</dfn></dt>
-  <dd>The user agent is using a Wi-Fi connection as the <a>underlying connection technology</a>.</dd>
-  <dt><dfn id="dom-connectiontype-wimax">wimax</dfn></dt>
-  <dd>The user agent is using a WiMAX connection as the underlying connection technology.</dd>
-  <dt><dfn id="dom-connectiontype-other">other</dfn></dt>
-  <dd>The user agent is using a connection type that is not one of enumerated connection types as the <a>underlying connection technology</a>.</dd>
-  <dt><dfn id="dom-connectiontype-mixed">mixed</dfn></dt>
-  <dd>The user agent is using multiple connection types as the <a>underlying connection technology</a>.</dd>
-  <dt><dfn id="dom-connectiontype-unknown">unknown</dfn></dt>
-  <dd>The user agent has established a network connection, but is unable to determine what is the <a>underlying connection technology</a>.</dd>
-</dl>
+  <section data-dfn-for="ConnectionType" data-link-for="ConnectionType">
+  ### Underlying connection technology
+  This section defines the <dfn data-lt="connection type">connection types</dfn>:
+
+  <dl>
+    <dt><dfn>bluetooth</dfn></dt>
+    <dd>The user agent is using a Bluetooth connection as the <a>underlying connection technology</a>.</dd>
+    <dt><dfn>cellular</dfn></dt>
+    <dd>The user agent is using a cellular connection as the <a>underlying connection technology</a> (e.g., EDGE, HSPA, LTE, etc.).</dd>
+    <dt><dfn>ethernet</dfn></dt>
+    <dd>The user agent is using an Ethernet connection as the <a>underlying connection technology</a>.</dd>
+    <dt><dfn>none</dfn></dt>
+    <dd>The user agent will not contact the network when the user follows links or when a script requests a remote page (or knows that such an attempt would fail) - i.e., equivalent to `navigator.onLine === false` in HTML.</dd>
+    <dt><dfn>wifi</dfn></dt>
+    <dd>The user agent is using a Wi-Fi connection as the <a>underlying connection technology</a>.</dd>
+    <dt><dfn>wimax</dfn></dt>
+    <dd>The user agent is using a WiMAX connection as the <a>underlying connection technology</a>.</dd>
+    <dt><dfn>other</dfn></dt>
+    <dd>The user agent is using a connection type that is not one of enumerated connection types as the <a>underlying connection technology</a>.</dd>
+    <dt><dfn>mixed</dfn></dt>
+    <dd>The user agent is using multiple connection types as the <a>underlying connection technology</a>.</dd>
+    <dt><dfn>unknown</dfn></dt>
+    <dd>The user agent has established a network connection, but is unable to determine what is the <a>underlying connection technology</a>.</dd>
+  </dl>
+  </section>
+
+  <section>
+  ### Effective connection types
+  This section defines the <dfn data-lt="effective connection type">effective connection types</dfn> (ECT):
+
+  <table id="effective-connection-type-table" data-dfn-for="EffectiveConnectionType">
+    <caption><dfn>Table of effective connection types</dfn></caption>
+    <thead>
+      <tr>
+        <th>ECT</th>
+        <th>Minimum RTT (ms)</th>
+        <th>Maximum downlink (Kbps)</th>
+        <th>Explanation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><dfn>slow-2g</dfn></td>
+        <td>1900</td>
+        <td>50</td>
+        <td>The network is suited for small transfers only such as text-only pages.</td>
+      </tr>
+      <tr>
+        <td><dfn>2g</dfn></td>
+        <td>1300</td>
+        <td>70</td>
+        <td>The network is suited for transfers of small images.</td>
+      </tr>
+      <tr>
+        <td><dfn>3g</dfn></td>
+        <td>200</td>
+        <td>700</td>
+        <td>The network is suited for transfers of large assets such as high resolution images, audio, and SD video.</td>
+      </tr>
+      <tr>
+        <td><dfn>4g</dfn></td>
+        <td>0</td>
+        <td>∞</td>
+        <td>The network is suited for HD video, real-time video, etc.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>The above roundtrip and bandwidth values are based on real user measurement observations:</p>
+  <ul>
+    <li>`slow-2g` is the 66.6th percentile of 2G observations</li>
+    <li>`2g` is the 50th percentile of 2G observations</li>
+    <li>`3g` is the 50th percentile of 3G observations</li>
+  </ul>
+  <p>The absolute values provided above are based on real user measurement on Chrome on Android, as captured in April 2017. The user agent MAY update these values in the future to reflect changes in the measurement data.</p>
+  </section>
 </section>
 
-<section>
+
+<section data-dfn-for="NavigatorNetworkInformation" data-link-for="NavigatorNetworkInformation">
 ## Extensions to the `Navigator` interface
+The <dfn>`NavigatorNetworkInformation`</dfn> interface exposes access to <a>`NetworkInformation`</a> interface.
 
 <pre class=idl>
 [NoInterfaceObject, Exposed=(Window,Worker)]
@@ -214,7 +263,7 @@ WorkerNavigator implements NavigatorNetworkInformation;
 The <dfn id="widl-Navigator-connection">`connection`</dfn> attribute, when getting, returns an object that implements the <a>`NetworkInformation`</a> interface.
 </section>
 
-<section>
+<section data-dfn-for="NetworkInformation" data-link-for="NetworkInformation">
 ## The `NetworkInformation` interface
 The <dfn>`NetworkInformation`</dfn> interface provides a means to access information about the network connection the user agent is currently using.
 
@@ -222,16 +271,23 @@ The <dfn>`NetworkInformation`</dfn> interface provides a means to access informa
 [Exposed=(Window,Worker)]
 interface NetworkInformation : EventTarget{
   readonly attribute ConnectionType type;
+  readonly attribute EffectiveConnectionType effectiveType;
   readonly attribute Megabit downlinkMax;
+  readonly attribute Megabit downlink;
+  readonly attribute Millisecond rtt;
   attribute EventHandler onchange;
 };
 
 typedef unrestricted double Megabit;
+typedef unsigned long long Millisecond;
 </pre>
 
 
 ### `type` attribute
-The <dfn id="netinfo.type">`type`</dfn> attribute, when getting, returns the <a>connection type</a> that the user agent is using.
+The <dfn>`type`</dfn> attribute, when getting, returns the <a>connection type</a> that the user agent is using.
+
+### `effectiveType` attribute
+The <dfn>`effectiveType`</dfn> attribute, when getting, returns the <a>effective connection type</a> that is determined using a combination of recently observed round trip times and downlink bandwidth.
 
 ### `downlinkMax` attribute
 The <dfn>`downlinkMax`</dfn> attribute represents an <dfn>upper bound on the downlink speed of the first network hop</dfn>. The reported value is in <a>megabits per second</a> and determined by the properties of the <a>underlying connection technology</a>.
@@ -239,6 +295,16 @@ The <dfn>`downlinkMax`</dfn> attribute represents an <dfn>upper bound on the dow
 <div class="note">
 The user agent has no knowledge of the total number or the performance characteristics of the various network hops required to fulfill a particular request; different requests may follow different routes and have different performance characteristics. The reported <a>upper bound on the downlink speed of the first network hop</a> value is determined by the properties of the <a>underlying connection technology</a> of the first network hop. The end-to-end performance of any request cannot exceed this value, but it is also not a guarantee of performance and may be significantly worse.
 </div>
+
+### `onchange` attribute
+The <dfn>`onchange`</dfn> event handler attribute handles "change" events fired during the <a>steps to update the connection values</a>.
+
+### `downlink` attribute
+The <dfn>`downlink`</dfn> attribute represents the effective bandwidth estimate in <a>megabits per second</a> based on recently observed throughput on the client, rounded to nearest 25 kilobits per second.
+
+### `rtt` attribute
+The <dfn>`rtt`</dfn> attribute represents the effective round-trip time estimate in <dfn data-lt="Millisecond">milliseconds</dfn> based on recently observed round-trip times on the client, rounded to nearest 25 milliseconds.
+
 
 ## Underlying connection technology
 
@@ -252,7 +318,7 @@ The <a>upper bound on the downlink speed of the first network hop</a> is determi
 The enumeration of available network interfaces and their generation and version is not directly exposed to script. Instead, `downlinkMax` exposes a single value in <a>megabits per second</a> that accounts for all available interfaces and their current network conditions.
 </div>
 
-<table id="max-downlink-table" class="simple">
+<table id="max-downlink-table" class="simple" data-link-for="ConnectionType">
   <caption><dfn>Table of maximum downlink speeds</dfn></caption>
   <thead>
     <tr>
@@ -272,26 +338,31 @@ The enumeration of available network interfaces and their generation and version
 
 ### Handling changes to the underlying connection
 
-When the properties of the <a>underlying connection technology</a> change (e.g. due to a switch to a different <a>connection type</a>, or change in <a>upper bound on the downlink speed of the first network hop</a>), the user agent MUST run the <dfn>steps to update the connection values</dfn>:
+When the properties of the <a>underlying connection technology</a> change, due to a switch to a different <a>connection type</a> or <a>effective connection type</a>, change in <a>upper bound on the downlink speed of the first network hop</a>, or change in effective <a>downlink</a> or <a>rtt</a> estimates, the user agent MUST run the <dfn>steps to update the connection values</dfn>:
 
 1. Let <var>new-type</var> be the <a>connection type</a> that represents the <a>underlying connection technology</a>.
+1. Let <var>new-effective-type</var> be the <a>effective connection type</a> determined by current <a>downlink</a> and <a>rtt</a> values.
+1. Let <var>new-downlink</var> be the <a>downlink</a> value.
+1. Let <var>new-rtt</var> be the <a>rtt</a> value.
 1. If <var>new-type</var> is "none", set <var>max-value</var> to `0`.
 1. if <var>new-type</var> is "unknown", set <var>max-value</var> to `+Infinity`.
 1. If <var>new-type</var> is "mixed", set <var>max-value</var> to an applicable value for the interface configuration used to service new network requests - e.g. if multiple interfaces may be used, sum their <a>downlinkMax for an available interface</a> values.
 1. Otherwise, set <var>max-value</var> to <a>downlinkMax for an available interface</a>.
-1. If <var>max-value</var> is not equal to the value of `connection.downlinkMax` or if <var>new-type</var> is not equal to the value of `connection.type`:
-    1. Using the <a>networking task source</a>, <a>queue a task</a> to perform the following:
+1. If <var>max-value</var> is not equal to the value of `connection.downlinkMax`, or if <var>new-type</var> is not equal to the value of `connection.type`, or if <var>new-downlink</var> is not equal to the value of `connection.downlink`, or if <var>new-rtt</var> is not equal to the value of `connection.rtt`:
+    1. Using the <a data-cite="!HTML#networking-task-source">networking task source</a>, <a data-cite="!HTML#queue-a-task">queue a task</a> to perform the following:
         1. Set `connection.downlinkMax` to <var>max-value</var>.
         1. Set `connection.type` to <var>new-type</var>.
-        1. <a>Fire a simple event</a> named `change` at the `NetworkInformation` object.
-
+        1. set `connection.effectiveType` to <var>new-effective-type</var>.
+        1. Set `connection.downlink` to <var>new-downlink</var>.
+        1. Set `connection.rtt` to <var>new-rtt</var>.
+        1. <a data-cite="!DOM#concept-event-fire">Fire an event</a> named `change` at the `NetworkInformation` object.
 </section>
 
 <section>
-  ## The `ConnectionType` enum
+  ## The <dfn>ConnectionType</dfn> enum
 
   <pre class="idl">
-  enum ConnectionType{
+  enum ConnectionType {
     "bluetooth",
     "cellular",
     "ethernet",
@@ -300,15 +371,29 @@ When the properties of the <a>underlying connection technology</a> change (e.g. 
     "other",
     "unknown",
     "wifi",
-    "wimax",
+    "wimax"
   };
   </pre>
 </section>
 
+<section>
+  ## The <dfn>EffectiveConnectionType</dfn> enum
+
+  <pre class="idl">
+  enum EffectiveConnectionType {
+    "slow-2g",
+    "2g",
+    "3g",
+    "4g"
+  };
+  </pre>
+</section>
+
+
 <section id="privacy">
   ## Privacy Considerations
 
-  The Network Information API exposes information about the first network hop between the user agent and the server; specifically, the type of connection and the upper bound of the downlink speed, as well as signals whenever this information changes. Such information may be used to:
+  The Network Information API exposes information about the observed network bandwidth, latency and the first network hop between the user agent and the server; specifically, the type of connection and the upper bound of the downlink speed, as well as signals whenever this information changes. Such information may be used to:
 
   <ul>
     <li>Fingerprint a user based on characteristics of a particular network (e.g. type and downlink estimates) at a point in time, and by observing change in such characteristics over a period of time.</li>
