@@ -271,7 +271,7 @@ The `NavigatorNetworkInformation` interface exposes access to <a>`NetworkInforma
 <section data-dfn-for="NetworkInformation">
   ## <dfn>NetworkInformation</dfn> interface
 
-  The `NetworkInformation` interface provides a means to access information about the network connection the user agent is currently using. The <code><dfn data-cite="DOM#interface-eventtarget">EventTarget</dfn></code> is defined in [[!DOM]]. 
+  The `NetworkInformation` interface provides a means to access information about the network connection the user agent is currently using. The <code><dfn data-cite="DOM#interface-eventtarget">EventTarget</dfn></code> is defined in [[!DOM]].
 
   <pre class="idl">
   [Exposed=(Window,Worker)]
@@ -289,15 +289,15 @@ The `NavigatorNetworkInformation` interface exposes access to <a>`NetworkInforma
   </pre>
 
   ### <dfn>type</dfn> attribute
-  
+
   The `type` attribute, when getting, returns the <a>connection type</a> that the user agent is using.
 
   ### <dfn>effectiveType</dfn> attribute
-  
+
   The `effectiveType` attribute, when getting, returns the <a>effective connection type</a> that is determined using a combination of recently observed round trip times and downlink bandwidth.
 
   ### <dfn>downlinkMax</dfn> attribute
-  
+
   The `downlinkMax` attribute represents an <dfn>upper bound on the downlink speed of the first network hop</dfn>. The reported value is in <a>megabits per second</a> and determined by the properties of the <a>underlying connection technology</a>.
 
   <div class="note">
@@ -305,17 +305,17 @@ The `NavigatorNetworkInformation` interface exposes access to <a>`NetworkInforma
   </div>
 
   ### <dfn>onchange</dfn> attribute
-  
+
   The `onchange` event handler attribute handles "change" events fired during the <a>steps to update the connection values</a>.
 
   ### <dfn>downlink</dfn> attribute
-  
+
   The `downlink` attribute represents the effective bandwidth estimate in <a>megabits per second</a> based on recently observed throughput on the client, rounded to nearest 25 kilobits per second.
 
   ### <dfn>rtt</dfn> attribute
-  
+
   The `rtt` attribute represents the effective round-trip time estimate in <dfn data-lt="Millisecond">milliseconds</dfn> based on recently observed round-trip times on the client, rounded to nearest 25 milliseconds.
-  
+
 </section>
 
 
@@ -356,8 +356,12 @@ When the properties of the <a>underlying connection technology</a> change, due t
 
   1. Let <var>new-type</var> be the <a>connection type</a> that represents the <a>underlying connection technology</a>.
   1. Let <var>new-effective-type</var> be the <a>effective connection type</a> determined by current <a>downlink</a> and <a>rtt</a> values.
-  1. Let <var>new-downlink</var> be the <a>downlink</a> value.
-  1. Let <var>new-rtt</var> be the <a>rtt</a> value.
+  1. Let <var>new-downlink</var> be the result of:
+    1. Rounding <a>downlink</a> value to nearest 25 kilobits per second.
+    1. If the resulting value is 10% greater or smaller than the value of `connection.downlink`, then set <var>new-dowlink</var> to resulting value. Otherwise, set <var>new-downlink</var> to the value of `connection.downlink`.
+  1. Let <var>new-rtt</var> be the result of:
+    1. Rounding <a>rtt</a> value to nearest 25 milliseconds.
+    1. If the resulting value is 10% greater or smaller than the value of `connection.rtt`, then set <var>new-rtt</var> to resulting value. Otherwise, set <var>new-rtt</var> to the value of `connection.rtt`.
   1. If <var>new-type</var> is "none", set <var>max-value</var> to `0`.
   1. if <var>new-type</var> is "unknown", set <var>max-value</var> to `+Infinity`.
   1. If <var>new-type</var> is "mixed", set <var>max-value</var> to an applicable value for the interface configuration used to service new network requests - e.g. if multiple interfaces may be used, sum their <a>downlinkMax for an available interface</a> values.
@@ -372,6 +376,7 @@ When the properties of the <a>underlying connection technology</a> change, due t
       1. <a data-cite="!DOM#concept-event-fire">Fire an event</a> named `change` at the `NetworkInformation` object.
 </section>
 
+<section>
 ## Privacy Considerations
 
 The Network Information API exposes information about the observed network bandwidth, latency and the first network hop between the user agent and the server; specifically, the type of connection and the upper bound of the downlink speed, as well as signals whenever this information changes. Such information may be used to:
@@ -398,6 +403,7 @@ Mitigating such attacks initiated from the client requires preventing the attack
 As such, while the Network Information API makes it easier to obtain information about the first network hop, by avoiding the need to observe or make network requests, it does not expose anything that is not already available to a sufficiently-motivated attacker.
 
 If the client wants to mitigate this class of attacks, they should disable JavaScript, monitor that all outbound requests are made to trusted origins, and make diligent use of anonymizing VPN/proxy services.
+</section>
 
 <section id="conformance">
   There is only one class of product that can claim conformance to this
