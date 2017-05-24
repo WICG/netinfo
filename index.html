@@ -294,7 +294,7 @@ The `NavigatorNetworkInformation` interface exposes access to <a>`NetworkInforma
 
   ### <dfn>effectiveType</dfn> attribute
 
-  The `effectiveType` attribute, when getting, returns the <a>effective connection type</a> that is determined using a combination of recently observed round trip times and downlink bandwidth.
+  The `effectiveType` attribute, when getting, returns the <a>effective connection type</a> that is determined using a combination of recently observed <a href="#dom-networkinformation-rtt">rtt</a> and <a href="#dom-networkinformation-downlink">downlink</a> values.
 
   ### <dfn>downlinkMax</dfn> attribute
 
@@ -310,11 +310,11 @@ The `NavigatorNetworkInformation` interface exposes access to <a>`NetworkInforma
 
   ### <dfn>downlink</dfn> attribute
 
-  The `downlink` attribute represents the effective bandwidth estimate in <a>megabits per second</a> based on recently observed throughput on the client, rounded to nearest multiple of 25 kilobits per second.
+  The `downlink` attribute represents the effective bandwidth estimate in <a>megabits per second</a>, rounded to nearest multiple of 25 kilobits per second, and is based on recently observed transport-layer throughput across recently active connections. In absence of recent bandwidth measurement data, the attribute value is determined by the properties of the <a>underlying connection technology</a>.
 
   ### <dfn>rtt</dfn> attribute
 
-  The `rtt` attribute represents the effective round-trip time estimate in <dfn data-lt="Millisecond">milliseconds</dfn> based on recently observed round-trip times on the client, rounded to nearest multiple of 25 milliseconds.
+  The `rtt` attribute represents the effective round-trip time estimate in <dfn data-lt="Millisecond">milliseconds</dfn>, rounded to nearest multiple of 25 milliseconds, and is based on recently observed transport-layer RTT measurements across recently active connections. In absence of recent RTT measurement data, the attribute value is determined by the properties of the <a>underlying connection technology</a>.
 
 </section>
 
