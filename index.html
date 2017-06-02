@@ -387,7 +387,7 @@ The Network Information API exposes information about the observed network bandw
 
 However, above considerations are not new, and sufficiently motivated attackers may already obtain such information using other technologies:
 
-  * The attacker can use JavaScript to observe the duration (e.g. time from start of fetch to `onload` event) of any network fetch on the client, and may get more detailed timing data about the same fetch via the Resource Timing API.
+  * The attacker can use JavaScript to observe the duration (e.g. time from start of fetch to `onload` event) of any network fetch (same or cross-origin) on the client, and may get more detailed timing data about the same fetch via the Resource Timing API.
   * The attacker can use WebRTC to identify client's public and private IP addresses via STUN, or similar mechanisms.
   * The attacker can observe the client IP, fetch duration, RTT, transfer speed, and other low-level socket metrics of a fetch on the server.
 
