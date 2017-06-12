@@ -310,11 +310,11 @@ The `NavigatorNetworkInformation` interface exposes access to <a>`NetworkInforma
 
   ### <dfn>downlink</dfn> attribute
 
-  The `downlink` attribute represents the effective bandwidth estimate in <a>megabits per second</a>, rounded to nearest multiple of 25 kilobits per second, and is based on recently observed transport-layer throughput across recently active connections. In absence of recent bandwidth measurement data, the attribute value is determined by the properties of the <a>underlying connection technology</a>.
+  The `downlink` attribute represents the effective bandwidth estimate in <a>megabits per second</a>, rounded to nearest multiple of 25 kilobits per second, and is based on recently observed application (HTTP) layer throughput across recently active connections, excluding connections made to private address space [[!RFC1918]]. In absence of recent bandwidth measurement data, the attribute value is determined by the properties of the <a>underlying connection technology</a>.
 
   ### <dfn>rtt</dfn> attribute
 
-  The `rtt` attribute represents the effective round-trip time estimate in <dfn data-lt="Millisecond">milliseconds</dfn>, rounded to nearest multiple of 25 milliseconds, and is based on recently observed transport-layer RTT measurements across recently active connections. In absence of recent RTT measurement data, the attribute value is determined by the properties of the <a>underlying connection technology</a>.
+  The `rtt` attribute represents the effective round-trip time estimate in <dfn data-lt="Millisecond">milliseconds</dfn>, rounded to nearest multiple of 25 milliseconds, and is based on recently observed application-layer (HTTP) RTT measurements across recently active connections, excluding connections made to private address space [[!RFC1918]]. In absence of recent RTT measurement data, the attribute value is determined by the properties of the <a>underlying connection technology</a>.
 
 </section>
 
@@ -379,7 +379,7 @@ When the properties of the <a>underlying connection technology</a> change, due t
 <section>
 ## Privacy Considerations
 
-The Network Information API exposes information about the observed network bandwidth, latency and the first network hop between the user agent and the server; specifically, the type of connection and the upper bound of the downlink speed, as well as signals whenever this information changes. Such information may be used to:
+The Network Information API exposes information about the observed end-to-end network bandwidth and latency, and the first network hop between the user agent and the server; specifically, the type of connection and the upper bound of the downlink speed, as well as signals whenever this information changes. Such information may be used to:
 
   * Fingerprint a user based on characteristics of a particular network (e.g. type and downlink estimates) at a point in time, and by observing change in such characteristics over a period of time.
   * Fingerprint a user based on transitions between one or more networks (e.g. based on order of transitions by type, downlink estimates, and time).
@@ -400,7 +400,7 @@ The above list is not a complete overview. However, as the above examples illust
 
 Mitigating such attacks initiated from the client requires preventing the attacker from observing and initiating network requests - e.g., use HTTPS to prevent trivial content injection by malicious parties; disable JavaScript to prevent scripted resource fetch of any kind. Mitigating attacks from the sender is possible via the use of a VPN or an HTTP proxy - e.g. to hide the client's true IP address, to introduce additional latency, and so on.
 
-As such, while the Network Information API makes it easier to obtain information about the first network hop, by avoiding the need to observe or make network requests, it does not expose anything that is not already available to a sufficiently-motivated attacker.
+As such, while the Network Information API makes it easier to obtain information about the end-to-end network throughput, latency, and the first network hop, by avoiding the need to observe or make network requests, it does not expose anything that is not already available to a sufficiently-motivated attacker.
 
 If the client wants to mitigate this class of attacks, they should disable JavaScript, monitor that all outbound requests are made to trusted origins, and make diligent use of anonymizing VPN/proxy services.
 </section>
