@@ -108,7 +108,7 @@ It should be queryable in an ad hoc fashion from client pages, and should also b
 **Example use cases:**
 
 *   A web application whose primary purpose is to stream media could check `navigator.connection.type` prior to playback. When it's set to `'cellular'`, it could advise users that their mobile network operator might be charging for the bandwidth, and only start automatic playback of previously cached content.
-*   A web application that makes use of a service worker to [cache](https://w3c.github.io/ServiceWorker/v1/#cache-objects) resources during [installation](https://w3c.github.io/ServiceWorker/v1/#installation-algorithm) might have different bundles of assets that it might cache: a list of crucial assets that are cached unconditionally, and a bundle of larger, optional assets that are only cached ahead of time when `navigator.connection.type` is '`ethernet'` or '`wifi'`.
+*   A web application that makes use of a service worker to [cache](https://w3c.github.io/ServiceWorker/v1/#cache-objects) resources during [installation](https://w3c.github.io/ServiceWorker/v1/#installation-algorithm) might have different bundles of assets that it might cache: a list of crucial assets that are cached unconditionally, and a bundle of larger, optional assets that are only cached ahead of time when `navigator.connection.type` is `'ethernet'` or `'wifi'`.
 *   A web application that uses a service worker with a [background sync](https://github.com/WICG/BackgroundSync/blob/master/explainer.md) handler might check the current `navigator.connection.type` value, and only transfer data inside the `sync` event handler if it is is `'ethernet'` or `'wifi'`.
 
 ### Provide a way for scripts to be notified if the connection type changes.
@@ -118,7 +118,7 @@ This allows developers to make dynamic changes to their user interface to inform
 **Example use cases:**
 
 *   A web application whose primary purpose is to stream media could dynamically change its user interface in response to updates to the connection type. This may afford a better user experience than waiting until a user attempts to playback and performing a one-off query. It allows applications to provide context about the connection in advance of user interaction.
-*   A web application that allows for uploads or downloads might defer initiating the request when `navigator.connection.type` is set to ``'cellular'`, and add a listener for changes to the connection. When a change to a high-bandwidth network type is detected, the request could be automatically started.
+*   A web application that allows for uploads or downloads might defer initiating the request when `navigator.connection.type` is set to `'cellular'`, and add a listener for changes to the connection. When a change to a high-bandwidth network type is detected, the request could be automatically started.
 
 <section class="informative">
   ## Examples of usage
