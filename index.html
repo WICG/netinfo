@@ -281,11 +281,17 @@ The `NavigatorNetworkInformation` interface exposes access to <a>`NetworkInforma
     readonly attribute Megabit downlinkMax;
     readonly attribute Megabit downlink;
     readonly attribute Millisecond rtt;
+    readonly attribute SaveData saveData;
     attribute EventHandler onchange;
   };
 
   typedef unrestricted double Megabit;
   typedef unsigned long long Millisecond;
+
+  enum SaveData {
+    "on",
+    ""
+  };
   </pre>
 
   ### <dfn>type</dfn> attribute
@@ -315,6 +321,29 @@ The `NavigatorNetworkInformation` interface exposes access to <a>`NetworkInforma
   ### <dfn>rtt</dfn> attribute
 
   The `rtt` attribute represents the effective round-trip time estimate in <dfn data-lt="Millisecond">milliseconds</dfn>, rounded to nearest multiple of 25 milliseconds, and is based on recently observed application-layer RTT measurements across recently active connections, excluding connections made to private address space [[!RFC1918]]. In absence of recent RTT measurement data, the attribute value is determined by the properties of the <a>underlying connection technology</a>.
+
+  ### <dfn>saveData</dfn> attribute
+
+  The `saveData` attribute represents the user agent's preference for reduced data usage, due to high transfer costs, slow connection speeds, or other reasons. On getting, it returns one of the following values:
+
+  <table id="save-data-table" data-dfn-for="SaveData">
+    <thead>
+      <tr>
+        <th>Value</th>
+        <th>Explanation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><dfn>on</dfn></td>
+        <td>Incidates explicit user opt-in into a reduced data usage mode on the client. [CLIENT-HINTS](https://tools.ietf.org/html/draft-ietf-httpbis-client-hints-04#section-3.5)</td>
+      </tr>
+      <tr>
+        <td><dfn>""</dfn> (empty string)</td>
+        <td>Unknown or unspecified preference.</td>
+      </tr>
+    </tbody>
+  </table>
 
 </section>
 
