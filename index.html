@@ -322,6 +322,23 @@ The `NavigatorNetworkInformation` interface exposes access to <a>`NetworkInforma
   The `saveData` attribute, when getting, returns `true` if the user has requested a reduced data usage mode from the user agent, and `false` otherwise.
 
   <p class="note">The user may enable such preference, if made available by the user agent, due to high data transfer costs, slow connection speeds, or other reasons.</p>
+
+  <section>
+    #### Save-Data (Client Hint) Request Header Field
+
+    The “Save-Data” request header field consists of one or more tokens that indicate user agent's preference for reduced data usage.
+
+    <pre class="highlight">
+      Save-Data = sd-token *( OWS ";" OWS [sd-token] )
+      sd-token = token
+    </pre>
+
+    This specification defines the "`on`" `sd-token` value, which is used as a signal indicating explicit user opt-in into a reduced data usage mode (i.e. when <a>saveData</a>'s value is `true`), and when communicated to origins allows them to deliver alternate content honoring such preference - e.g. smaller image and video resources, alternate markup, and so on.
+
+    If Save-Data occurs in a message more than once, the last value overrides all previous occurrences.
+
+    <p class="issue">TODO: update <a href="https://fetch.spec.whatwg.org/#fetching">Fetch#fetching algorithm</a> to use `connection.saveData` as signal to append the Save-Data header.</p>
+  </section>
 </section>
 
 
