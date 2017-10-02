@@ -297,6 +297,7 @@ The `NavigatorNetworkInformation` interface exposes access to <a>`NetworkInforma
     readonly attribute Megabit downlinkMax;
     readonly attribute Megabit downlink;
     readonly attribute Millisecond rtt;
+    readonly attribute boolean saveData;
     attribute EventHandler onchange;
   };
 
@@ -332,6 +333,28 @@ The `NavigatorNetworkInformation` interface exposes access to <a>`NetworkInforma
 
   The `rtt` attribute represents the effective round-trip time estimate in <dfn data-lt="Millisecond">milliseconds</dfn>, rounded to nearest multiple of 25 milliseconds, and is based on recently observed application-layer RTT measurements across recently active connections, excluding connections made to private address space [[!RFC1918]]. In absence of recent RTT measurement data, the attribute value is determined by the properties of the <a>underlying connection technology</a>.
 
+  ### <dfn>saveData</dfn> attribute
+
+  The `saveData` attribute, when getting, returns `true` if the user has requested a reduced data usage mode from the user agent, and `false` otherwise.
+
+  <p class="note">The user may enable such preference, if made available by the user agent, due to high data transfer costs, slow connection speeds, or other reasons.</p>
+
+  <section>
+    #### Save-Data (Client Hint) Request Header Field
+
+    The “Save-Data” request header field consists of one or more tokens that indicate user agent's preference for reduced data usage.
+
+    <pre class="highlight">
+      Save-Data = sd-token *( OWS ";" OWS [sd-token] )
+      sd-token = token
+    </pre>
+
+    This specification defines the "`on`" `sd-token` value, which is used as a signal indicating explicit user opt-in into a reduced data usage mode (i.e. when <a>saveData</a>'s value is `true`), and when communicated to origins allows them to deliver alternate content honoring such preference - e.g. smaller image and video resources, alternate markup, and so on.
+
+    If Save-Data occurs in a message more than once, the last value overrides all previous occurrences.
+
+    <p class="issue">TODO: update <a href="https://fetch.spec.whatwg.org/#fetching">Fetch#fetching algorithm</a> to use `connection.saveData` as signal to append the Save-Data header.</p>
+  </section>
 </section>
 
 
@@ -368,10 +391,11 @@ The <a>upper bound on the downlink speed of the first network hop</a> is determi
 <section data-link-for="NetworkInformation">
 ### Handling changes to the underlying connection
 
-When the properties of the <a>underlying connection technology</a> change, due to a switch to a different <a>connection type</a> or <a>effective connection type</a>, change in <a>upper bound on the downlink speed of the first network hop</a>, or change in effective <a>downlink</a> or <a>rtt</a> estimates, the user agent MUST run the <dfn>steps to update the connection values</dfn>:
+When the properties of the <a>underlying connection technology</a> change, due to a switch to a different <a>connection type</a> or <a>effective connection type</a>, change in <a>upper bound on the downlink speed of the first network hop</a>, change in effective <a>downlink</a> or <a>rtt</a> estimates, or change in <a>saveData</a> preference, the user agent MUST run the <dfn>steps to update the connection values</dfn>:
 
   1. Let <var>new-type</var> be the <a>connection type</a> that represents the <a>underlying connection technology</a>.
   1. Let <var>new-effective-type</var> be the <a>effective connection type</a> determined by current <a>downlink</a> and <a>rtt</a> values.
+  1. Let <var>new-saveData</var> be the current <a>saveData</a> preference.
   1. Let <var>new-downlink</var> be the result of:
     1. Rounding <a>downlink</a> value to nearest multiple of 25 kilobits per second.
     1. If the resulting value is 10% greater or smaller than the value of `connection.downlink`, then set <var>new-dowlink</var> to resulting value. Otherwise, set <var>new-downlink</var> to the value of `connection.downlink`.
@@ -382,13 +406,14 @@ When the properties of the <a>underlying connection technology</a> change, due t
   1. if <var>new-type</var> is "unknown", set <var>max-value</var> to `+Infinity`.
   1. If <var>new-type</var> is "mixed", set <var>max-value</var> to an applicable value for the interface configuration used to service new network requests - e.g. if multiple interfaces may be used, sum their <a>downlinkMax for an available interface</a> values.
   1. Otherwise, set <var>max-value</var> to <a>downlinkMax for an available interface</a>.
-  1. If <var>max-value</var> is not equal to the value of `connection.downlinkMax`, or if <var>new-type</var> is not equal to the value of `connection.type`, or if <var>new-downlink</var> is not equal to the value of `connection.downlink`, or if <var>new-rtt</var> is not equal to the value of `connection.rtt`:
+  1. If <var>max-value</var> is not equal to the value of `connection.downlinkMax`, or if <var>new-type</var> is not equal to the value of `connection.type`, or if <var>new-downlink</var> is not equal to the value of `connection.downlink`, or if <var>new-rtt</var> is not equal to the value of `connection.rtt`, or if <var>new-saveData</var> is not equal to the value of `connection.saveData`:
     1. Using the <a data-cite="!HTML#networking-task-source">networking task source</a>, <a data-cite="!HTML#queue-a-task">queue a task</a> to perform the following:
       1. Set `connection.downlinkMax` to <var>max-value</var>.
       1. Set `connection.type` to <var>new-type</var>.
       1. set `connection.effectiveType` to <var>new-effective-type</var>.
       1. Set `connection.downlink` to <var>new-downlink</var>.
       1. Set `connection.rtt` to <var>new-rtt</var>.
+      1. Set `connection.saveData` to <var>new-saveData</var>.
       1. <a data-cite="!DOM#concept-event-fire">Fire an event</a> named `change` at the `NetworkInformation` object.
 </section>
 
