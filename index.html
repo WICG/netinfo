@@ -88,6 +88,14 @@ var respecConfig = {
     },
   ],
   preProcess: [loadTableData],
+  localBiblio: {
+    "CLIENT-HINTS": {
+      title: "HTTP Client Hints",
+      href: "https://tools.ietf.org/html/draft-grigorik-http-client-hints",
+      status: "Internet-Draft",
+      publisher: "IETF",
+    }
+  },
 };
 </script>
 
@@ -313,6 +321,19 @@ The `NavigatorNetworkInformation` interface exposes access to <a>`NetworkInforma
 
   The `effectiveType` attribute, when getting, returns the <a>effective connection type</a> that is determined using a combination of recently observed <a>rtt</a> and <a>downlink</a> values.
 
+  #### `ECT` Request Header Field
+
+  The `ECT` [[!CLIENT-HINTS]] request header field is a token that indicates the <a>effectiveType</a>, which is one of <a>EffectiveConnectionType</a> values, at the time when the request is made by the user agent.
+
+  <pre class="nohighlight">
+    ECT = sd-token \*( OWS ";" OWS [sd-token] )
+    sd-token = token
+  </pre>
+
+  If `ECT` occurs in a message more than once, the last value overrides
+  all previous occurrences.
+
+
   ### <dfn>downlinkMax</dfn> attribute
 
   The `downlinkMax` attribute represents an <dfn>upper bound on the downlink speed of the first network hop</dfn>. The reported value is in <a>megabits per second</a> and determined by the properties of the <a>underlying connection technology</a>.
@@ -329,9 +350,32 @@ The `NavigatorNetworkInformation` interface exposes access to <a>`NetworkInforma
 
   The `downlink` attribute represents the effective bandwidth estimate in <a>megabits per second</a>, rounded to nearest multiple of 25 kilobits per second, and is based on recently observed application layer throughput across recently active connections, excluding connections made to private address space [[!RFC1918]]. In absence of recent bandwidth measurement data, the attribute value is determined by the properties of the <a>underlying connection technology</a>.
 
+  #### `Downlink` Request Header Field
+
+  The `Downlink` [[!CLIENT-HINTS]] request header field is a number that indicates the <a>downlink</a> value at the time when the request is made by the user agent.
+
+  <pre class="nohighlight">
+    Downlink = 1\*DIGIT [ "." 1\*DIGIT ]
+  </pre>
+
+  If `Downlink` occurs in a message more than once, the last value overrides
+  all previous occurrences.
+
+
   ### <dfn>rtt</dfn> attribute
 
   The `rtt` attribute represents the effective round-trip time estimate in <dfn data-lt="Millisecond">milliseconds</dfn>, rounded to nearest multiple of 25 milliseconds, and is based on recently observed application-layer RTT measurements across recently active connections, excluding connections made to private address space [[!RFC1918]]. In absence of recent RTT measurement data, the attribute value is determined by the properties of the <a>underlying connection technology</a>.
+
+  #### `RTT` Request Header Field
+
+  The `RTT` [[!CLIENT-HINTS]] request header field is a number that indicates the <a>rtt</a> value at the time when the request is made by the user agent.
+
+  <pre class="nohighlight">
+    RTT = 1\*DIGIT
+  </pre>
+
+  If `RTT` occurs in a message more than once, the last value overrides all previous occurrences.
+
 
   ### <dfn>saveData</dfn> attribute
 
@@ -339,22 +383,20 @@ The `NavigatorNetworkInformation` interface exposes access to <a>`NetworkInforma
 
   <p class="note">The user may enable such preference, if made available by the user agent, due to high data transfer costs, slow connection speeds, or other reasons.</p>
 
-  <section>
-    #### Save-Data (Client Hint) Request Header Field
+  #### `Save-Data` Request Header Field
 
-    The “Save-Data” request header field consists of one or more tokens that indicate user agent's preference for reduced data usage.
+  The `Save-Data` [[!CLIENT-HINTS]] request header field consists of one or more tokens that indicate user agent's preference for reduced data usage.
 
-    <pre class="highlight">
-      Save-Data = sd-token *( OWS ";" OWS [sd-token] )
-      sd-token = token
-    </pre>
+  <pre class="nohighlight">
+    Save-Data = sd-token \*( OWS ";" OWS [sd-token] )
+    sd-token = token
+  </pre>
 
-    This specification defines the "`on`" `sd-token` value, which is used as a signal indicating explicit user opt-in into a reduced data usage mode (i.e. when <a>saveData</a>'s value is `true`), and when communicated to origins allows them to deliver alternate content honoring such preference - e.g. smaller image and video resources, alternate markup, and so on.
+  This specification defines the "`on`" `sd-token` value, which is used as a signal indicating explicit user opt-in into a reduced data usage mode (i.e. when <a>saveData</a>'s value is `true`), and when communicated to origins allows them to deliver alternate content honoring such preference - e.g. smaller image and video resources, alternate markup, and so on.
 
-    If Save-Data occurs in a message more than once, the last value overrides all previous occurrences.
+  If `Save-Data` occurs in a message more than once, the last value overrides all previous occurrences.
 
-    <p class="issue">TODO: update <a href="https://fetch.spec.whatwg.org/#fetching">Fetch#fetching algorithm</a> to use `connection.saveData` as signal to append the Save-Data header.</p>
-  </section>
+  <p class="issue">TODO: update <a href="https://fetch.spec.whatwg.org/#fetching">Fetch#fetching algorithm</a> to use `connection.saveData` as signal to append the Save-Data header.</p>
 </section>
 
 
