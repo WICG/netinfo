@@ -490,6 +490,46 @@ As such, while the Network Information API makes it easier to obtain information
 If the client wants to mitigate this class of attacks, they should disable JavaScript, monitor that all outbound requests are made to trusted origins, and make diligent use of anonymizing VPN/proxy services.
 </section>
 
+<section id="iana-considerations">
+## IANA Considerations
+
+The following three HTTP request header fields should be added to the permanent registry of message header fields (see [[!RFC3864]]), taking into account the guidelines given by HTTP/1.1 [[!RFC7231]].
+  
+<section id="registration-ect">
+### `ECT` Request Header Field Registration
+
+* Header Field Name: ECT
+* Applicable Protocol: Hypertext Transfer Protocol (HTTP)
+* Status: Standard
+* Author/Change controller: W3C
+* Specification document(s): W3C TR https://www.w3.org/TR/netinfo/
+
+</section>
+
+<section id="registration-downlink">
+### `Downlink` Request Header Field Registration
+
+* Header Field Name: Downlink
+* Applicable Protocol: Hypertext Transfer Protocol (HTTP)
+* Status: Standard
+* Author/Change controller: W3C
+* Specification document(s): W3C TR https://www.w3.org/TR/netinfo/
+
+</section>
+
+<section id="registration-rtt">
+### `RTT` Request Header Field Registration
+
+* Header Field Name: RTT
+* Applicable Protocol: Hypertext Transfer Protocol (HTTP)
+* Status: Standard
+* Author/Change controller: W3C
+* Specification document(s): W3C TR https://www.w3.org/TR/netinfo/
+
+</section>
+
+</section>
+
 <section id="conformance">
   There is only one class of product that can claim conformance to this
   specification: a <dfn>user agent</dfn>.
