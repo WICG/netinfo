@@ -120,6 +120,7 @@ It should be queryable in an ad hoc fashion from client pages, and should also b
 *   A web application whose primary purpose is to stream media could check `navigator.connection.type` prior to playback. When it's set to `'cellular'`, it could advise users that their mobile network operator might be charging for the bandwidth, and only start automatic playback of previously cached content.
 *   A web application that makes use of a service worker to [cache](https://w3c.github.io/ServiceWorker/v1/#cache-objects) resources during [installation](https://w3c.github.io/ServiceWorker/v1/#installation-algorithm) might have different bundles of assets that it might cache: a list of crucial assets that are cached unconditionally, and a bundle of larger, optional assets that are only cached ahead of time when `navigator.connection.type` is `'ethernet'` or `'wifi'`.
 *   A web application that uses a service worker with a [background sync](https://github.com/WICG/BackgroundSync/blob/master/explainer.md) handler might check the current `navigator.connection.type` value, and only transfer data inside the `sync` event handler if it is is `'ethernet'` or `'wifi'`.
+*   A web application might make decision to enable offline mode based on network condition (e.g., when EDGE is not enough).
 
 ### Provide a way for scripts to be notified if the connection type changes.
 
