@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <meta charset='utf-8'>
 <title>Network Information API</title>
-<script class='remove' src='//www.w3.org/Tools/respec/respec-w3c-common'></script>
+<script class='remove' src='https://www.w3.org/Tools/respec/respec-w3c-common'></script>
 <script>
-function loadTableData() {
-  return fetch("downlink.json")
-    .then(res => res.json())
-    .then(populateTable)
-    .catch(err => {
-      console.error("Error trying to get downlink.json", err);
-      populateTable({});
-    });
+async function loadTableData() {
+  const res = await fetch("downlink.json");
+  const json = await res.json();
+  try {
+    populateTable(json)
+  } catch (err) {
+    console.error("Error trying to get downlink.json", err);
+    populateTable({});
+  }
 }
 
 function populateTable(data) {
@@ -78,17 +79,7 @@ var respecConfig = {
   ],
   wg: "Web Incubator Community Group",
   wgURI: "https://wicg.io",
-  otherLinks: [
-    {
-      key: "Implementations",
-      data: [
-        {
-          value: "Chromium",
-          href: "https://code.google.com/p/chromium/issues/detail?id=368358",
-        },
-      ],
-    },
-  ],
+  caniuse: "netinfo",
   preProcess: [loadTableData],
   localBiblio: {
     "CLIENT-HINTS": {
@@ -136,21 +127,21 @@ This allows developers to make dynamic changes to their user interface to inform
   For examples of the kinds of applications one can build with this API, see the <cite>[Review of Apps that Use Network Information](https://github.com/w3c-webmob/netinfo)</cite>.
 
   <pre class="example js">
-    // Get the connection type.
-    var type = navigator.connection.type;
+  // Get the connection type.
+  var type = navigator.connection.type;
 
-    // Get an upper bound on the downlink speed of the first network hop
-    var max = navigator.connection.downlinkMax;
+  // Get an upper bound on the downlink speed of the first network hop
+  var max = navigator.connection.downlinkMax;
 
-    function changeHandler(e) {
-      // Handle change to connection here.
-    }
+  function changeHandler(e) {
+    // Handle change to connection here.
+  }
 
-    // Register for event changes.
-    navigator.connection.onchange = changeHandler;
+  // Register for event changes.
+  navigator.connection.onchange = changeHandler;
 
-    // Alternatively.
-    navigator.connection.addEventListener('change', changeHandler);
+  // Alternatively.
+  navigator.connection.addEventListener('change', changeHandler);
   </pre>
 </section>
 
@@ -180,7 +171,7 @@ This section defines the <dfn data-lt="connection type">connection types</dfn> a
   <dt><dfn>ethernet</dfn></dt>
   <dd>An Ethernet connection.</dd>
   <dt><dfn>none</dfn></dt>
-  <dd>No network connection. The user agent will not contact the network when the user follows links or when a script requests a remote page (or knows that such an attempt would fail) - i.e., equivalent to `navigator.onLine === false` in HTML.</dd>
+  <dd>No network connection. The user agent will not contact the network when the user follows links or when a script requests a remote page (or knows that such an attempt would fail) - i.e., equivalent to <code>navigator.onLine === false</code> in HTML.</dd>
   <dt><dfn>mixed</dfn></dt>
   <dd>The user agent is using multiple connection types.</dd>
   <dt><dfn>other</dfn></dt>
@@ -277,28 +268,28 @@ The <a>effective connection types</a> are represented in this API by the <a>Effe
 
 ## <dfn>NavigatorNetworkInformation</dfn> interface
 
-The `NavigatorNetworkInformation` interface exposes access to <a>`NetworkInformation`</a> interface by extending the <code><dfn data-cite="!HTML#navigator">Navigator</dfn></code> and <code><dfn data-cite="!HTML#workernavigator">WorkerNavigator</dfn></code> interface.
+The <code><dfn data-cite="!HTML#navigator">Navigator</dfn></code> and <code><dfn data-cite="!HTML#workernavigator">WorkerNavigator</dfn></code> interface expose access to <a>NetworkInformation</a> interface by mixing in <a>NavigatorNetworkInformation</a>.
 
 <pre class="idl">
   [NoInterfaceObject, Exposed=(Window,Worker)]
-  interface NavigatorNetworkInformation {
+  interface mixin NavigatorNetworkInformation {
     readonly attribute NetworkInformation connection;
   };
 
-  Navigator implements NavigatorNetworkInformation;
-  WorkerNavigator implements NavigatorNetworkInformation;
+  Navigator includes NavigatorNetworkInformation;
+  WorkerNavigator includes NavigatorNetworkInformation;
 </pre>
 
-<section data-dfn-for="NavigatorNetworkInformation">
-  ### <dfn>connection</dfn> attribute
+<section data-dfn-for="NavigatorNetworkInformation" data-link-for="NavigatorNetworkInformation">
+  ### <code><dfn>connection</dfn></code> attribute
 
-  The `connection` attribute, when getting, returns an object that implements the <a>NetworkInformation</a> interface.
+  The <a>connection</a> attribute, when getting, returns an object that implements the <a>NetworkInformation</a> interface.
 </section>
 
 <section data-dfn-for="NetworkInformation" data-link-for="NetworkInformation">
   ## <dfn>NetworkInformation</dfn> interface
 
-  The `NetworkInformation` interface provides a means to access information about the network connection the user agent is currently using. The <code><dfn data-cite="DOM#interface-eventtarget">EventTarget</dfn></code> is defined in [[!DOM]].
+  The <a>NetworkInformation</a> interface provides a means to access information about the network connection the user agent is currently using. The <code><dfn data-cite="DOM#interface-eventtarget">EventTarget</dfn></code> is defined in [[!DOM]].
 
   <pre class="idl">
   [Exposed=(Window,Worker)]
@@ -318,15 +309,15 @@ The `NavigatorNetworkInformation` interface exposes access to <a>`NetworkInforma
 
   ### <dfn>type</dfn> attribute
 
-  The `type` attribute, when getting, returns the <a>connection type</a> that the user agent is using.
+  The <a>type</a> attribute, when getting, returns the <a>connection type</a> that the user agent is using.
 
   ### <dfn>effectiveType</dfn> attribute
 
-  The `effectiveType` attribute, when getting, returns the <a>effective connection type</a> that is determined using a combination of recently observed <a>rtt</a> and <a>downlink</a> values.
+  The <a>effectiveType</a> attribute, when getting, returns the <a>effective connection type</a> that is determined using a combination of recently observed <a>rtt</a> and <a>downlink</a> values.
 
-  #### `ECT` Request Header Field
+  #### <code><dfn>ECT</dfn></code> Request Header Field
 
-  The `ECT` request header field is a token that indicates the <a>effectiveType</a>, which is one of <a>EffectiveConnectionType</a> values, at the time when the request is made by the user agent.
+  The <a>ECT</a> request header field is a token that indicates the <a>effectiveType</a>, which is one of <a>EffectiveConnectionType</a> values, at the time when the request is made by the user agent.
 
   <pre class="nohighlight">
     ECT = sd-token \*( OWS ";" OWS [sd-token] )
@@ -339,7 +330,7 @@ The `NavigatorNetworkInformation` interface exposes access to <a>`NetworkInforma
 
   ### <dfn>downlinkMax</dfn> attribute
 
-  The `downlinkMax` attribute represents an <dfn>upper bound on the downlink speed of the first network hop</dfn>. The reported value is in <a>megabits per second</a> and determined by the properties of the <a>underlying connection technology</a>.
+  The <a>downlinkMax</a> attribute represents an <dfn>upper bound on the downlink speed of the first network hop</dfn>. The reported value is in <a>megabits per second</a> and determined by the properties of the <a>underlying connection technology</a>.
 
   <div class="note">
     The user agent has no knowledge of the total number or the performance characteristics of the various network hops required to fulfill a particular request; different requests may follow different routes and have different performance characteristics. The reported <a>upper bound on the downlink speed of the first network hop</a> value is determined by the properties of the <a>underlying connection technology</a> of the first network hop. The end-to-end performance of any request cannot exceed this value, but it is also not a guarantee of performance and may be significantly worse.
@@ -347,15 +338,15 @@ The `NavigatorNetworkInformation` interface exposes access to <a>`NetworkInforma
 
   ### <dfn>onchange</dfn> attribute
 
-  The `onchange` event handler attribute handles "change" events fired during the <a>steps to update the connection values</a>.
+  The <a>onchange</a> event handler attribute handles "change" events fired during the <a>steps to update the connection values</a>.
 
   ### <dfn>downlink</dfn> attribute
 
-  The `downlink` attribute represents the effective bandwidth estimate in <a>megabits per second</a>, rounded to nearest multiple of 25 kilobits per second, and is based on recently observed application layer throughput across recently active connections, excluding connections made to private address space [[!RFC1918]]. In absence of recent bandwidth measurement data, the attribute value is determined by the properties of the <a>underlying connection technology</a>.
+  The <a>downlink</a> attribute represents the effective bandwidth estimate in <a>megabits per second</a>, rounded to nearest multiple of 25 kilobits per second, and is based on recently observed application layer throughput across recently active connections, excluding connections made to private address space [[!RFC1918]]. In absence of recent bandwidth measurement data, the attribute value is determined by the properties of the <a>underlying connection technology</a>.
 
   #### `Downlink` Request Header Field
 
-  The `Downlink` request header field is a number that indicates the <a>downlink</a> value at the time when the request is made by the user agent.
+  The <a>Downlink</a> request header field is a number that indicates the <a>downlink</a> value at the time when the request is made by the user agent.
 
   <pre class="nohighlight">
     Downlink = 1\*DIGIT [ "." 1\*DIGIT ]
@@ -367,11 +358,11 @@ The `NavigatorNetworkInformation` interface exposes access to <a>`NetworkInforma
 
   ### <dfn>rtt</dfn> attribute
 
-  The `rtt` attribute represents the effective round-trip time estimate in <dfn data-lt="Millisecond">milliseconds</dfn>, rounded to nearest multiple of 25 milliseconds, and is based on recently observed application-layer RTT measurements across recently active connections, excluding connections made to private address space [[!RFC1918]]. In absence of recent RTT measurement data, the attribute value is determined by the properties of the <a>underlying connection technology</a>.
+  The <a>rtt</a> attribute represents the effective round-trip time estimate in <dfn data-lt="Millisecond">milliseconds</dfn>, rounded to nearest multiple of 25 milliseconds, and is based on recently observed application-layer RTT measurements across recently active connections, excluding connections made to private address space [[!RFC1918]]. In absence of recent RTT measurement data, the attribute value is determined by the properties of the <a>underlying connection technology</a>.
 
   #### `RTT` Request Header Field
 
-  The `RTT` request header field is a number that indicates the <a>rtt</a> value at the time when the request is made by the user agent.
+  The <a>RTT</a> request header field is a number that indicates the <a>rtt</a> value at the time when the request is made by the user agent.
 
   <pre class="nohighlight">
     RTT = 1\*DIGIT
@@ -382,13 +373,13 @@ The `NavigatorNetworkInformation` interface exposes access to <a>`NetworkInforma
 
   ### <dfn>saveData</dfn> attribute
 
-  The `saveData` attribute, when getting, returns `true` if the user has requested a reduced data usage mode from the user agent, and `false` otherwise.
+  The <a>saveData</a> attribute, when getting, returns `true` if the user has requested a reduced data usage mode from the user agent, and `false` otherwise.
 
   <p class="note">The user may enable such preference, if made available by the user agent, due to high data transfer costs, slow connection speeds, or other reasons.</p>
 
-  #### `Save-Data` Request Header Field
+  #### <code><dfn>Save-Data</dfn></code> Request Header Field
 
-  The `Save-Data` [[!CLIENT-HINTS]] request header field consists of one or more tokens that indicate user agent's preference for reduced data usage.
+  The <a>SaveData</a> [[!CLIENT-HINTS]] request header field consists of one or more tokens that indicate user agent's preference for reduced data usage.
 
   <pre class="nohighlight">
     Save-Data = sd-token \*( OWS ";" OWS [sd-token] )
@@ -397,9 +388,11 @@ The `NavigatorNetworkInformation` interface exposes access to <a>`NetworkInforma
 
   This specification defines the "`on`" `sd-token` value, which is used as a signal indicating explicit user opt-in into a reduced data usage mode (i.e. when <a>saveData</a>'s value is `true`), and when communicated to origins allows them to deliver alternate content honoring such preference - e.g. smaller image and video resources, alternate markup, and so on.
 
-  If `Save-Data` occurs in a message more than once, the last value overrides all previous occurrences.
+  If <a>Save-Data</a> occurs in a message more than once, the last value overrides all previous occurrences.
 
-  <p class="issue">TODO: update <a href="https://fetch.spec.whatwg.org/#fetching">Fetch#fetching algorithm</a> to use `connection.saveData` as signal to append the Save-Data header.</p>
+  <div class="issue">
+    TODO: update <a href="https://fetch.spec.whatwg.org/#fetching">Fetch#fetching algorithm</a> to use `connection.saveData` as signal to append the Save-Data header.
+  </div>
 </section>
 
 
@@ -495,7 +488,7 @@ If the client wants to mitigate this class of attacks, they should disable JavaS
 ## IANA Considerations
 
 The following three HTTP request header fields should be added to the permanent registry of message header fields (see [[!RFC3864]]), taking into account the guidelines given by HTTP/1.1 [[!RFC7231]].
-  
+
 <section id="registration-ect">
 ### `ECT` Request Header Field Registration
 
