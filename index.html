@@ -271,7 +271,6 @@ The <a>effective connection types</a> are represented in this API by the <a>Effe
 The <code><dfn data-cite="!HTML#navigator">Navigator</dfn></code> and <code><dfn data-cite="!HTML#workernavigator">WorkerNavigator</dfn></code> interface expose access to <a>NetworkInformation</a> interface by mixing in <a>NavigatorNetworkInformation</a>.
 
 <pre class="idl">
-  [NoInterfaceObject, Exposed=(Window,Worker)]
   interface mixin NavigatorNetworkInformation {
     readonly attribute NetworkInformation connection;
   };
