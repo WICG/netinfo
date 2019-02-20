@@ -272,7 +272,7 @@ The <code><dfn data-cite="!HTML#navigator">Navigator</dfn></code> and <code><dfn
 
 <pre class="idl">
   interface mixin NavigatorNetworkInformation {
-    readonly attribute NetworkInformation connection;
+    [SameObject] readonly attribute NetworkInformation connection;
   };
 
   Navigator includes NavigatorNetworkInformation;
