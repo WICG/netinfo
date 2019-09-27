@@ -1,5 +1,6 @@
  {
     "group":      ["80485"]
 ,   "contacts":   ["marcoscaceres"]
-,   "shortName":  "netinfo"
+,   "shortName":  "netinfo",
+    "repo-type": "cg-report"
 }
