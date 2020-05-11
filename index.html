@@ -79,7 +79,10 @@ var respecConfig = {
   ],
   wg: "Web Incubator Community Group",
   wgURI: "https://wicg.io",
-  caniuse: "netinfo",
+  caniuse: {
+    feature: "netinfo",
+    browsers: ["chrome", "firefox", "and_ff", "safari"],
+  },
   preProcess: [loadTableData],
   localBiblio: {
     "CLIENT-HINTS": {
