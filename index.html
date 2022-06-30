@@ -85,16 +85,10 @@ var respecConfig = {
   preProcess: [loadTableData],
   localBiblio: {
     "CLIENT-HINTS": {
-      title: "HTTP Client Hints",
-      href: "https://tools.ietf.org/html/draft-grigorik-http-client-hints",
-      status: "Internet-Draft",
-      publisher: "IETF",
+      aliasOf: "RFC8942"
     },
     "STRUCTURED-HEADERS": {
-      title: "Structured Headers for HTTP",
-      href: "https://tools.ietf.org/html/draft-ietf-httpbis-header-structure",
-      status: "Internet-Draft",
-      publisher: "IETF",
+      aliasOf: "RFC8941"
     },
   },
   mdn: true,
@@ -413,7 +407,7 @@ When the properties of the <a>underlying connection technology</a> change, due t
       1. set `connection.effectiveType` to <var>new-effective-type</var>.
       1. Set `connection.downlink` to <var>new-downlink</var>.
       1. Set `connection.rtt` to <var>new-rtt</var>.
-      1. <a data-cite="!DOM#concept-event-fire">Fire an event</a> named `change` at the `NetworkInformation` object.
+      1. <a data-cite="!DOM#concept-event-fire">Fire an event</a> named <dfn data-dfn-type='event' data-dfn-for='NetworkInformation'>change</dfn> at the `NetworkInformation` object.
 </section>
 
 <section>
